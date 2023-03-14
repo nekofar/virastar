@@ -1,0 +1,14 @@
+# Ignore build artifacts
+lib/
+dist/
+
+# Ignore compiled TypeScript files
+*.js
+*.d.ts
+*.map
+
+# Ignore any other temporary files or caches
+*.tmp
+*.temp
+*.cache
+*.DS_Store
