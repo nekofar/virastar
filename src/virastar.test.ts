@@ -1867,52 +1867,95 @@ describe('Virastar', () => {
 
   describe('markdownNormalizeBraces', () => {
     it('should remove spaces between ! and opening brace on markdown images', () => {
-      const input = '! [alt] (src)';
-      const expected = '![alt](src)';
+      const input = '! [alt] (src)'
+      const expected = '![alt](src)'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         markdown_normalize_braces: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove spaces between [] and ()', () => {
-      const input = '[text] (link)';
-      const expected = '[text](link)';
+      const input = '[text] (link)'
+      const expected = '[text](link)'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         markdown_normalize_braces: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove spaces inside double () [] {}', () => {
-      const input = '[[ text ]]';
-      const expected = '[[text]]';
+      const input = '[[ text ]]'
+      const expected = '[[text]]'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         markdown_normalize_braces: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove spaces between double () [] {}', () => {
-      const input = '[[text] ]';
-      const expected = '[[text]]';
+      const input = '[[text] ]'
+      const expected = '[[text]]'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         markdown_normalize_braces: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
+  describe('markdownNormalizeLists', () => {
+    it('should remove extra line between two items list for bulleted lists', () => {
+      const input = `* item 1
+
+* item 2`
+      const expected = `* item 1
+* item 2`
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_lists: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove extra line between two items list for hyphenated lists', () => {
+      const input = `- item 1
+
+- item 2`
+      const expected = `- item 1
+- item 2`
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_lists: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove extra line between two items list for numbered lists', () => {
+      const input = `# item 1
+
+# item 2`
+      const expected = `# item 1
+# item 2`
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_lists: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
