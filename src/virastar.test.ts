@@ -1958,4 +1958,55 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('normalizeDates', () => {
+    it('should re-order date parts with slash as delimiter', () => {
+      const input = '۱۴/۰۳/۲۰۲۱';
+      const expected = '۲۰۲۱/۰۳/۱۴';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_dates: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not modify the text if it does not contain a date', () => {
+      const input = 'متنی بدون تاریخ';
+      const expected = input;
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_dates: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should handle multiple dates in the text', () => {
+      const input = '۱۴/۰۳/۲۰۲۱ - ۱۴/۰۳/۲۰۲۲';
+      const expected = '۲۰۲۱/۰۳/۱۴ - ۲۰۲۲/۰۳/۱۴';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_dates: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should handle different date formats', () => {
+      const input = '۲۰-۰۳-۲۰۲۱';
+      const expected = '۲۰۲۱/۰۳/۲۰';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_dates: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
+
 })
