@@ -1536,4 +1536,18 @@ describe('Virastar', () => {
     })
   })
 
+  describe('fixPunctuations', () => {
+    it('should replace ASCII punctuations with Persian punctuations', () => {
+      const input = 'من آمده‌ام، با خودم کتاب‌هایی آورده‌ام؛ من می‌خوانم.'
+      const expected =
+        'من آمده\u200cام، با خودم کتاب\u200cهایی آورده\u200cام؛ من می\u200cخوانم.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_punctuations: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
