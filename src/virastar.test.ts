@@ -22,7 +22,7 @@ const options = {
   // fix_misc_non_persian_chars: true,
   // fix_misc_spacing: true,
   // fix_numeral_symbols: true,
-  // fix_perfix_spacing: true,
+  // fix_prefix_spacing: true,
   // fix_persian_glyphs: false,
   // fix_punctuations: true,
   // fix_question_mark: true,
@@ -69,7 +69,7 @@ const optionsDisabled = {
   fix_misc_non_persian_chars: false,
   fix_misc_spacing: false,
   fix_numeral_symbols: false,
-  fix_perfix_spacing: false,
+  fix_prefix_spacing: false,
   fix_persian_glyphs: false,
   fix_punctuations: false,
   fix_question_mark: false,
@@ -1466,6 +1466,44 @@ describe('Virastar', () => {
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_numeral_symbols: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
+
+  describe('fixPrefixSpacing', () => {
+    it('should put zwnj between the word and the mi* prefix', () => {
+      const input = 'من می روم'
+      const expected = 'من می\u200cروم'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_prefix_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should put zwnj between the word and the nemi* prefix', () => {
+      const input = 'من نمی روم'
+      const expected = 'من نمی\u200cروم'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_prefix_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should put zwnj between the word and the bi* prefix', () => {
+      const input = 'من بی خیال شدم'
+      const expected = 'من بی‌خیال شدم'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_prefix_spacing: true,
       })
 
       expect(result).toBe(expected)
