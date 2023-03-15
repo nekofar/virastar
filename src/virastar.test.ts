@@ -896,4 +896,31 @@ describe('Virastar', () => {
       expect(result).toBe(expected);
     });
   });
+
+  describe('cleanupSpacing', () => {
+    it('should replace more than one space with just a single one', () => {
+      const input = 'تست    تست. تست  تست\n'
+      const expected = 'تست تست. تست تست\n'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should clean tab/space/zwnj/zwj/nbsp between two new-lines', () => {
+      const input = 'تست\n \t \u200c \nتست'
+      const expected = 'تست\n\nتست'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+  })
 })
