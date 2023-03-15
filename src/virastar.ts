@@ -990,19 +990,19 @@ export class Virastar {
    */
   private cleanupExtraMarks(text: string) {
     // remove space between different/same marks
-    text = text.replace(/([؟?!])([ ]+)(?=[؟?!])/g, '$1');
+    text = text.replace(/([؟?!])([ ]+)(?=[؟?!])/g, '$1')
 
     // replace more than one exclamation mark with just one
-    text = text.replace(/(!){2,}/g, '$1');
+    text = text.replace(/(!){2,}/g, '$1')
 
     // replace more than one english or persian question mark with just one
-    text = text.replace(/([\u061F?]){2,}/g, '$1');
+    text = text.replace(/([\u061F?]){2,}/g, '$1')
 
     // re-order consecutive marks
-    text = text.replace(/(!)([ \t]*)([\u061F?])/g, '$3$1');
+    text = text.replace(/(!)([ \t]*)([\u061F?])/g, '$3$1')
 
     // `?!` --> `!?`
-    return text;
+    return text
   }
 
   // replaces kashidas to ndash in parenthetic
@@ -1010,7 +1010,13 @@ export class Virastar {
     return text.replace(/(\s)\u0640+/g, '$1–').replace(/\u0640+(\s)/g, '–$1')
   }
 
-  cleanupKashidas(text: string) {
+  /**
+   * Replaces kashidas between numbers with ndash, and removes all kashidas between non-whitespace characters
+   *
+   * @param {string} text - The text to clean up
+   * @returns {string} The cleaned up text
+   */
+  private cleanupKashidas(text: string) {
     return (
       text
         // converts kashida between numbers to ndash
