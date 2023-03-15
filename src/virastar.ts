@@ -709,16 +709,19 @@ export class Virastar {
     )
   }
 
-  private fixThreeDots(text: string) {
-    return (
-      text
+  /**
+   * Fixes the punctuation spacing for three dots in Persian text.
+   * Remove spaces between dots and replaces three dots with ellipsis character.
+   *
+   * @param text The input text to fix punctuation spacing.
+   * @returns The text with fixed punctuation spacing for three dots.
+   */
+  private fixThreeDots(text: string): string {
+    // Removes spaces between dots
+    text = text.replace(/\.([ ]+)(?=[.])/g, '.')
 
-        // removes spaces between dots
-        .replace(/\.([ ]+)(?=[.])/g, '.')
-
-        // replaces three dots with ellipsis character
-        .replace(/[ \t]*\.{3,}/g, '…')
-    )
+    // Replaces three dots with ellipsis character
+    return text.replace(/[ \t]*\.{3,}/g, '…')
   }
 
   normalizeEllipsis(text: string) {
