@@ -774,13 +774,13 @@ export class Virastar {
     )
   }
 
-  cleanupRLM(text: string) {
-    return (
-      text
-        // converts Right-to-left marks followed by persian characters to
-        // zero-width non-joiners (ZWNJ)
-        .replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c')
-    )
+  /**
+   * Replaces Right-to-Left marks followed by Persian characters with Zero-Width Non-Joiners (ZWNJ) in the given text.
+   * @param text The input string to process.
+   * @returns Returns the processed string.
+   */
+  private cleanupRLM(text: string): string {
+    return text.replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c');
   }
 
   // converts incorrect persian glyphs to standard characters
