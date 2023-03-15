@@ -903,8 +903,13 @@ export class Virastar {
     )
   }
 
-  fixPunctuations(text: string) {
-    return this.charReplace(text, ',;', '،؛')
+  /**
+   * Replaces ASCII punctuations with their Persian equivalent.
+   * @param {string} text The input text.
+   * @returns {string} The processed text.
+   */
+  private fixPunctuations(text: string): string {
+    return this.charReplace(text, ',;', '،؛');
   }
 
   // replaces question marks with its persian equivalent
