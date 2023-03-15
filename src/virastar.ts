@@ -1185,13 +1185,14 @@ export class Virastar {
     )
   }
 
-  cleanupLineBreaks(text: string) {
-    return (
-      text
-
-        // cleans more than two contiguous line-breaks
-        .replace(/\n{2,}/g, '\n\n')
-    )
+  /**
+   * Cleans up line breaks in a Persian text.
+   * @param {string} text - The Persian text to clean up.
+   * @returns {string} - The cleaned text.
+   */
+  private cleanupLineBreaks(text: string): string {
+    // Cleans more than two contiguous line-breaks.
+    return text.replace(/\n{2,}/g, '\n\n');
   }
 
   /**
