@@ -1047,4 +1047,30 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixArabicNumbers', () => {
+    it('should replace Arabic numbers with Persian numbers', () => {
+      const input = '۱۲۳٤٥٦۷۸۹٠'
+      const expected = '۱۲۳۴۵۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_arabic_numbers: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should not replace anything if there are no Arabic numbers', () => {
+      const input = '۱۲۳۴۵۶۷۸۹۰'
+      const expected = '۱۲۳۴۵۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_arabic_numbers: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
