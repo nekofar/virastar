@@ -1850,4 +1850,18 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('kashidasAsParenthetic', () => {
+    it('should replace kashidas with ndash for parenthetic spacing', () => {
+      const input = 'تستــــــ'
+      const expected = 'تست–'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        kashidas_as_parenthetic: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
