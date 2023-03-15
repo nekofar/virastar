@@ -1109,4 +1109,42 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixDiacritics', () => {
+    it.skip('should fix diacritics and remove spaces before them', () => {
+      const input = 'کتَابِت، اینجا خونه است'
+      const expected = 'کتابت، اینجا خونه است'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_diacritics: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should fix diacritics and remove zwnj before them', () => {
+      const input = 'ما هم‌زَمان بودیم'
+      const expected = 'ما همزمان بودیم'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_diacritics: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should fix diacritics and remove multiple diacritics', () => {
+      const input = 'کتابتِِِ ِ ِ ِ َ    ؟؟؟؟؟'
+      const expected = 'کتابتِ َ    ؟؟؟؟؟'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_diacritics: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
