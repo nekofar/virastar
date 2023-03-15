@@ -1864,4 +1864,55 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('markdownNormalizeBraces', () => {
+    it('should remove spaces between ! and opening brace on markdown images', () => {
+      const input = '! [alt] (src)';
+      const expected = '![alt](src)';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_braces: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove spaces between [] and ()', () => {
+      const input = '[text] (link)';
+      const expected = '[text](link)';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_braces: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove spaces inside double () [] {}', () => {
+      const input = '[[ text ]]';
+      const expected = '[[text]]';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_braces: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove spaces between double () [] {}', () => {
+      const input = '[[text] ]';
+      const expected = '[[text]]';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        markdown_normalize_braces: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
+
 })
