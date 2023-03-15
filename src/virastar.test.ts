@@ -748,8 +748,10 @@ title: My Awesome Title
     })
 
     it('should preserve all HTML tags when preserve_HTML option is enabled', () => {
-      const input = '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
-      const expected = '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
+      const input =
+        '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
+      const expected =
+        '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -760,8 +762,10 @@ title: My Awesome Title
     })
 
     it('should preserve all no-break space entities when `preserve_nbsps` is true', () => {
-      const input = 'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
-      const expected = 'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
+      const input =
+        'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
+      const expected =
+        'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -785,8 +789,10 @@ title: My Awesome Title
     })
 
     it('should preserve Markdown links in text', () => {
-      const input = 'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
-      const expected = 'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
+      const input =
+        'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
+      const expected =
+        'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -2168,6 +2174,44 @@ title: My Awesome Title
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         normalize_eol: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
+
+  describe('removeDiacritics', () => {
+    it('should remove all diacritic characters from the input text', () => {
+      const input = 'دَرخِتِ قَدِيمي زَيرآب'
+      const expected = 'درخت قديمي زيرآب'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        remove_diacritics: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should not change the text if there are no diacritic characters', () => {
+      const input = 'شيوه نگارش فارسی را بهبود بخشيد'
+      const expected = 'شيوه نگارش فارسی را بهبود بخشيد'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        remove_diacritics: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove diacritic characters in combination with other characters', () => {
+      const input = 'چِند ضَربِه از مَي خورِد؟'
+      const expected = 'چند ضربه از مي خورد؟'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        remove_diacritics: true,
       })
 
       expect(result).toBe(expected)
