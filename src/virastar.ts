@@ -1068,7 +1068,12 @@ export class Virastar {
     )
   }
 
-  private fixPunctuationSpacing(text: string) {
+  /**
+   * Removes unnecessary spaces around punctuations and corrects the punctuation marks in Persian text.
+   * @param text The text to be processed.
+   * @returns The processed text with proper punctuation marks.
+   */
+  private fixPunctuationSpacing(text: string): string {
     return (
       text
         // removes space before punctuations
