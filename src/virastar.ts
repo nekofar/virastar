@@ -793,7 +793,7 @@ export class Virastar {
    * @returns Text with Hamzeh ة replaced with ه‌ی
    */
   private fixHamzehArabicAlt(text: string): string {
-    return text.replace(/(\S)ة([\s\u200c\u200e])/g, '$1ه‌ی$2');
+    return text.replace(/(\S)ة([\s\u200c\u200e])/g, '$1ه‌ی$2')
   }
 
   /**
@@ -811,17 +811,13 @@ export class Virastar {
   }
 
   // props @ebraminio/persiantools
-  fixMiscNonPersianChars(text: string) {
+  /**
+   * Replaces misc. non-Persian characters with their Persian equivalent.
+   * @param text The text to fix.
+   * @returns The fixed text.
+   */
+  private fixMiscNonPersianChars(text: string): string {
     return this.charReplace(text, 'كڪيىۍېہە', 'ککییییههه')
-    // return text
-    //   .replace(/ك/g, 'ک') // arabic kaf
-    //   .replace(/ڪ/g, 'ک') // arabic letter swash kaf
-    //   .replace(/ي/g, 'ی') // arabic
-    //   .replace(/ى/g, 'ی') // urdu
-    //   .replace(/ۍ/g, 'ی') // pushtu
-    //   .replace(/ې/g, 'ی') // uyghur
-    //   .replace(/ہ/g, 'ه') // converts &#x06C1; to &#x0647; ہہہہ to ههه
-    //   .replace(/[ەھ]/g, 'ه'); // kurdish
   }
 
   /**
