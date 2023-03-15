@@ -1407,4 +1407,42 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixMiscSpacing', () => {
+    it('should remove space before parentheses when given misc cases', () => {
+      const input = 'مثال (ص) جمله (س) کلمه (ع)';
+      const expected = 'مثال(ص) جمله(س) کلمه(ع)';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_misc_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    });
+
+    it('should remove space before braces containing numbers', () => {
+      const input = 'اعداد [۱۲۳۴۵۶۷۸۹۰]';
+      const expected = 'اعداد[۱۲۳۴۵۶۷۸۹۰]';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_misc_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    });
+
+    it('should not change the text if there are no misc cases', () => {
+      const input = 'این یک متن است';
+      const expected = 'این یک متن است';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_misc_spacing: true,
+      })
+
+      expect(result).toBe(expected)
+    });
+  });
 })
