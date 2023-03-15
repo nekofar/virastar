@@ -912,9 +912,13 @@ export class Virastar {
     return this.charReplace(text, ',;', '،؛');
   }
 
-  // replaces question marks with its persian equivalent
-  fixQuestionMark(text: string) {
-    return text.replace(/(\?)/g, '\u061F') // \u061F = ؟
+  /**
+   * Replaces question marks with its Persian equivalent
+   * @param text - The text to fix
+   * @returns The text with fixed question marks
+   */
+  private fixQuestionMark(text: string): string {
+    return text.replace(/(\?)/g, '\u061F'); // \u061F = ؟
   }
 
   /**
