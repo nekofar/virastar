@@ -7,6 +7,7 @@
     "build": "tsc",
     "clean": "rimraf -rf ./dist",
     "postclean": "npm test",
+    "pretest": "npm run lint",
     "test": "jest",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.ts\"",
