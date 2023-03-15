@@ -692,17 +692,22 @@ export class Virastar {
     )
   }
 
-  fixDashes(text: string) {
+  /**
+   * Replaces triple and double dashes with mdash and ndash respectively.
+   * @param text The text to fix.
+   * @returns The fixed text.
+   */
+  private fixDashes(text: string): string {
     return (
       text
+        // Replaces triple dash to mdash
+        .replace(/-{3}/g, '\u2014')
 
-        // replaces triple dash to mdash
-        .replace(/-{3}/g, '—')
-
-        // replaces double dash to ndash
-        .replace(/-{2}/g, '–')
-    )
+        // Replaces double dash to ndash
+        .replace(/-{2}/g, '\u2013')
+    );
   }
+
 
   fixThreeDots(text: string) {
     return (
