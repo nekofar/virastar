@@ -720,4 +720,54 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('cleanupExtraMarks', () => {
+    it('should remove extra marks from the text', () => {
+      const input = 'سلام؟؟؟! چطورید؟؟!'
+      const expected = 'سلام؟! چطورید؟!'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_extra_marks: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should replace multiple exclamation marks with a single one', () => {
+      const input = 'وای! خدایا!!'
+      const expected = 'وای! خدایا!'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_extra_marks: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should replace multiple question marks with a single one', () => {
+      const input = '؟؟؟چرا'
+      const expected = '؟چرا'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_extra_marks: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should reorder consecutive marks', () => {
+      const input = 'چطوری!؟'
+      const expected = 'چطوری؟!'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_extra_marks: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
