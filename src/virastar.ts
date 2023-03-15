@@ -303,7 +303,7 @@ export class Virastar {
     // Preserves strings inside curly braces (`{}`)
     const braces: string[] = []
     if (opts.preserve_braces) {
-      text = text.replace(/(\{.*?\})/g, function (matched) {
+      text = text.replace(/(\{.*?})/g, function (matched) {
         braces.push(matched)
         return ' __BRACES__PRESERVER__ '
       })

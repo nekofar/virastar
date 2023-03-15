@@ -670,6 +670,16 @@ describe('Virastar', () => {
 
       expect(result).toBe(expected)
     })
+
+    it('should preserve strings inside curly braces when preserve_braces is true', () => {
+      const input = '{سلام}، این {جمله} یک {تست} است.'
+      const expected = '{سلام}، این {جمله} یک {تست} است.'
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_braces: true,
+      })
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
