@@ -1248,4 +1248,42 @@ describe('Virastar', () => {
     })
   })
 
+  describe('fixEnglishQuotes', () => {
+    it('should replace double quotes with Persian quotes', () => {
+      const input = '"با چشم‌هایی متعجب به یکدیگر نگاه کردند"';
+      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should replace single quotes with Persian quotes', () => {
+      const input = `'با چشم‌هایی متعجب به یکدیگر نگاه کردند'`;
+      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should replace backticks with Persian quotes', () => {
+      const input = `\`با چشم‌هایی متعجب به یکدیگر نگاه کردند\``;
+      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+  });
 })
