@@ -1147,4 +1147,43 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixEnglishNumbers', () => {
+    it('should replace English numbers with their Persian equivalent', () => {
+      const input = '123۴۵6';
+      const expected = '۱۲۳۴۵۶';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_numbers: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace already Persian numbers', () => {
+      const input = '۱۲۳۴۵۶';
+      const expected = '۱۲۳۴۵۶';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_numbers: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should handle empty string', () => {
+      const input = '';
+      const expected = '';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_numbers: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
+
 })
