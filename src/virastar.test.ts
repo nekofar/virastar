@@ -770,4 +770,30 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('cleanupKashidas', () => {
+    it('should replace kashidas between numbers with ndash', () => {
+      const input = '۱۲۳۴۵۶۷۸۹۰ــــــ۱۲۳۴۵۶۷۸۹۰';
+      const expected = '۱۲۳۴۵۶۷۸۹۰–۱۲۳۴۵۶۷۸۹۰';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_kashidas: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove all kashidas between non-whitespace characters', () => {
+      const input = 'تـحـت مـجـازیـت هـوا';
+      const expected = 'تحت مجازیت هوا';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_kashidas: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
 })
