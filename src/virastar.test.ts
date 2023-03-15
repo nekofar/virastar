@@ -847,4 +847,53 @@ describe('Virastar', () => {
     });
   })
 
+  describe('cleanupRLM', () => {
+    it('should replace RLM followed by persian character with ZWNJ', () => {
+      const input = 'این\u200Fیک متن فارسی است.';
+      const expected = 'این\u200cیک متن فارسی است.';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_rlm: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace RLM before latin character with ZWNJ', () => {
+      const input = 'This\u200Fis a persian text.';
+      const expected = 'This\u200Fis a persian text.';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_rlm: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace RLM before dash with ZWNJ', () => {
+      const input = 'یک متن فارسی -\u200F مثال';
+      const expected = 'یک متن فارسی -\u200F مثال';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_rlm: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should replace multiple RLM with ZWNJ', () => {
+      const input = 'این\u200Fیک\u200Fمتن فارسی است.';
+      const expected = 'این\u200cیک\u200cمتن فارسی است.';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_rlm: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
 })
