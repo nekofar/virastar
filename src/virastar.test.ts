@@ -1150,41 +1150,41 @@ describe('Virastar', () => {
 
   describe('fixEnglishNumbers', () => {
     it('should replace English numbers with their Persian equivalent', () => {
-      const input = '123۴۵6';
-      const expected = '۱۲۳۴۵۶';
+      const input = '123۴۵6'
+      const expected = '۱۲۳۴۵۶'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_numbers: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace already Persian numbers', () => {
-      const input = '۱۲۳۴۵۶';
-      const expected = '۱۲۳۴۵۶';
+      const input = '۱۲۳۴۵۶'
+      const expected = '۱۲۳۴۵۶'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_numbers: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should handle empty string', () => {
-      const input = '';
-      const expected = '';
+      const input = ''
+      const expected = ''
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_numbers: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
   describe('fixEnglishQuotesPairs', () => {
     it('should replace English quote pairs with their Persian equivalent', () => {
@@ -1196,7 +1196,7 @@ describe('Virastar', () => {
         fix_english_quotes_pairs: true,
       })
 
-      expect(result).toBe(expected);
+      expect(result).toBe(expected)
     })
 
     it('should replace all occurrences of English quote pairs with their Persian equivalent', () => {
@@ -1208,19 +1208,19 @@ describe('Virastar', () => {
         fix_english_quotes_pairs: true,
       })
 
-      expect(result).toBe(expected);
+      expect(result).toBe(expected)
     })
 
     it('should not replace single quotes or apostrophes', () => {
-      const input = 'Don\'t forget to say “Hello, World!”'
-      const expected = 'Don\'t forget to say «Hello, World!»'
+      const input = "Don't forget to say “Hello, World!”"
+      const expected = "Don't forget to say «Hello, World!»"
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_quotes_pairs: true,
       })
 
-      expect(result).toBe(expected);
+      expect(result).toBe(expected)
     })
 
     it.skip('should not replace quotes inside HTML tags', () => {
@@ -1232,7 +1232,7 @@ describe('Virastar', () => {
         fix_english_quotes_pairs: true,
       })
 
-      expect(result).toBe(expected);
+      expect(result).toBe(expected)
     })
 
     it.skip('should not replace quotes inside code blocks', () => {
@@ -1244,46 +1244,153 @@ describe('Virastar', () => {
         fix_english_quotes_pairs: true,
       })
 
-      expect(result).toBe(expected);
+      expect(result).toBe(expected)
     })
   })
 
   describe('fixEnglishQuotes', () => {
     it('should replace double quotes with Persian quotes', () => {
-      const input = '"با چشم‌هایی متعجب به یکدیگر نگاه کردند"';
-      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»';
+      const input = '"با چشم‌هایی متعجب به یکدیگر نگاه کردند"'
+      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_quotes: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should replace single quotes with Persian quotes', () => {
-      const input = `'با چشم‌هایی متعجب به یکدیگر نگاه کردند'`;
-      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»';
+      const input = `'با چشم‌هایی متعجب به یکدیگر نگاه کردند'`
+      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_quotes: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should replace backticks with Persian quotes', () => {
-      const input = `\`با چشم‌هایی متعجب به یکدیگر نگاه کردند\``;
-      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»';
+      const input = `\`با چشم‌هایی متعجب به یکدیگر نگاه کردند\``
+      const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_english_quotes: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
+  })
 
-  });
+  describe('fixHamzehArabic', () => {
+    it.skip('should replace arabic hamzeh with هٔ', () => {
+      const input = 'تست ة تست' // 'test ة test'
+      const expected = 'تست هٔ تست' // 'test هٔ test'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: false,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should not replace hamzeh when it is not followed by space, zwnj or tab', () => {
+      const input = 'تستة تست' // 'testة test'
+      const expected = 'تستة تست' // 'testة test'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should not replace hamzeh when it is at the end of the word', () => {
+      const input = 'تستة' // 'testة'
+      const expected = 'تستة' // 'testة'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should not replace hamzeh when it is at the beginning of the word', () => {
+      const input = 'ةتست' // 'ةtest'
+      const expected = 'ةتست' // 'ةtest'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
+
+  describe('fixHamzehArabicAlt', () => {
+    it.skip('should replace Arabic Hamzeh ة with ه‌ی in the text', () => {
+      const input = 'ماشینة ورزشة'
+      const expectedOutput = 'ماشینه‌ی ورزشه‌ی'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expectedOutput)
+    })
+
+    it.skip('should not replace Hamzeh ة at the end of the word', () => {
+      const input = 'دندانپزشكة'
+      const expectedOutput = 'دندانپزشكه‌ی'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expectedOutput)
+    })
+
+    it.skip('should not replace Hamzeh ة with no space before it', () => {
+      const input = 'بانكة'
+      const expectedOutput = 'بانكه‌ی'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expectedOutput)
+    })
+
+    it.skip('should not replace Hamzeh ة with no space after it', () => {
+      const input = 'مدرسة'
+      const expectedOutput = 'مدرسه‌ی'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_hamzeh: true,
+        fix_hamzeh_arabic: true,
+      })
+
+      expect(result).toBe(expectedOutput)
+    })
+  })
 })
