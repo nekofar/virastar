@@ -1550,4 +1550,30 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixQuestionMark', () => {
+    it('should replace all question marks with Persian equivalent', () => {
+      const input = 'چرا سوالی نیست? من همیشه پر از سوالاتم?';
+      const expected = 'چرا سوالی نیست؟ من همیشه پر از سوالاتم؟';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_question_mark: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should return the same text if there is no question mark in it', () => {
+      const input = 'این جمله سوالی نیست.';
+      const expected = 'این جمله سوالی نیست.';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_question_mark: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
 })
