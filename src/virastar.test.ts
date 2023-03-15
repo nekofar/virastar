@@ -1410,8 +1410,8 @@ describe('Virastar', () => {
 
   describe('fixMiscSpacing', () => {
     it('should remove space before parentheses when given misc cases', () => {
-      const input = 'مثال (ص) جمله (س) کلمه (ع)';
-      const expected = 'مثال(ص) جمله(س) کلمه(ع)';
+      const input = 'مثال (ص) جمله (س) کلمه (ع)'
+      const expected = 'مثال(ص) جمله(س) کلمه(ع)'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -1419,11 +1419,11 @@ describe('Virastar', () => {
       })
 
       expect(result).toBe(expected)
-    });
+    })
 
     it('should remove space before braces containing numbers', () => {
-      const input = 'اعداد [۱۲۳۴۵۶۷۸۹۰]';
-      const expected = 'اعداد[۱۲۳۴۵۶۷۸۹۰]';
+      const input = 'اعداد [۱۲۳۴۵۶۷۸۹۰]'
+      const expected = 'اعداد[۱۲۳۴۵۶۷۸۹۰]'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -1431,11 +1431,11 @@ describe('Virastar', () => {
       })
 
       expect(result).toBe(expected)
-    });
+    })
 
     it('should not change the text if there are no misc cases', () => {
-      const input = 'این یک متن است';
-      const expected = 'این یک متن است';
+      const input = 'این یک متن است'
+      const expected = 'این یک متن است'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -1443,6 +1443,32 @@ describe('Virastar', () => {
       })
 
       expect(result).toBe(expected)
-    });
-  });
+    })
+  })
+
+  describe('fixNumeralSymbols', () => {
+    test('should replace english numerals with their persian equivalent characters', () => {
+      const input = '۱,۰۰۰٫۵۰%'
+      const expected = '۱٬۰۰۰٫۵۰٪'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_numeral_symbols: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    test('should replace multiple occurrences of english numerals with their persian equivalent characters', () => {
+      const input = '۱۲۳,۴۵۶.۷۸% ۹۰۰.۱۲'
+      const expected = '۱۲۳٬۴۵۶٫۷۸٪ ۹۰۰٫۱۲'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_numeral_symbols: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
