@@ -805,7 +805,13 @@ export class Virastar {
     return text.replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c')
   }
 
-  // converts incorrect persian glyphs to standard characters
+  /**
+   * Replaces each occurrence of characters in a string with their corresponding
+   * standardized glyphs from a given array.
+   * @param text The input string to be processed.
+   * @param array An object that maps characters to their standardized glyphs.
+   * @returns A string with all incorrect glyphs replaced by their corresponding standard characters.
+   */
   private fixPersianGlyphs(text: string) {
     return this.arrReplace(text, this.glyphs)
   }
