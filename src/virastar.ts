@@ -909,7 +909,7 @@ export class Virastar {
    * @returns {string} The processed text.
    */
   private fixPunctuations(text: string): string {
-    return this.charReplace(text, ',;', '،؛');
+    return this.charReplace(text, ',;', '،؛')
   }
 
   /**
@@ -918,7 +918,7 @@ export class Virastar {
    * @returns The text with fixed question marks
    */
   private fixQuestionMark(text: string): string {
-    return text.replace(/(\?)/g, '\u061F'); // \u061F = ؟
+    return text.replace(/(\?)/g, '\u061F') // \u061F = ؟
   }
 
   /**
@@ -1115,19 +1115,24 @@ export class Virastar {
     )
   }
 
-  fixBracesSpacingInside(text: string) {
+  /**
+   * Replaces spaces inside various types of braces with no spaces.
+   * @param text The input string to fix.
+   * @returns The fixed string with no spaces inside the braces.
+   */
+  private fixBracesSpacingInside(text: string): string {
     const replacement = '$1$2$3'
+
     return (
       text
-        // removes inside spaces for `()`, `[]`, `{}`, `“”` and `«»`
+        // Remove inside spaces for `()`, `[]`, `{}`, `“”`, and `«»`.
         .replace(/(\()\s*([^)]+?)\s*?(\))/g, replacement)
         .replace(/(\[)\s*([^\]]+?)\s*?(])/g, replacement)
         .replace(/(\{)\s*([^}]+?)\s*?(})/g, replacement)
         .replace(/(“)\s*([^”]+?)\s*?(”)/g, replacement)
         .replace(/(«)\s*([^»]+?)\s*?(»)/g, replacement)
 
-        // NOTE: must be here, wierd not working if on `markdownNormalizeBraces()`
-        // removes markdown link spaces inside normal ()
+        // Remove Markdown link spaces inside normal ().
         .replace(/(\(\[.*?]\(.*?\))\s+(\))/g, '$1$2')
     )
   }
