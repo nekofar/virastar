@@ -758,6 +758,19 @@ title: My Awesome Title
 
       expect(result).toBe(expected)
     })
+
+    it('should preserve all no-break space entities when `preserve_nbsps` is true', () => {
+      const input = 'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
+      const expected = 'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_nbsps: true,
+        decode_htmlentities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
