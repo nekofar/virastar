@@ -1186,4 +1186,66 @@ describe('Virastar', () => {
     });
   });
 
+  describe('fixEnglishQuotesPairs', () => {
+    it('should replace English quote pairs with their Persian equivalent', () => {
+      const input = '“Hello, World!”'
+      const expected = '«Hello, World!»'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes_pairs: true,
+      })
+
+      expect(result).toBe(expected);
+    })
+
+    it('should replace all occurrences of English quote pairs with their Persian equivalent', () => {
+      const input = '“Hello, World!” “Welcome to the party.”'
+      const expected = '«Hello, World!» «Welcome to the party.»'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes_pairs: true,
+      })
+
+      expect(result).toBe(expected);
+    })
+
+    it('should not replace single quotes or apostrophes', () => {
+      const input = 'Don\'t forget to say “Hello, World!”'
+      const expected = 'Don\'t forget to say «Hello, World!»'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes_pairs: true,
+      })
+
+      expect(result).toBe(expected);
+    })
+
+    it.skip('should not replace quotes inside HTML tags', () => {
+      const input = '<p>“Hello, World!”</p>'
+      const expected = '<p>“Hello, World!”</p>'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes_pairs: true,
+      })
+
+      expect(result).toBe(expected);
+    })
+
+    it.skip('should not replace quotes inside code blocks', () => {
+      const input = '```“Hello, World!”```'
+      const expected = '```“Hello, World!”```'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_english_quotes_pairs: true,
+      })
+
+      expect(result).toBe(expected);
+    })
+  })
+
 })
