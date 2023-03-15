@@ -92,14 +92,18 @@ export class Virastar {
    * @param toBatch - The batch of replacement characters.
    * @returns The text with replaced characters.
    */
-  private charReplace(text: string, fromBatch: string, toBatch: string): string {
-    const fromChars = fromBatch.split('');
-    const toChars = toBatch.split('');
+  private charReplace(
+    text: string,
+    fromBatch: string,
+    toBatch: string,
+  ): string {
+    const fromChars = fromBatch.split('')
+    const toChars = toBatch.split('')
     for (let i = 0; i < fromChars.length; i++) {
-      const re = new RegExp(fromChars[i], 'g');
-      text = text.replace(re, toChars[i]);
+      const re = new RegExp(fromChars[i], 'g')
+      text = text.replace(re, toChars[i])
     }
-    return text;
+    return text
   }
 
   /**
@@ -186,7 +190,7 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  private digits = '۱۲۳۴۵۶۷۸۹۰'
+  private persianDigits = '۱۲۳۴۵۶۷۸۹۰'
 
   /* eslint-disable */
   private entities: { [key: string]: string } = {
@@ -212,7 +216,7 @@ export class Virastar {
 
   // props @ebraminio/persiantools
   // noinspection JSNonASCIINames,NonAsciiCharacters
-  private glyphs = {
+  private persianGlyphs = {
     // these two are for visually available ZWNJ #visualZwnj
     '\u200cه': 'ﻫ',
     'ی\u200c': 'ﻰﻲ',
@@ -838,7 +842,7 @@ export class Virastar {
    * @returns A string with all incorrect glyphs replaced by their corresponding standard characters.
    */
   private fixPersianGlyphs(text: string) {
-    return this.arrReplace(text, this.glyphs)
+    return this.arrReplace(text, this.persianGlyphs)
   }
 
   // props @ebraminio/persiantools
@@ -857,7 +861,7 @@ export class Virastar {
    * @returns The processed text with Persian numbers.
    */
   private fixEnglishNumbers(text: string): string {
-    return this.charReplace(text, '1234567890', this.digits)
+    return this.charReplace(text, '1234567890', this.persianDigits)
   }
 
   /**
