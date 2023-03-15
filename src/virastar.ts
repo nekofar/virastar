@@ -1248,13 +1248,14 @@ export class Virastar {
     )
   }
 
-  private removeDiacritics(text: string) {
-    return (
-      text
-
-        // removes all diacritic characters
-        .replace(this.newRegExp('[' + this.charsDiacritic + ']+'), '')
-    )
+  /**
+   * Removes all diacritic characters from the input text.
+   *
+   * @param text The text to remove diacritics from.
+   * @returns The input text with all diacritic characters removed.
+   */
+  private removeDiacritics(text: string): string {
+    return text.replace(new RegExp(`[${this.charsDiacritic}]+`, 'g'), '')
   }
 
   /**
