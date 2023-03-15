@@ -855,10 +855,14 @@ export class Virastar {
     })
   }
 
-  fixNumeralSymbols(text: string) {
+  /**
+   * Replaces English numerals with their Persian equivalent characters
+   * @param text The text that needs to be fixed
+   * @returns The text with fixed numerals
+   */
+  private fixNumeralSymbols(text: string): string {
     return (
       text
-
         // replaces english percent signs (U+066A)
         // props @ebraminio/persiantools
         .replace(/([۰-۹]) ?%/g, '$1٪')
@@ -1160,7 +1164,7 @@ export class Virastar {
 
         // removes space before braces containing numbers
         .replace(/ \[([0-9۰-۹]+)]/g, '[$1]')
-    );
+    )
   }
 
   /**
