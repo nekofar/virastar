@@ -49,6 +49,53 @@ const options = {
   // skip_markdown_ordered_lists_numbers_conversion: true,
 }
 
+const optionsDisabled = {
+  cleanup_begin_and_end: false,
+  cleanup_extra_marks: false,
+  cleanup_kashidas: false,
+  cleanup_line_breaks: false,
+  cleanup_rlm: false,
+  cleanup_spacing: false,
+  cleanup_zwnj: false,
+  decode_htmlentities: false,
+  fix_arabic_numbers: false,
+  fix_dashes: false,
+  fix_diacritics: false,
+  fix_english_numbers: false,
+  fix_english_quotes_pairs: false,
+  fix_english_quotes: false,
+  fix_hamzeh: false,
+  fix_hamzeh_arabic: false,
+  fix_misc_non_persian_chars: false,
+  fix_misc_spacing: false,
+  fix_numeral_symbols: false,
+  fix_perfix_spacing: false,
+  fix_persian_glyphs: false,
+  fix_punctuations: false,
+  fix_question_mark: false,
+  fix_spacing_for_braces_and_quotes: false,
+  fix_spacing_for_punctuations: false,
+  fix_suffix_misc: false,
+  fix_suffix_spacing: false,
+  fix_three_dots: false,
+  kashidas_as_parenthetic: false,
+  markdown_normalize_braces: false,
+  markdown_normalize_lists: false,
+  normalize_dates: false,
+  normalize_ellipsis: false,
+  normalize_eol: false,
+  preserve_braces: false,
+  preserve_brackets: false,
+  preserve_comments: false,
+  preserve_entities: false,
+  preserve_frontmatter: false,
+  preserve_HTML: false,
+  preserve_nbsps: false,
+  preserve_URIs: false,
+  remove_diacritics: false,
+  skip_markdown_ordered_lists_numbers_conversion: false,
+}
+
 describe('Virastar', () => {
   let virastar: Virastar
 
@@ -417,7 +464,6 @@ describe('Virastar', () => {
       expect(virastar.cleanup('سلامـــت')).toEqual('سلامت')
       expect(virastar.cleanup('لــعل سـلـسـبیــل')).toEqual('لعل سلسبیل')
     })
-
   })
 
   describe('#cleanup(): Equals', () => {
@@ -610,6 +656,68 @@ describe('Virastar', () => {
       ).toEqual(
         'اذا عمت البلدان الفتن فعلیکم بقم وحوالیها ونواحیها فان البلاء مدفوع عنها',
       )
+    })
+  })
+
+  describe('cleanupBeginAndEnd', () => {
+    it('should remove leading and trailing whitespace and newlines', () => {
+      const input = '  \n\t۱۲۳۴۵۶۷۸۹۰  \n\t'
+      const expected = '۱۲۳۴۵۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_begin_and_end: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should only remove leading whitespace and newlines when inside the text', () => {
+      const input = '  \n\t۱۲۳  ۴۵ ۶۷۸۹۰  \n\t'
+      const expected = '۱۲۳  ۴۵ ۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_begin_and_end: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove all kinds of directionality marks', () => {
+      const input = '\u200f۱۲۳۴۵۶۷۸۹۰\u200f'
+      const expected = '۱۲۳۴۵۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_begin_and_end: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove zwnj', () => {
+      const input = '‌۱۲۳۴۵۶۷۸۹۰‌'
+      const expected = '۱۲۳۴۵۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_begin_and_end: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove nbsp', () => {
+      const input = '۱۲۳۴۵۶۷۸۹۰ '
+      const expected = '۱۲۳۴۵۶۷۸۹۰'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_begin_and_end: true,
+      })
+
+      expect(result).toBe(expected)
     })
   })
 })
