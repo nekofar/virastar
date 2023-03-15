@@ -1073,4 +1073,19 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixDashes', () => {
+    it('should replace triple dashes with mdash and double dashes with ndash', () => {
+      const input = 'این یک متن است که --- و -- های زیادی دارد.';
+      const expected = 'این یک متن است که — و – های زیادی دارد.';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_dashes: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
+
 })
