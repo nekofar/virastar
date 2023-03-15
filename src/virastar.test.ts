@@ -1712,4 +1712,55 @@ describe('Virastar', () => {
       expect(result).toBe(expected);
     });
   });
+
+  describe('fixSuffixMisc', () => {
+    it('should replace ه followed by ئ or ی, and then by ی, with ه\u200cای', () => {
+      const input = 'خانه‌ئی';
+      const expected = 'خانه‌ای';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_misc: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace when there is no ئ or ی after ه', () => {
+      const input = 'همچنان';
+      const expected = 'همچنان';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_misc: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace when there is no ه before ئ or ی', () => {
+      const input = 'خانه‌ایی';
+      const expected = 'خانه‌ایی';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_misc: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace when ه followed by ئ or ی is not followed by ی', () => {
+      const input = 'به زودی';
+      const expected = 'به زودی';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_misc: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
+
 })
