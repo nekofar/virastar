@@ -46,7 +46,7 @@ interface VirastarOptions {
 }
 
 export class Virastar {
-  public opts: VirastarOptions = {}
+  private readonly opts: VirastarOptions = {}
 
   constructor(text?: string | object, options: object = {}) {
     if (!(this instanceof Virastar)) {
@@ -64,7 +64,7 @@ export class Virastar {
     return this
   }
 
-  parseOptions(options: Record<string, any> = {}) {
+  private parseOptions(options: Record<string, any> = {}) {
     const parsed: Record<string, any> = { ...this.defaults }
 
     for (const i in parsed) {
@@ -76,7 +76,7 @@ export class Virastar {
     return parsed
   }
 
-  charReplace(text: string, fromBatch: string, toBatch: string) {
+  private charReplace(text: string, fromBatch: string, toBatch: string) {
     const fromChars = fromBatch.split('')
     const toChars = toBatch.split('')
     for (let i in fromChars) {
@@ -111,18 +111,18 @@ export class Virastar {
     return new RegExp(pattern, flags || 'g')
   }
 
-  charsPersian = 'ءاآأإئؤبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیةيك'
+  private charsPersian = 'ءاآأإئؤبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیةيك'
 
   // @REF: https://en.wikipedia.org/wiki/Persian_alphabet#Diacritics
   // `\u064e\u0650\u064f\u064b\u064d\u064c\u0651\u06c0`
-  charsDiacritic = 'ًٌٍَُِّْ'
+  private charsDiacritic = 'ًٌٍَُِّْ'
 
   // @source: https://github.com/jhermsmeier/uri.regex
-  patternURI =
+  private patternURI =
     "([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?"
-  patternAfter = '\\s.,;،؛!؟?"\'()[\\]{}“”«»'
+  private patternAfter = '\\s.,;،؛!؟?"\'()[\\]{}“”«»'
 
-  defaults = {
+  private defaults = {
     cleanup_begin_and_end: true,
     cleanup_extra_marks: true,
     cleanup_kashidas: true,
@@ -169,7 +169,7 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  digits = '۱۲۳۴۵۶۷۸۹۰'
+  private digits = '۱۲۳۴۵۶۷۸۹۰'
 
   /* eslint-disable */
   private entities: { [key: string]: string } = {
@@ -195,7 +195,7 @@ export class Virastar {
 
   // props @ebraminio/persiantools
   // noinspection JSNonASCIINames,NonAsciiCharacters
-  glyphs = {
+  private glyphs = {
     // these two are for visually available ZWNJ #visualZwnj
     '\u200cه': 'ﻫ',
     'ی\u200c': 'ﻰﻲ',
@@ -253,7 +253,7 @@ export class Virastar {
    * @returns The cleaned up text.
    * @throws TypeError if the input text is not a string.
    */
-  cleanup(text: string, options?: VirastarOptions) {
+  public cleanup(text: string, options?: VirastarOptions) {
     // Don't bother if it's empty or whitespace
     if (!text.trim()) {
       return text
@@ -645,7 +645,7 @@ export class Virastar {
   }
 
   // late checks for zwnjs
-  cleanupZWNJLate(text: string) {
+  private cleanupZWNJLate(text: string) {
     return (
       text
 
@@ -684,7 +684,7 @@ export class Virastar {
     })
   }
 
-  normalizeEOL(text: string) {
+  private normalizeEOL(text: string) {
     return (
       text
 
@@ -709,7 +709,7 @@ export class Virastar {
     )
   }
 
-  fixThreeDots(text: string) {
+  private fixThreeDots(text: string) {
     return (
       text
 
@@ -883,7 +883,7 @@ export class Virastar {
     )
   }
 
-  normalizeDates(text: string) {
+  private normalizeDates(text: string) {
     return (
       text
 
@@ -936,7 +936,7 @@ export class Virastar {
 
   // puts zwnj between the word and the suffix
   // NOTE: possible bug: suffixes could be nouns
-  fixSuffixSpacing(text: string) {
+  private fixSuffixSpacing(text: string) {
     const replacement = '$1\u200c$2'
     return (
       text
@@ -996,7 +996,7 @@ export class Virastar {
     )
   }
 
-  fixSuffixSpacingHamzeh(text: string) {
+  private fixSuffixSpacingHamzeh(text: string) {
     const replacement = '$1\u0647\u200c\u06cc$3'
     return (
       text
@@ -1012,7 +1012,7 @@ export class Virastar {
     )
   }
 
-  fixSuffixMisc(text: string) {
+  private fixSuffixMisc(text: string) {
     return (
       text
         // replaces ه followed by ئ or ی, and then by ی, with ه\u200cای,
@@ -1046,7 +1046,7 @@ export class Virastar {
   }
 
   // replaces kashidas to ndash in parenthetic
-  kashidasAsParenthetic(text: string) {
+  private kashidasAsParenthetic(text: string) {
     return text.replace(/(\s)\u0640+/g, '$1–').replace(/\u0640+(\s)/g, '–$1')
   }
 
@@ -1068,7 +1068,7 @@ export class Virastar {
     )
   }
 
-  fixPunctuationSpacing(text: string) {
+  private fixPunctuationSpacing(text: string) {
     return (
       text
         // removes space before punctuations
@@ -1095,7 +1095,7 @@ export class Virastar {
     )
   }
 
-  fixBracesSpacing(text: string) {
+  private fixBracesSpacing(text: string) {
     const replacement = ' $1$2$3 '
     return (
       text
@@ -1137,7 +1137,7 @@ export class Virastar {
     )
   }
 
-  markdownNormalizeBraces(text: string) {
+  private markdownNormalizeBraces(text: string) {
     return (
       text
         // removes space between ! and opening brace on markdown images
@@ -1163,7 +1163,7 @@ export class Virastar {
     )
   }
 
-  markdownNormalizeLists(text: string) {
+  private markdownNormalizeLists(text: string) {
     return (
       text
         // removes extra line between two items list
@@ -1216,7 +1216,7 @@ export class Virastar {
     )
   }
 
-  removeDiacritics(text: string) {
+  private removeDiacritics(text: string) {
     return (
       text
 
@@ -1271,7 +1271,7 @@ export class Virastar {
     )
   }
 
-  flipPunctuations(text: string) {
+  private flipPunctuations(text: string) {
     const end = ['-']
     const start = ['!', '.', '،', '…', '"']
     const before = []
@@ -1309,7 +1309,7 @@ export class Virastar {
   }
 
   // swap incorrect quotes pairs `»«` to `«»` and `”“` to `“”`
-  swapQuotes(text: string) {
+  private swapQuotes(text: string) {
     return text.replace(/(»)(.+?)(«)/g, '«$2»').replace(/(”)(.+?)(“)/g, '“$2”')
   }
 }
