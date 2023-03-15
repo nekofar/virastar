@@ -1763,4 +1763,54 @@ describe('Virastar', () => {
     });
   });
 
+  describe('fixSuffixSpacingHamzeh', () => {
+    it('should add correct hamzeh spacing for heh+ye', () => {
+      const input = 'مدیریت های دوم';
+      const expected = 'مدیریت\u200cهای دوم';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_spacing: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should add correct hamzeh spacing for heh+standalone hamza', () => {
+      const input = 'راه هایی';
+      const expected = 'راه\u200cهایی';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_spacing: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should add correct hamzeh spacing for heh+hamza above', () => {
+      const input = 'تراش هایی';
+      const expected = 'تراش\u200cهایی';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_spacing: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not add hamzeh spacing if not applicable', () => {
+      const input = 'هوا';
+      const expected = 'هوا';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_suffix_spacing: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
+
 })
