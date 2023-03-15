@@ -744,9 +744,13 @@ export class Virastar {
     return text.replace(/“(.+?)”/g, '«$1»');
   }
 
-  // replaces english quote marks with their persian equivalent
-  fixEnglishQuotes(text: string) {
-    return text.replace(/(["'`]+)(.+?)(\1)/g, '«$2»')
+  /**
+   * Replaces English quote marks with their Persian equivalent.
+   * @param text The input string in Persian to be fixed.
+   * @returns Returns a string with English quote marks replaced with their Persian equivalent.
+   */
+  private fixEnglishQuotes(text: string): string {
+    return text.replace(/(["'`]+)(.+?)(\1)/g, '«$2»');
   }
 
   fixHamzeh(text: string) {
