@@ -1194,14 +1194,14 @@ export class Virastar {
     )
   }
 
-  private markdownNormalizeLists(text: string) {
-    return (
-      text
-        // removes extra line between two items list
-        .replace(/((\n|^)\*.*?)\n+(?=\n\*)/g, '$1')
-        .replace(/((\n|^)-.*?)\n+(?=\n-)/g, '$1')
-        .replace(/((\n|^)#.*?)\n+(?=\n#)/g, '$1')
-    )
+  /**
+   * Normalizes the spacing between items in Markdown lists
+   * @param text - The text to be normalized
+   * @returns The normalized text
+   */
+  private markdownNormalizeLists(text: string): string {
+    // removes extra line between two items list
+    return text.replace(/([\*\-\#]\s+.+?)\n{2,}(?=(?:[\*\-\#]\s+)|$)/g, '$1\n')
   }
 
   /**
