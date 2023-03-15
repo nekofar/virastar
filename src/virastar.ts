@@ -166,7 +166,7 @@ export class Virastar {
     preserve_nbsps: true,
     preserve_URIs: true,
     remove_diacritics: false,
-    skip_markdown_ordered_lists_numbers_conversion: false
+    skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
   digits = '۱۲۳۴۵۶۷۸۹۰'
@@ -301,12 +301,12 @@ export class Virastar {
     }
 
     // Preserves strings inside curly braces (`{}`)
-    const braces: string[] = [];
+    const braces: string[] = []
     if (opts.preserve_braces) {
       text = text.replace(/(\{.*?\})/g, function (matched) {
-        braces.push(matched);
-        return ' __BRACES__PRESERVER__ ';
-      });
+        braces.push(matched)
+        return ' __BRACES__PRESERVER__ '
+      })
     }
 
     // Preserves all URI strings in the text
@@ -1181,16 +1181,18 @@ export class Virastar {
     )
   }
 
+  /**
+   * Removes leading and trailing whitespace, newlines, zwnj, directionality marks, and nbsp from text.
+   */
   private cleanupBeginAndEnd(text: string) {
     return (
       text
-
-        // removes space/tab/zwnj/nbsp from the beginning of the new-lines
+        // Removes space/tab/zwnj/nbsp from the beginning of the new-lines.
         .replace(/([\n]+)[ \t\u200c\u00a0]*/g, '$1')
 
-        // removes spaces, tabs, zwnj, direction marks and new lines from
-        // the beginning and end of text
-        // @REF: http://stackoverflow.com/a/38490203
+        // Removes spaces, tabs, zwnj, direction marks, and new lines from
+        // the beginning and end of text.
+        // Ref: https://stackoverflow.com/a/38490203
         .replace(/^[\s\u200c\u200e\u200f]+|[\s\u200c\u200e\u200f]+$/g, '')
     )
   }
