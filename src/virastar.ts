@@ -780,7 +780,7 @@ export class Virastar {
    * @returns Returns the processed string.
    */
   private cleanupRLM(text: string): string {
-    return text.replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c');
+    return text.replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c')
   }
 
   // converts incorrect persian glyphs to standard characters
@@ -1170,7 +1170,12 @@ export class Virastar {
     )
   }
 
-  cleanupSpacing(text: string) {
+  /**
+   * Cleans up the spacing in the given text.
+   * @param {string} text - The text to clean up spacing for.
+   * @returns {string} The cleaned up text.
+   */
+  private cleanupSpacing(text: string): string {
     return (
       text
 
@@ -1192,7 +1197,7 @@ export class Virastar {
    */
   private cleanupLineBreaks(text: string): string {
     // Cleans more than two contiguous line-breaks.
-    return text.replace(/\n{2,}/g, '\n\n');
+    return text.replace(/\n{2,}/g, '\n\n')
   }
 
   /**
