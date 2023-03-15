@@ -746,6 +746,18 @@ title: My Awesome Title
 
       expect(result).toBe(expected)
     })
+
+    it('should preserve all HTML tags when preserve_HTML option is enabled', () => {
+      const input = '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
+      const expected = '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_HTML: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
