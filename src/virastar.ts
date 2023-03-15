@@ -84,13 +84,22 @@ export class Virastar {
     return parsed
   }
 
-  private charReplace(text: string, fromBatch: string, toBatch: string) {
-    const fromChars = fromBatch.split('')
-    const toChars = toBatch.split('')
-    for (let i in fromChars) {
-      text = text.replace(this.newRegExp(fromChars[i]), toChars[i])
+  /**
+   * Replaces all occurrences of characters from a given batch in the text
+   * with their corresponding characters from another batch.
+   * @param text - The input text.
+   * @param fromBatch - The batch of characters to be replaced.
+   * @param toBatch - The batch of replacement characters.
+   * @returns The text with replaced characters.
+   */
+  private charReplace(text: string, fromBatch: string, toBatch: string): string {
+    const fromChars = fromBatch.split('');
+    const toChars = toBatch.split('');
+    for (let i = 0; i < fromChars.length; i++) {
+      const re = new RegExp(fromChars[i], 'g');
+      text = text.replace(re, toChars[i]);
     }
-    return text
+    return text;
   }
 
   /**
