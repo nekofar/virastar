@@ -796,4 +796,55 @@ describe('Virastar', () => {
       expect(result).toBe(expected);
     });
   });
+
+  describe('cleanupLineBreaks', () => {
+    it('should replace more than two contiguous line-breaks with two line-breaks', () => {
+      const input = 'خط ۱\n\n\nخط ۲\n\n\n\n\n\n\n\n\n\n\n\n\nخط ۳'
+      const expected = 'خط ۱\n\nخط ۲\n\nخط ۳'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_line_breaks: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should not replace less than two contiguous line-breaks', () => {
+      const input = 'خط ۱\nخط ۲\n\n\nخط ۳'
+      const expected = 'خط ۱\nخط ۲\n\nخط ۳'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_line_breaks: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should not replace a single line-break', () => {
+      const input = 'متن با یک خط\n';
+      const expected = 'متن با یک خط\n';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_line_breaks: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not replace when there is no contiguous line-breaks', () => {
+      const input = 'متن بدون خطی\nبا خطی دیگر\n';
+      const expected = 'متن بدون خطی\nبا خطی دیگر\n';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_line_breaks: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  })
+
 })
