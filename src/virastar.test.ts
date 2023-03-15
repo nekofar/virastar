@@ -1961,52 +1961,78 @@ describe('Virastar', () => {
 
   describe('normalizeDates', () => {
     it('should re-order date parts with slash as delimiter', () => {
-      const input = '۱۴/۰۳/۲۰۲۱';
-      const expected = '۲۰۲۱/۰۳/۱۴';
+      const input = '۱۴/۰۳/۲۰۲۱'
+      const expected = '۲۰۲۱/۰۳/۱۴'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         normalize_dates: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not modify the text if it does not contain a date', () => {
-      const input = 'متنی بدون تاریخ';
-      const expected = input;
+      const input = 'متنی بدون تاریخ'
+      const expected = input
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         normalize_dates: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should handle multiple dates in the text', () => {
-      const input = '۱۴/۰۳/۲۰۲۱ - ۱۴/۰۳/۲۰۲۲';
-      const expected = '۲۰۲۱/۰۳/۱۴ - ۲۰۲۲/۰۳/۱۴';
+      const input = '۱۴/۰۳/۲۰۲۱ - ۱۴/۰۳/۲۰۲۲'
+      const expected = '۲۰۲۱/۰۳/۱۴ - ۲۰۲۲/۰۳/۱۴'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         normalize_dates: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should handle different date formats', () => {
-      const input = '۲۰-۰۳-۲۰۲۱';
-      const expected = '۲۰۲۱/۰۳/۲۰';
+      const input = '۲۰-۰۳-۲۰۲۱'
+      const expected = '۲۰۲۱/۰۳/۲۰'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         normalize_dates: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
+  describe('normalizeEllipsis', () => {
+    it('should replace more than one ellipsis with one', () => {
+      const input = 'سلام……'
+      const expected = 'سلام…'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_ellipsis: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should replace (space|tab|zwnj) after ellipsis with one space', () => {
+      const input = 'سلام…\t\t'
+      const expected = 'سلام… '
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_ellipsis: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+  })
 })
