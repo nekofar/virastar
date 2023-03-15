@@ -1509,4 +1509,31 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixPersianGlyphs', () => {
+    it('should replace incorrect persian glyphs with standard characters', () => {
+      const input = 'ﭖ ﻉ ﺥ ﮎ ﻛ ﺭ ﻝ'
+      const expected = 'پ ع خ ک ک ر ل'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_persian_glyphs: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should not change text without incorrect persian glyphs', () => {
+      const input = 'این یک متن عادی است.'
+      const expected = 'این یک متن عادی است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_persian_glyphs: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
+
 })
