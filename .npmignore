@@ -1,0 +1,26 @@
+# Source files
+tsconfig.json
+src/
+dist/
+node_modules/
+coverage/
+.nyc_output/
+*.log
+*.spec.*
+
+# Build files
+package-lock.json
+yarn.lock
+.pnp.js
+.pnp.cjs
+
+# Editor and tool files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+.eslintrc
+.prettierrc
+prettier.config.js
+.editorconfig
