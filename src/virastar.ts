@@ -670,7 +670,8 @@ export class Virastar {
       } else {
         const hasSemi = /;$/.test(match)
         const withoutSemi = hasSemi ? match.replace(/;$/, '') : match
-        const target = this.entities[withoutSemi] || (hasSemi && this.entities[match])
+        const target =
+          this.entities[withoutSemi] || (hasSemi && this.entities[match])
 
         if (typeof target === 'number') {
           return String.fromCharCode(target)
@@ -705,9 +706,8 @@ export class Virastar {
 
         // Replaces double dash to ndash
         .replace(/-{2}/g, '\u2013')
-    );
+    )
   }
-
 
   fixThreeDots(text: string) {
     return (
@@ -1151,7 +1151,12 @@ export class Virastar {
     )
   }
 
-  fixDiacritics(text: string) {
+  /**
+   * Replaces diacritic characters with their clean equivalent
+   * @param text - The text to fix
+   * @returns The text with diacritic characters replaced
+   */
+  private fixDiacritics(text: string): string {
     return (
       text
         // cleans zwnj before diacritic characters
@@ -1160,7 +1165,7 @@ export class Virastar {
         // cleans more than one diacritic characters
         // props @languagetool-org
         .replace(
-          this.newRegExp('(.*)([' + this.charsDiacritic + ']){2,}(.*)'),
+          this.newRegExp(`(.*)([${this.charsDiacritic}]){2,}(.*)`),
           '$1$2$3',
         )
 
