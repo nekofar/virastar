@@ -1160,7 +1160,15 @@ export class Virastar {
     )
   }
 
-  private markdownNormalizeBraces(text: string) {
+  /**
+   * Normalizes various spacing issues in Markdown, including removing spaces between
+   * markdown images, removing spaces between [] and (), and removing spaces inside
+   * double () [] {}.
+   *
+   * @param text - The input text to normalize.
+   * @returns The normalized text.
+   */
+  private markdownNormalizeBraces(text: string): string {
     return (
       text
         // removes space between ! and opening brace on markdown images
