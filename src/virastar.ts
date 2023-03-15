@@ -886,23 +886,19 @@ export class Virastar {
     )
   }
 
-  private normalizeDates(text: string) {
-    return (
-      text
-
-        // re-orders date parts with slash as delimiter
-        .replace(
-          /([0-9۰-۹]{1,2})([/-])([0-9۰-۹]{1,2})\2([0-9۰-۹]{4})/g,
-          function (
-            matched: any,
-            day: string,
-            delimiter: any,
-            month: string,
-            year: string,
-          ) {
-            return year + '/' + month + '/' + day
-          },
-        )
+  /**
+   * Normalizes date formats in the given text by re-ordering date parts with
+   * a slash as the delimiter.
+   *
+   * @param text - The text to normalize.
+   * @returns The normalized text.
+   */
+  private normalizeDates(text: string): string {
+    return text.replace(
+      /([0-9۰-۹]{1,2})([/-])([0-9۰-۹]{1,2})\2([0-9۰-۹]{4})/g,
+      function (matched, day, delimiter, month, year) {
+        return `${year}/${month}/${day}`
+      },
     )
   }
 
