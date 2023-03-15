@@ -734,13 +734,14 @@ export class Virastar {
     )
   }
 
-  fixEnglishQuotesPairs(text: string) {
-    return (
-      text
-
-        // replaces english quote pairs with their persian equivalent
-        .replace(/(“)(.+?)(”)/g, '«$2»')
-    )
+  /**
+   * Replaces English quote pairs with their Persian equivalent.
+   *
+   * @param text The text to fix.
+   * @returns The fixed text.
+   */
+  private fixEnglishQuotesPairs(text: string): string {
+    return text.replace(/“(.+?)”/g, '«$1»');
   }
 
   // replaces english quote marks with their persian equivalent
