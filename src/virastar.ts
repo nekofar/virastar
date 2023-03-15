@@ -741,7 +741,7 @@ export class Virastar {
    * @returns The fixed text.
    */
   private fixEnglishQuotesPairs(text: string): string {
-    return text.replace(/“(.+?)”/g, '«$1»');
+    return text.replace(/“(.+?)”/g, '«$1»')
   }
 
   /**
@@ -750,44 +750,50 @@ export class Virastar {
    * @returns Returns a string with English quote marks replaced with their Persian equivalent.
    */
   private fixEnglishQuotes(text: string): string {
-    return text.replace(/(["'`]+)(.+?)(\1)/g, '«$2»');
+    return text.replace(/(["'`]+)(.+?)(\1)/g, '«$2»')
   }
 
-  fixHamzeh(text: string) {
+  /**
+   * Replaces various forms of "heh" followed by "ye" or "hamza" with the standard form "heh with hamza"
+   * and replaces various forms of the Persian letter "ve" with the standard form "heh with hamza".
+   * @param text The text to fix.
+   * @returns The fixed text.
+   */
+  private fixHamzeh(text: string): string {
     const replacement = '$1هٔ$3'
+
     return (
       text
-
         // replaces ه followed by (space|ZWNJ|lrm) follow by ی with هٔ
-        .replace(/(\S)(ه[\s\u200c\u200e]+[یي])([\s\u200c\u200e])/g, replacement) // heh + ye
+        .replace(/(\S)(ه[\s\u200c\u200e]+[یي])([\s\u200c\u200e])/g, replacement)
 
         // replaces ه followed by (space|ZWNJ|lrm|nothing) follow by ء with هٔ
         .replace(
           /(\S)(ه[\s\u200c\u200e]?\u0621)([\s\u200c\u200e])/g,
           replacement,
-        ) // heh + standalone hamza
+        )
 
         // replaces هٓ or single-character ۀ with the standard هٔ
-        // props @ebraminio/persiantools
         .replace(/(ۀ|هٓ)/g, 'هٔ')
     )
   }
 
-  fixHamzehArabic(text: string) {
-    return (
-      text
-
-        // converts arabic hamzeh ة to هٔ
-        .replace(/(\S)ة([\s\u200c\u200e])/g, '$1هٔ$2')
-    )
+  /**
+   * Replaces Arabic hamzeh with هٔ in the input string.
+   * @param text The input string to replace Arabic hamzeh in.
+   * @returns The input string with Arabic hamzeh replaced with هٔ.
+   */
+  private fixHamzehArabic(text: string): string {
+    return text.replace(/(\S)ة([\s\u200c\u200e])/g, '$1هٔ$2')
   }
 
-  fixHamzehArabicAlt(text: string) {
-    return (
-      text
-        // converts arabic hamzeh ة to ه‌ی
-        .replace(/(\S)ة([\s\u200c\u200e])/g, '$1ه‌ی$2')
-    )
+  /**
+   * Replaces Arabic Hamzeh ة with ه‌ی in Persian text
+   * @param text Input text in Persian
+   * @returns Text with Hamzeh ة replaced with ه‌ی
+   */
+  private fixHamzehArabicAlt(text: string): string {
+    return text.replace(/(\S)ة([\s\u200c\u200e])/g, '$1ه‌ی$2');
   }
 
   /**
