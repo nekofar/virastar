@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Virastar is a TypeScript library for Persian text processing, providing various functions such as normalization, cleaning, and formatting for better readability and compatibility.",
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "tsc",
+    "clean": "rimraf -rf ./dist",
     "test": "jest",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.ts\"",
