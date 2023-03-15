@@ -64,15 +64,23 @@ export class Virastar {
     return this
   }
 
-  private parseOptions(options: Record<string, any> = {}) {
+  /**
+   * Parses the given options and returns an object with default options overridden by the given options.
+   * @param options - The options to parse.
+   * @returns An object with default options overridden by the given options.
+   */
+  private parseOptions(options: Record<string, any> = {}): Record<string, any> {
+    // Initialize an object with default options.
     const parsed: Record<string, any> = { ...this.defaults }
 
-    for (const i in parsed) {
-      if (Object.prototype.hasOwnProperty.call(options, i)) {
-        parsed[i] = options[i]
+    // Override default options with given options.
+    for (const key in options) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
+        parsed[key] = options[key]
       }
     }
 
+    // Return the parsed options object.
     return parsed
   }
 
