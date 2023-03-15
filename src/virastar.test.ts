@@ -690,6 +690,30 @@ describe('Virastar', () => {
       })
       expect(result).toBe(expected)
     })
+
+    it('should preserve and restore HTML comments', () => {
+      const input = `
+      <div>
+        <!-- This is a comment -->
+        <p>Hello world</p>
+        <!-- Another comment -->
+      </div>
+    `
+      const expected = `
+      <div>
+        <!-- This is a comment -->
+        <p>Hello world</p>
+        <!-- Another comment -->
+      </div>
+    `
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_comments: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
