@@ -1641,176 +1641,213 @@ describe('Virastar', () => {
 
   describe('fixPunctuationSpacing', () => {
     it('should remove spaces before punctuations and reduce multiple spaces after punctuations to one space', () => {
-      const input = 'اگر دوست داشته باشید ؛ به من یاد می‌دهید ؟';
-      const expected = 'اگر دوست داشته باشید؛ به من یاد می‌دهید؟';
+      const input = 'اگر دوست داشته باشید ؛ به من یاد می‌دهید ؟'
+      const expected = 'اگر دوست داشته باشید؛ به من یاد می‌دهید؟'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_spacing_for_punctuations: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not remove space after colon that separates non-time parts', () => {
-      const input = 'نام: محمد، سن: ۲۵';
-      const expected = 'نام: محمد، سن: ۲۵';
+      const input = 'نام: محمد، سن: ۲۵'
+      const expected = 'نام: محمد، سن: ۲۵'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_spacing_for_punctuations: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove space after colon that separates time parts', () => {
-      const input = 'زمان: ۱۰: ۴۵';
-      const expected = 'زمان: ۱۰:۴۵';
+      const input = 'زمان: ۱۰: ۴۵'
+      const expected = 'زمان: ۱۰:۴۵'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_spacing_for_punctuations: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove space after dots in numbers', () => {
-      const input = 'قیمت: ۱۰. ۵ دلار';
-      const expected = 'قیمت: ۱۰.۵ دلار';
+      const input = 'قیمت: ۱۰. ۵ دلار'
+      const expected = 'قیمت: ۱۰.۵ دلار'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_spacing_for_punctuations: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove space before common domain tlds', () => {
-      const input = 'برای دسترسی به سایت‌های time .ir و google. com';
-      const expected = 'برای دسترسی به سایت‌های time.ir و google.com';
+      const input = 'برای دسترسی به سایت‌های time .ir و google. com'
+      const expected = 'برای دسترسی به سایت‌های time.ir و google.com'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_spacing_for_punctuations: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove spaces between different/same marks', () => {
-      const input = '؟     !';
-      const expected = '؟!';
+      const input = '؟     !'
+      const expected = '؟!'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_spacing_for_punctuations: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
   describe('fixSuffixMisc', () => {
     it('should replace ه followed by ئ or ی, and then by ی, with ه\u200cای', () => {
-      const input = 'خانه‌ئی';
-      const expected = 'خانه‌ای';
+      const input = 'خانه‌ئی'
+      const expected = 'خانه‌ای'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_misc: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace when there is no ئ or ی after ه', () => {
-      const input = 'همچنان';
-      const expected = 'همچنان';
+      const input = 'همچنان'
+      const expected = 'همچنان'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_misc: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace when there is no ه before ئ or ی', () => {
-      const input = 'خانه‌ایی';
-      const expected = 'خانه‌ایی';
+      const input = 'خانه‌ایی'
+      const expected = 'خانه‌ایی'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_misc: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace when ه followed by ئ or ی is not followed by ی', () => {
-      const input = 'به زودی';
-      const expected = 'به زودی';
+      const input = 'به زودی'
+      const expected = 'به زودی'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_misc: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
   describe('fixSuffixSpacingHamzeh', () => {
     it('should add correct hamzeh spacing for heh+ye', () => {
-      const input = 'مدیریت های دوم';
-      const expected = 'مدیریت\u200cهای دوم';
+      const input = 'مدیریت های دوم'
+      const expected = 'مدیریت\u200cهای دوم'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_spacing: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should add correct hamzeh spacing for heh+standalone hamza', () => {
-      const input = 'راه هایی';
-      const expected = 'راه\u200cهایی';
+      const input = 'راه هایی'
+      const expected = 'راه\u200cهایی'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_spacing: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should add correct hamzeh spacing for heh+hamza above', () => {
-      const input = 'تراش هایی';
-      const expected = 'تراش\u200cهایی';
+      const input = 'تراش هایی'
+      const expected = 'تراش\u200cهایی'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_spacing: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not add hamzeh spacing if not applicable', () => {
-      const input = 'هوا';
-      const expected = 'هوا';
+      const input = 'هوا'
+      const expected = 'هوا'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_suffix_spacing: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
+  describe('fixThreeDots', () => {
+    it('should replace three dots with ellipsis character', () => {
+      const input = 'سلام ... دنیا'
+      const expected = 'سلام… دنیا'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_three_dots: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove spaces between dots', () => {
+      const input = 'سلام.  .  . دنیا'
+      const expected = 'سلام… دنیا'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_three_dots: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should not replace two dots', () => {
+      const input = 'من .. دوستت دارم'
+      const expected = 'من .. دوستت دارم'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_three_dots: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
