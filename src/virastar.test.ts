@@ -985,4 +985,66 @@ describe('Virastar', () => {
       expect(result).toBe(expected);
     });
   })
+
+  describe('decodeHTMLEntities', () => {
+    it('should decode HTML entities in the given text', () => {
+      const input = '&#1740;&#1705;&#32;&#1606;&#1605;&#1575;&#1740;&#1588;&zwnj;&#1606;&#1575;&#1605;&#1607;&#32;&#1605;&#1593;&#1585;&#1608;&#1601;&#32;&#1576;&#1607;&#32;&#1605;&#1585;&#1583;&#32;&#1582;&#1575;&#1606;&#1607;&zwnj;&#1583;&#1575;&#1585;&#32;&#1608;&#32;&#1583;&#1608;&#1576;&#1604;&#1607;&zwnj;&#1740;&#32;&#1601;&#1740;&#1604;&#1605;&zwnj;&#1607;&#1575;&#1740;&#32;&#1576;&#1604;&#1606;&#1583;&#32;&#1604;&#1606;&#1711;&#1585;&#1740;'
+      const expected = 'یک نمایش‌نامه معروف به مرد خانه‌دار و دوبله‌ی فیلم‌های بلند لنگری'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        decode_htmlentities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should decode HTML entities correctly', () => {
+      const input = 'این یک &nbsp;متن است&#x60; با&nbsp;entity ها&nbsp;مختلف. &lt;br&gt;'
+      const expected = 'این یک  متن است` با entity ها مختلف. <br>'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        decode_htmlentities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should handle invalid HTML entities', () => {
+      const input = 'این یک متن با entity های نامعتبر &invalid; است.'
+      const expected = 'این یک متن با entity های نامعتبر &invalid; است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        decode_htmlentities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should handle decimal entities', () => {
+      const input = '&#1587;&#1604;&#1575;&#1605;&#32;&#1583;&#1606;&#1740;&#1575;'
+      const expected = 'سلام دنیا'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        decode_htmlentities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should handle hexadecimal entities', () => {
+      const input = '&#x633;&#x644;&#x627;&#x645;&#x20;&#x62f;&#x646;&#x6cc;&#x627;'
+      const expected = 'سلام دنیا'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        decode_htmlentities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
