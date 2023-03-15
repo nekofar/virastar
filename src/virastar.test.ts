@@ -771,6 +771,30 @@ title: My Awesome Title
 
       expect(result).toBe(expected)
     })
+
+    it('should bring back URIs in text', () => {
+      const input = 'جستجوی در اینترنت: https://fa.wikipedia.org'
+      const expected = 'جستجوی در اینترنت: https://fa.wikipedia.org'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_URIs: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should preserve Markdown links in text', () => {
+      const input = 'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
+      const expected = 'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_URIs: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
