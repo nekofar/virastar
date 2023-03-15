@@ -726,6 +726,26 @@ describe('Virastar', () => {
 
       expect(result).toBe(expected)
     })
+
+    it('should preserve frontmatter data when preserve_frontmatter is true', () => {
+      const input = `---
+title: My Awesome Title
+---
+
+این یک تست است.`
+      const expected = `---
+title: My Awesome Title
+---
+
+این یک تست است.`
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_frontmatter: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
