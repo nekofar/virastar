@@ -684,13 +684,14 @@ export class Virastar {
     })
   }
 
-  private normalizeEOL(text: string) {
-    return (
-      text
-
-        // replaces windows end of lines with unix eol (`\n`)
-        .replace(/(\r?\n)|(\r\n?)/g, '\n')
-    )
+  /**
+   * Replaces all Windows-style and Mac-style end of line characters with Unix-style end of line character (\n).
+   *
+   * @param text - The input text to be normalized
+   * @returns The normalized text with all Windows-style and Mac-style end of line characters replaced with Unix-style end of line character.
+   */
+  private normalizeEOL(text: string): string {
+    return text.replace(/\r?\n|\r/g, '\n')
   }
 
   /**
