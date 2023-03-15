@@ -714,6 +714,18 @@ describe('Virastar', () => {
 
       expect(result).toBe(expected)
     })
+
+    it('should bring back all preserved html entities', () => {
+      const input = 'سلام &nbsp; جهان'
+      const expected = 'سلام &nbsp; جهان'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_entities: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
