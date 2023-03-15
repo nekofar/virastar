@@ -1393,4 +1393,18 @@ describe('Virastar', () => {
       expect(result).toBe(expectedOutput)
     })
   })
+
+  describe('fixMiscNonPersianChars', function () {
+    it.skip('should replace misc non-Persian characters with their Persian equivalents', () => {
+      const input = 'كڪيىۍېہە'
+      const expected = 'ککییییههه'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_misc_non_persian_chars: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
