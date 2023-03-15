@@ -613,7 +613,13 @@ export class Virastar {
   }
 
   // props @ebraminio/persiantools
-  cleanupZWNJ(text: string) {
+  /**
+   * Replaces soft hyphens with ZWNJ and cleans up unnecessary ZWNJ.
+   *
+   * @param text The input string to clean up.
+   * @returns The cleaned up string.
+   */
+  private cleanupZWNJ(text: string) {
     return (
       text
 
