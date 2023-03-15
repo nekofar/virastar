@@ -801,6 +801,18 @@ title: My Awesome Title
 
       expect(result).toBe(expected)
     })
+
+    it('should return matched text when skip_markdown_ordered_lists_numbers_conversion is true', () => {
+      const input = 'سومین مورد\n1. خریداری\n2. نصب\n3. راه اندازی'
+      const expected = 'سومین مورد\n1. خریداری\n2. نصب\n3. راه اندازی'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        skip_markdown_ordered_lists_numbers_conversion: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
