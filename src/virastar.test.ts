@@ -2033,6 +2033,19 @@ describe('Virastar', () => {
 
       expect(result).toBe(expected)
     })
+  })
 
+  describe('normalizeEOL', () => {
+    it('should replace windows end of lines with unix eol (`\\n`)', () => {
+      const input = 'متن با سلام\r\nاین یک تست است\nو برای تست\rمی باشد'
+      const expected = 'متن با سلام\nاین یک تست است\nو برای تست\nمی باشد'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        normalize_eol: true,
+      })
+
+      expect(result).toBe(expected)
+    })
   })
 })
