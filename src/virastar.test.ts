@@ -1394,7 +1394,7 @@ describe('Virastar', () => {
     })
   })
 
-  describe('fixMiscNonPersianChars', function () {
+  describe('fixMiscNonPersianChars', () => {
     it.skip('should replace misc non-Persian characters with their Persian equivalents', () => {
       const input = 'كڪيىۍېہە'
       const expected = 'ککییییههه'
@@ -1553,27 +1553,89 @@ describe('Virastar', () => {
 
   describe('fixQuestionMark', () => {
     it('should replace all question marks with Persian equivalent', () => {
-      const input = 'چرا سوالی نیست? من همیشه پر از سوالاتم?';
-      const expected = 'چرا سوالی نیست؟ من همیشه پر از سوالاتم؟';
+      const input = 'چرا سوالی نیست? من همیشه پر از سوالاتم?'
+      const expected = 'چرا سوالی نیست؟ من همیشه پر از سوالاتم؟'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_question_mark: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should return the same text if there is no question mark in it', () => {
-      const input = 'این جمله سوالی نیست.';
-      const expected = 'این جمله سوالی نیست.';
+      const input = 'این جمله سوالی نیست.'
+      const expected = 'این جمله سوالی نیست.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_question_mark: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
+
+  describe('fixBracesSpacingInside', () => {
+    it('should remove inside spaces for ()', () => {
+      const input = 'این یک ( تست ) است.'
+      const expected = 'این یک (تست) است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_braces_and_quotes: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove inside spaces for []', () => {
+      const input = 'این یک [ تست ] است.'
+      const expected = 'این یک [تست] است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_braces_and_quotes: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove inside spaces for {}', () => {
+      const input = 'این یک { تست } است.'
+      const expected = 'این یک {تست} است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_braces_and_quotes: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove inside spaces for “”', () => {
+      const input = 'این یک “ تست ” است.'
+      const expected = 'این یک “تست” است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_braces_and_quotes: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove inside spaces for «»', () => {
+      const input = 'این یک « تست » است.'
+      const expected = 'این یک «تست» است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_braces_and_quotes: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
 })
