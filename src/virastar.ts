@@ -655,13 +655,14 @@ export class Virastar {
   }
 
   /**
-   * Converts numeral and selected html character-sets into original characters
-   * @param text - The input text to decode
-   * @returns The decoded text
+   * Decodes HTML entities in the given text.
+   * @param text - The text containing HTML entities to decode.
+   * @returns The text with HTML entities decoded.
    */
   private decodeHTMLEntities(text: string): string {
     return text.replace(/&(#?[^;\W]+;?)/g, (matched: string, match: string) => {
       let n: RegExpExecArray | null
+
       if ((n = /^#(\d+);?$/.exec(match))) {
         return String.fromCharCode(parseInt(n[1], 10))
       } else if ((n = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match))) {
@@ -669,8 +670,7 @@ export class Virastar {
       } else {
         const hasSemi = /;$/.test(match)
         const withoutSemi = hasSemi ? match.replace(/;$/, '') : match
-        const target =
-          this.entities[withoutSemi] || (hasSemi && this.entities[match])
+        const target = this.entities[withoutSemi] || (hasSemi && this.entities[match])
 
         if (typeof target === 'number') {
           return String.fromCharCode(target)
