@@ -923,4 +923,66 @@ describe('Virastar', () => {
     })
 
   })
+
+  describe('cleanupZWNJ', () => {
+    it('should cleanup soft hyphens and multiple zwnj', () => {
+      const input = 'این یک\u00adمتن است که زیاده\u200c\u200c\u200c\u200c\u200c\u200c\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
+      const expected = 'این یک\u200cمتن است که زیاده\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_zwnj: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it.skip('should cleanup unnecessary zwnj around words, numbers and punctuations', () => {
+      const input = 'برای آزمایش توانایی \u200c   این علائم [ ] { } ( ) ؛  ،   ؟   " "   در متون پارسی'
+      const expected = 'برای آزمایش توانایی این علائم[]{}()؛،؟""در متون پارسی'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_zwnj: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should cleanup unnecessary zwnj on start/end of each line', () => {
+      const input = '\u200cاین یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است\u200c'
+      const expected = 'این یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_zwnj: true,
+      })
+
+      expect(result).toBe(expected)
+    })
+
+    it('should remove extra ZWNJ characters before and after English words', () => {
+      const input = 'the \u200cbook \u200cis \u200cinteresting.';
+      const expected = 'the book is interesting.';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_zwnj: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove extra ZWNJ characters before and after numbers', () => {
+      const input = '۱۲۳۴۵۶۷۸۹۰ \u200c۱۲۳۴۵۶۷۸۹۰ ';
+      const expected = '۱۲۳۴۵۶۷۸۹۰ ۱۲۳۴۵۶۷۸۹۰ ';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        cleanup_zwnj: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  })
 })
