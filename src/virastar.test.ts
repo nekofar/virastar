@@ -1638,4 +1638,78 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
   })
+
+  describe('fixPunctuationSpacing', () => {
+    it('should remove spaces before punctuations and reduce multiple spaces after punctuations to one space', () => {
+      const input = 'اگر دوست داشته باشید ؛ به من یاد می‌دهید ؟';
+      const expected = 'اگر دوست داشته باشید؛ به من یاد می‌دهید؟';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_punctuations: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should not remove space after colon that separates non-time parts', () => {
+      const input = 'نام: محمد، سن: ۲۵';
+      const expected = 'نام: محمد، سن: ۲۵';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_punctuations: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove space after colon that separates time parts', () => {
+      const input = 'زمان: ۱۰: ۴۵';
+      const expected = 'زمان: ۱۰:۴۵';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_punctuations: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove space after dots in numbers', () => {
+      const input = 'قیمت: ۱۰. ۵ دلار';
+      const expected = 'قیمت: ۱۰.۵ دلار';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_punctuations: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove space before common domain tlds', () => {
+      const input = 'برای دسترسی به سایت‌های time .ir و google. com';
+      const expected = 'برای دسترسی به سایت‌های time.ir و google.com';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_punctuations: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+
+    it('should remove spaces between different/same marks', () => {
+      const input = '؟     !';
+      const expected = '؟!';
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        fix_spacing_for_punctuations: true,
+      })
+
+      expect(result).toBe(expected);
+    });
+  });
 })
