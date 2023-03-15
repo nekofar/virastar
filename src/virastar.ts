@@ -18,7 +18,7 @@ interface VirastarOptions {
   fix_misc_non_persian_chars?: boolean
   fix_misc_spacing?: boolean
   fix_numeral_symbols?: boolean
-  fix_perfix_spacing?: boolean
+  fix_prefix_spacing?: boolean
   fix_persian_glyphs?: boolean
   fix_punctuations?: boolean
   fix_question_mark?: boolean
@@ -142,7 +142,7 @@ export class Virastar {
     fix_misc_non_persian_chars: true,
     fix_misc_spacing: true,
     fix_numeral_symbols: true,
-    fix_perfix_spacing: true,
+    fix_prefix_spacing: true,
     fix_persian_glyphs: true,
     fix_punctuations: true,
     fix_question_mark: true,
@@ -465,8 +465,8 @@ export class Virastar {
       text = this.normalizeDates(text)
     }
 
-    if (opts.fix_perfix_spacing) {
-      text = this.fixPerfixSpacing(text)
+    if (opts.fix_prefix_spacing) {
+      text = this.fixPrefixSpacing(text)
     }
 
     if (opts.fix_suffix_spacing) {
@@ -906,14 +906,17 @@ export class Virastar {
     return text.replace(/(\?)/g, '\u061F') // \u061F = ؟
   }
 
-  // puts zwnj between the word and the prefix:
-  // - mi* nemi* bi*
-  // NOTE: there's a possible bug here: prefixes could be separate nouns
-  fixPerfixSpacing(text: string) {
+  /**
+   * Puts zwnj between the word and the prefix: mi*, nemi*, bi*.
+   * Note: there's a possible bug here: prefixes could be separate nouns.
+   * @param text - The input text to process.
+   * @returns The processed text with zwnj between the word and the prefix.
+   */
+  private fixPrefixSpacing(text: string): string {
     const replacement = '$1\u200c$3'
     return text
       .replace(/((\s|^)ن?می) ([^ ])/g, replacement)
-      .replace(/((\s|^)بی) ([^ ])/g, replacement) // props @zoghal
+      .replace(/((\s|^)بی) ([^ ])/g, replacement)
   }
 
   // puts zwnj between the word and the suffix
