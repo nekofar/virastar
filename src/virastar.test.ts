@@ -680,6 +680,16 @@ describe('Virastar', () => {
       })
       expect(result).toBe(expected)
     })
+
+    it('should preserve strings inside brackets when preserve_brackets is true', () => {
+      const input = '[سلام]، این [جمله] یک [تست] است.'
+      const expected = '[سلام]، این [جمله] یک [تست] است.'
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+        preserve_brackets: true,
+      })
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupBeginAndEnd', () => {
