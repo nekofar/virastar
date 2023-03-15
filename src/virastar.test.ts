@@ -659,6 +659,19 @@ describe('Virastar', () => {
     })
   })
 
+  describe('cleanup', () => {
+    it('should return the same string when all cleanup options are disabled', () => {
+      const input = '&nbsp;امروز&nbsp;۲۰&nbsp;مرداد&nbsp;۱۴۰۰&nbsp;'
+      const expected = '&nbsp;امروز&nbsp;۲۰&nbsp;مرداد&nbsp;۱۴۰۰&nbsp;'
+
+      const result = virastar.cleanup(input, {
+        ...optionsDisabled,
+      })
+
+      expect(result).toBe(expected)
+    })
+  })
+
   describe('cleanupBeginAndEnd', () => {
     it('should remove leading and trailing whitespace and newlines', () => {
       const input = '  \n\t۱۲۳۴۵۶۷۸۹۰  \n\t'
@@ -773,29 +786,29 @@ describe('Virastar', () => {
 
   describe('cleanupKashidas', () => {
     it('should replace kashidas between numbers with ndash', () => {
-      const input = '۱۲۳۴۵۶۷۸۹۰ــــــ۱۲۳۴۵۶۷۸۹۰';
-      const expected = '۱۲۳۴۵۶۷۸۹۰–۱۲۳۴۵۶۷۸۹۰';
+      const input = '۱۲۳۴۵۶۷۸۹۰ــــــ۱۲۳۴۵۶۷۸۹۰'
+      const expected = '۱۲۳۴۵۶۷۸۹۰–۱۲۳۴۵۶۷۸۹۰'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_kashidas: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove all kashidas between non-whitespace characters', () => {
-      const input = 'تـحـت مـجـازیـت هـوا';
-      const expected = 'تحت مجازیت هوا';
+      const input = 'تـحـت مـجـازیـت هـوا'
+      const expected = 'تحت مجازیت هوا'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_kashidas: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
   describe('cleanupLineBreaks', () => {
     it('should replace more than two contiguous line-breaks with two line-breaks', () => {
@@ -823,79 +836,79 @@ describe('Virastar', () => {
     })
 
     it('should not replace a single line-break', () => {
-      const input = 'متن با یک خط\n';
-      const expected = 'متن با یک خط\n';
+      const input = 'متن با یک خط\n'
+      const expected = 'متن با یک خط\n'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_line_breaks: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace when there is no contiguous line-breaks', () => {
-      const input = 'متن بدون خطی\nبا خطی دیگر\n';
-      const expected = 'متن بدون خطی\nبا خطی دیگر\n';
+      const input = 'متن بدون خطی\nبا خطی دیگر\n'
+      const expected = 'متن بدون خطی\nبا خطی دیگر\n'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_line_breaks: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
   })
 
   describe('cleanupRLM', () => {
     it('should replace RLM followed by persian character with ZWNJ', () => {
-      const input = 'این\u200Fیک متن فارسی است.';
-      const expected = 'این\u200cیک متن فارسی است.';
+      const input = 'این\u200Fیک متن فارسی است.'
+      const expected = 'این\u200cیک متن فارسی است.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_rlm: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace RLM before latin character with ZWNJ', () => {
-      const input = 'This\u200Fis a persian text.';
-      const expected = 'This\u200Fis a persian text.';
+      const input = 'This\u200Fis a persian text.'
+      const expected = 'This\u200Fis a persian text.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_rlm: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should not replace RLM before dash with ZWNJ', () => {
-      const input = 'یک متن فارسی -\u200F مثال';
-      const expected = 'یک متن فارسی -\u200F مثال';
+      const input = 'یک متن فارسی -\u200F مثال'
+      const expected = 'یک متن فارسی -\u200F مثال'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_rlm: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should replace multiple RLM with ZWNJ', () => {
-      const input = 'این\u200Fیک\u200Fمتن فارسی است.';
-      const expected = 'این\u200cیک\u200cمتن فارسی است.';
+      const input = 'این\u200Fیک\u200Fمتن فارسی است.'
+      const expected = 'این\u200cیک\u200cمتن فارسی است.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_rlm: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
+      expect(result).toBe(expected)
+    })
+  })
 
   describe('cleanupSpacing', () => {
     it('should replace more than one space with just a single one', () => {
@@ -921,13 +934,14 @@ describe('Virastar', () => {
 
       expect(result).toBe(expected)
     })
-
   })
 
   describe('cleanupZWNJ', () => {
     it('should cleanup soft hyphens and multiple zwnj', () => {
-      const input = 'این یک\u00adمتن است که زیاده\u200c\u200c\u200c\u200c\u200c\u200c\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
-      const expected = 'این یک\u200cمتن است که زیاده\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
+      const input =
+        'این یک\u00adمتن است که زیاده\u200c\u200c\u200c\u200c\u200c\u200c\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
+      const expected =
+        'این یک\u200cمتن است که زیاده\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -938,7 +952,8 @@ describe('Virastar', () => {
     })
 
     it.skip('should cleanup unnecessary zwnj around words, numbers and punctuations', () => {
-      const input = 'برای آزمایش توانایی \u200c   این علائم [ ] { } ( ) ؛  ،   ؟   " "   در متون پارسی'
+      const input =
+        'برای آزمایش توانایی \u200c   این علائم [ ] { } ( ) ؛  ،   ؟   " "   در متون پارسی'
       const expected = 'برای آزمایش توانایی این علائم[]{}()؛،؟""در متون پارسی'
 
       const result = virastar.cleanup(input, {
@@ -950,8 +965,10 @@ describe('Virastar', () => {
     })
 
     it('should cleanup unnecessary zwnj on start/end of each line', () => {
-      const input = '\u200cاین یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است\u200c'
-      const expected = 'این یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است'
+      const input =
+        '\u200cاین یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است\u200c'
+      const expected =
+        'این یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -962,34 +979,36 @@ describe('Virastar', () => {
     })
 
     it('should remove extra ZWNJ characters before and after English words', () => {
-      const input = 'the \u200cbook \u200cis \u200cinteresting.';
-      const expected = 'the book is interesting.';
+      const input = 'the \u200cbook \u200cis \u200cinteresting.'
+      const expected = 'the book is interesting.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_zwnj: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
 
     it('should remove extra ZWNJ characters before and after numbers', () => {
-      const input = '۱۲۳۴۵۶۷۸۹۰ \u200c۱۲۳۴۵۶۷۸۹۰ ';
-      const expected = '۱۲۳۴۵۶۷۸۹۰ ۱۲۳۴۵۶۷۸۹۰ ';
+      const input = '۱۲۳۴۵۶۷۸۹۰ \u200c۱۲۳۴۵۶۷۸۹۰ '
+      const expected = '۱۲۳۴۵۶۷۸۹۰ ۱۲۳۴۵۶۷۸۹۰ '
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         cleanup_zwnj: true,
       })
 
-      expect(result).toBe(expected);
-    });
+      expect(result).toBe(expected)
+    })
   })
 
   describe('decodeHTMLEntities', () => {
     it('should decode HTML entities in the given text', () => {
-      const input = '&#1740;&#1705;&#32;&#1606;&#1605;&#1575;&#1740;&#1588;&zwnj;&#1606;&#1575;&#1605;&#1607;&#32;&#1605;&#1593;&#1585;&#1608;&#1601;&#32;&#1576;&#1607;&#32;&#1605;&#1585;&#1583;&#32;&#1582;&#1575;&#1606;&#1607;&zwnj;&#1583;&#1575;&#1585;&#32;&#1608;&#32;&#1583;&#1608;&#1576;&#1604;&#1607;&zwnj;&#1740;&#32;&#1601;&#1740;&#1604;&#1605;&zwnj;&#1607;&#1575;&#1740;&#32;&#1576;&#1604;&#1606;&#1583;&#32;&#1604;&#1606;&#1711;&#1585;&#1740;'
-      const expected = 'یک نمایش‌نامه معروف به مرد خانه‌دار و دوبله‌ی فیلم‌های بلند لنگری'
+      const input =
+        '&#1740;&#1705;&#32;&#1606;&#1605;&#1575;&#1740;&#1588;&zwnj;&#1606;&#1575;&#1605;&#1607;&#32;&#1605;&#1593;&#1585;&#1608;&#1601;&#32;&#1576;&#1607;&#32;&#1605;&#1585;&#1583;&#32;&#1582;&#1575;&#1606;&#1607;&zwnj;&#1583;&#1575;&#1585;&#32;&#1608;&#32;&#1583;&#1608;&#1576;&#1604;&#1607;&zwnj;&#1740;&#32;&#1601;&#1740;&#1604;&#1605;&zwnj;&#1607;&#1575;&#1740;&#32;&#1576;&#1604;&#1606;&#1583;&#32;&#1604;&#1606;&#1711;&#1585;&#1740;'
+      const expected =
+        'یک نمایش‌نامه معروف به مرد خانه‌دار و دوبله‌ی فیلم‌های بلند لنگری'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
@@ -1000,7 +1019,8 @@ describe('Virastar', () => {
     })
 
     it.skip('should decode HTML entities correctly', () => {
-      const input = 'این یک &nbsp;متن است&#x60; با&nbsp;entity ها&nbsp;مختلف. &lt;br&gt;'
+      const input =
+        'این یک &nbsp;متن است&#x60; با&nbsp;entity ها&nbsp;مختلف. &lt;br&gt;'
       const expected = 'این یک  متن است` با entity ها مختلف. <br>'
 
       const result = virastar.cleanup(input, {
@@ -1024,7 +1044,8 @@ describe('Virastar', () => {
     })
 
     it('should handle decimal entities', () => {
-      const input = '&#1587;&#1604;&#1575;&#1605;&#32;&#1583;&#1606;&#1740;&#1575;'
+      const input =
+        '&#1587;&#1604;&#1575;&#1605;&#32;&#1583;&#1606;&#1740;&#1575;'
       const expected = 'سلام دنیا'
 
       const result = virastar.cleanup(input, {
@@ -1036,7 +1057,8 @@ describe('Virastar', () => {
     })
 
     it('should handle hexadecimal entities', () => {
-      const input = '&#x633;&#x644;&#x627;&#x645;&#x20;&#x62f;&#x646;&#x6cc;&#x627;'
+      const input =
+        '&#x633;&#x644;&#x627;&#x645;&#x20;&#x62f;&#x646;&#x6cc;&#x627;'
       const expected = 'سلام دنیا'
 
       const result = virastar.cleanup(input, {
@@ -1076,16 +1098,15 @@ describe('Virastar', () => {
 
   describe('fixDashes', () => {
     it('should replace triple dashes with mdash and double dashes with ndash', () => {
-      const input = 'این یک متن است که --- و -- های زیادی دارد.';
-      const expected = 'این یک متن است که — و – های زیادی دارد.';
+      const input = 'این یک متن است که --- و -- های زیادی دارد.'
+      const expected = 'این یک متن است که — و – های زیادی دارد.'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
         fix_dashes: true,
       })
 
-      expect(result).toBe(expected);
-    });
-  });
-
+      expect(result).toBe(expected)
+    })
+  })
 })
