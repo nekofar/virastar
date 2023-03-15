@@ -9,6 +9,7 @@
     "postclean": "npm test",
     "pretest": "npm run lint",
     "test": "jest",
+    "prelint": "npm run format",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.ts\"",
     "prepare": "npm run build"
