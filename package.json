@@ -6,6 +6,7 @@
     "prebuild": "npm run clean",
     "build": "tsc",
     "clean": "rimraf -rf ./dist",
+    "postclean": "npm test",
     "test": "jest",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.ts\"",
