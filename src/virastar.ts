@@ -1146,7 +1146,12 @@ export class Virastar {
     )
   }
 
-  fixMiscSpacing(text: string) {
+  /**
+   * Removes miscellaneous spaces in Persian text.
+   * @param text - The Persian text to fix.
+   * @returns The cleaned text.
+   */
+  private fixMiscSpacing(text: string): string {
     return (
       text
 
@@ -1155,7 +1160,7 @@ export class Virastar {
 
         // removes space before braces containing numbers
         .replace(/ \[([0-9۰-۹]+)]/g, '[$1]')
-    )
+    );
   }
 
   /**
