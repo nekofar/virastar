@@ -132,16 +132,57 @@ export class Virastar {
     return new RegExp(pattern, flags || 'g')
   }
 
-  private charsPersian = 'ءاآأإئؤبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیةيك'
+  private charsPersian = [
+    '\u0621',
+    '\u0627',
+    '\u0622',
+    '\u0623',
+    '\u0625',
+    '\u0626',
+    '\u0624',
+    '\u0628',
+    '\u067E',
+    '\u062A',
+    '\u062B',
+    '\u062C',
+    '\u0686',
+    '\u062D',
+    '\u062E',
+    '\u062F',
+    '\u0630',
+    '\u0631',
+    '\u0632',
+    '\u0698',
+    '\u0633',
+    '\u0634',
+    '\u0635',
+    '\u0636',
+    '\u0637',
+    '\u0638',
+    '\u0639',
+    '\u063A',
+    '\u0641',
+    '\u0642',
+    '\u06A9',
+    '\u06AF',
+    '\u0644',
+    '\u0645',
+    '\u0646',
+    '\u0648',
+    '\u0647',
+    '\u06CC',
+    '\u0629',
+    '\u064A',
+    '\u0643',
+  ].join()
 
   // @REF: https://en.wikipedia.org/wiki/Persian_alphabet#Diacritics
-  // `\u064e\u0650\u064f\u064b\u064d\u064c\u0651\u06c0`
-  private charsDiacritic = 'ًٌٍَُِّْ'
+  private charsDiacritic = '\u0652\u064C\u064D\u064B\u064F\u0650\u064E\u0651'
 
   // @source: https://github.com/jhermsmeier/uri.regex
   private patternURI =
     "([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?"
-  private patternAfter = '\\s.,;،؛!؟?"\'()[\\]{}“”«»'
+  private patternAfter = '\\s.,;\u060C\u061B!\u061F?"\'()[\\]{}\u201C\u201D\u00AB\u00BB'
 
   private defaults = {
     cleanup_begin_and_end: true,
@@ -190,9 +231,8 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  private persianDigits = '۱۲۳۴۵۶۷۸۹۰'
+  private persianDigits = '\u06F1\u06F2\u06F3\u06F4\u06F5\u06F6\u06F7\u06F8\u06F9\u06F0'
 
-  /* eslint-disable */
   private entities: { [key: string]: string } = {
     'sbquo;': '\u201a',
     'lsquo;': '\u2018',
@@ -215,56 +255,53 @@ export class Virastar {
   }
 
   // props @ebraminio/persiantools
-  // noinspection JSNonASCIINames,NonAsciiCharacters
   private persianGlyphs = {
     // these two are for visually available ZWNJ #visualZwnj
-    '\u200cه': 'ﻫ',
-    'ی\u200c': 'ﻰﻲ',
-    ﺃ: 'ﺄﺃ',
-    ﺁ: 'ﺁﺂ',
-    ﺇ: 'ﺇﺈ',
-    ا: 'ﺎا',
-    ب: 'ﺏﺐﺑﺒ',
-    پ: 'ﭖﭗﭘﭙ',
-    ت: 'ﺕﺖﺗﺘ',
-    ث: 'ﺙﺚﺛﺜ',
-    ج: 'ﺝﺞﺟﺠ',
-    چ: 'ﭺﭻﭼﭽ',
-    ح: 'ﺡﺢﺣﺤ',
-    خ: 'ﺥﺦﺧﺨ',
-    د: 'ﺩﺪ',
-    ذ: 'ﺫﺬ',
-    ر: 'ﺭﺮ',
-    ز: 'ﺯﺰ',
-    ژ: 'ﮊﮋ',
-    س: 'ﺱﺲﺳﺴ',
-    ش: 'ﺵﺶﺷﺸ',
-    ص: 'ﺹﺺﺻﺼ',
-    ض: 'ﺽﺾﺿﻀ',
-    ط: 'ﻁﻂﻃﻄ',
-    ظ: 'ﻅﻆﻇﻈ',
-    ع: 'ﻉﻊﻋﻌ',
-    غ: 'ﻍﻎﻏﻐ',
-    ف: 'ﻑﻒﻓﻔ',
-    ق: 'ﻕﻖﻗﻘ',
-    ک: 'ﮎﮏﮐﮑﻙﻚﻛﻜ',
-    گ: 'ﮒﮓﮔﮕ',
-    ل: 'ﻝﻞﻟﻠ',
-    م: 'ﻡﻢﻣﻤ',
-    ن: 'ﻥﻦﻧﻨ',
-    ه: 'ﻩﻪﻫﻬ',
-    هٔ: 'ﮤﮥ',
-    و: 'ﻭﻮ',
-    ﺅ: 'ﺅﺆ',
-    ی: 'ﯼﯽﯾﯿﻯﻰﻱﻲﻳﻴ',
-    ئ: 'ﺉﺊﺋﺌ',
-    لا: 'ﻼ',
-    ﻹ: 'ﻺ',
-    ﻷ: 'ﻸ',
-    ﻵ: 'ﻶ',
+    '\u200C\u0647': '\uFEEB',
+    '\u06CC\u200C': '\uFEF0\uFEF2',
+    \uFE83: '\uFE84\uFE83',
+    \uFE81: '\uFE81\uFE82',
+    \uFE87: '\uFE87\uFE88',
+    \u0627: '\uFE8E\u0627',
+    \u0628: '\uFE8F\uFE90\uFE91\uFE92',
+    \u067E: '\uFB56\uFB57\uFB58\uFB59',
+    \u062A: '\uFE95\uFE96\uFE97\uFE98',
+    \u062B: '\uFE99\uFE9A\uFE9B\uFE9C',
+    \u062C: '\uFE9D\uFE9E\uFE9F\uFEA0',
+    \u0686: '\uFB7A\uFB7B\uFB7C\uFB7D',
+    \u062D: '\uFEA1\uFEA2\uFEA3\uFEA4',
+    \u062E: '\uFEA5\uFEA6\uFEA7\uFEA8',
+    \u062F: '\uFEA9\uFEAA',
+    \u0630: '\uFEAB\uFEAC',
+    \u0631: '\uFEAD\uFEAE',
+    \u0632: '\uFEAF\uFEB0',
+    \u0698: '\uFB8A\uFB8B',
+    \u0633: '\uFEB1\uFEB2\uFEB3\uFEB4',
+    \u0634: '\uFEB5\uFEB6\uFEB7\uFEB8',
+    \u0635: '\uFEB9\uFEBA\uFEBB\uFEBC',
+    \u0636: '\uFEBD\uFEBE\uFEBF\uFEC0',
+    \u0637: '\uFEC1\uFEC2\uFEC3\uFEC4',
+    \u0638: '\uFEC5\uFEC6\uFEC7\uFEC8',
+    \u0639: '\uFEC9\uFECA\uFECB\uFECC',
+    \u063A: '\uFECD\uFECE\uFECF\uFED0',
+    \u0641: '\uFED1\uFED2\uFED3\uFED4',
+    \u0642: '\uFED5\uFED6\uFED7\uFED8',
+    \u06A9: '\uFB8E\uFB8F\uFB90\uFB91\uFED9\uFEDA\uFEDB\uFEDC',
+    \u06AF: '\uFB92\uFB93\uFB94\uFB95',
+    \u0644: '\uFEDD\uFEDE\uFEDF\uFEE0',
+    \u0645: '\uFEE1\uFEE2\uFEE3\uFEE4',
+    \u0646: '\uFEE5\uFEE6\uFEE7\uFEE8',
+    \u0647: '\uFEE9\uFEEA\uFEEB\uFEEC',
+    \u0647\u0654: '\uFBA4\uFBA5',
+    \u0648: '\uFEED\uFEEE',
+    \uFE85: '\uFE85\uFE86',
+    \u06CC: '\uFBFC\uFBFD\uFBFE\uFBFF\uFEEF\uFEF0\uFEF1\uFEF2\uFEF3\uFEF4',
+    \u0626: '\uFE89\uFE8A\uFE8B\uFE8C',
+    \u0644\u0627: '\uFEFC',
+    \uFEF9: '\uFEFA',
+    \uFEF7: '\uFEF8',
+    \uFEF5: '\uFEF6',
   }
-
-  /* eslint-enable */
 
   /**
    * Cleans up a given text by applying various text cleaning techniques based on options.
