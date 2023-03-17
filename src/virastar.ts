@@ -221,6 +221,14 @@ export class Virastar {
   }
 
   /**
+   * Initializes a new instance of Virastar with the given options.
+   * @param {VirastarOptions} [options] - The options to configure the Virastar instance.
+   */
+  constructor(options: VirastarOptions = {}) {
+    this.opts = this.parseOptions(options)
+  }
+
+  /**
    * Cleans up a given text by applying various text cleaning techniques based on options.
    *
    * @param text The text to be cleaned up.
@@ -584,6 +592,62 @@ export class Virastar {
       text = text.replace(/^[ ]/g, '').replace(/[ ]$/g, '')
     }
 
+    return text
+  }
+
+  /**
+   * Parses the given options and returns an object with default options overridden by the given options.
+   * @param options - The options to parse.
+   * @returns An object with default options overridden by the given options.
+   */
+  private parseOptions(options: Record<string, any> = {}): Record<string, any> {
+    // Initialize an object with default options.
+    const parsed: Record<string, any> = { ...this.defaultOptions }
+
+    // Override default options with given options.
+    for (const key in options) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
+        parsed[key] = options[key]
+      }
+    }
+
+    // Return the parsed options object.
+    return parsed
+  }
+
+  /**
+   * Replaces all occurrences of characters from a given batch in the text
+   * with their corresponding characters from another batch.
+   * @param text - The input text.
+   * @param fromBatch - The batch of characters to be replaced.
+   * @param toBatch - The batch of replacement characters.
+   * @returns The text with replaced characters.
+   */
+  private charReplace(
+    text: string,
+    fromBatch: string,
+    toBatch: string,
+  ): string {
+    const fromChars = fromBatch.split('')
+    const toChars = toBatch.split('')
+    for (let i = 0; i < fromChars.length; i++) {
+      text = text.replace(new RegExp(fromChars[i], 'g'), toChars[i])
+    }
+    return text
+  }
+
+  /**
+   * Replaces characters in the given text based on the replacement map provided
+   * @param text - The text to replace characters in
+   * @param array
+   * @returns The modified text after replacing characters
+   */
+  private arrReplace(text: string, array: { [key: string]: string }) {
+    for (const i in array) {
+      if (array.hasOwnProperty(i)) {
+        text = text.replace(new RegExp(`[${array[i]}]`, 'g'), i)
+      }
+    }
     return text
   }
 
