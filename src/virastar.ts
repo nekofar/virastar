@@ -48,83 +48,7 @@ interface VirastarOptions {
 export class Virastar {
   private readonly opts: VirastarOptions = {}
 
-  /**
-   * Initializes a new instance of Virastar with the given options.
-   * @param {VirastarOptions} [options] - The options to configure the Virastar instance.
-   */
-  constructor(options: VirastarOptions = {}) {
-    this.opts = this.parseOptions(options)
-  }
-
-  /**
-   * Parses the given options and returns an object with default options overridden by the given options.
-   * @param options - The options to parse.
-   * @returns An object with default options overridden by the given options.
-   */
-  private parseOptions(options: Record<string, any> = {}): Record<string, any> {
-    // Initialize an object with default options.
-    const parsed: Record<string, any> = { ...this.defaults }
-
-    // Override default options with given options.
-    for (const key in options) {
-      if (Object.prototype.hasOwnProperty.call(options, key)) {
-        parsed[key] = options[key]
-      }
-    }
-
-    // Return the parsed options object.
-    return parsed
-  }
-
-  /**
-   * Replaces all occurrences of characters from a given batch in the text
-   * with their corresponding characters from another batch.
-   * @param text - The input text.
-   * @param fromBatch - The batch of characters to be replaced.
-   * @param toBatch - The batch of replacement characters.
-   * @returns The text with replaced characters.
-   */
-  private charReplace(
-    text: string,
-    fromBatch: string,
-    toBatch: string,
-  ): string {
-    const fromChars = fromBatch.split('')
-    const toChars = toBatch.split('')
-    for (let i = 0; i < fromChars.length; i++) {
-      const re = new RegExp(fromChars[i], 'g')
-      text = text.replace(re, toChars[i])
-    }
-    return text
-  }
-
-  /**
-   * Replaces characters in the given text based on the replacement map provided
-   * @param text - The text to replace characters in
-   * @param array
-   * @returns The modified text after replacing characters
-   */
-  private arrReplace(text: string, array: { [key: string]: string }) {
-    for (const i in array) {
-      if (array.hasOwnProperty(i)) {
-        // eslint-disable-line no-prototype-builtins
-        text = text.replace(this.newRegExp('[' + array[i] + ']'), i)
-      }
-    }
-    return text
-  }
-
-  /**
-   * Creates and returns a new regular expression object.
-   * @param pattern The pattern to be searched for.
-   * @param flags The regular expression flags to use (optional).
-   * @returns A new regular expression object.
-   */
-  private newRegExp(pattern: string, flags?: string): RegExp {
-    return new RegExp(pattern, flags || 'g')
-  }
-
-  private charsPersian = [
+  private readonly charsPersian = [
     '\u0621',
     '\u0627',
     '\u0622',
@@ -997,55 +921,39 @@ export class Virastar {
     return (
       text
 
-        // must done before others
+        // must be done before others
         // *ha *haye
         .replace(
-          this.newRegExp(
-            '([' +
-              this.charsPersian +
-              this.charsDiacritic +
-              ']) (ها(ی)?[' +
-              this.patternAfter +
-              '])',
+          new RegExp(
+            `([${this.charsPersian}${this.charsDiacritic}]) (ها(ی)?[${this.patternAfter}])`,
+            'g',
           ),
           replacement,
         )
 
         // *am *at *ash *ei *eid *eem *and *man *tan *shan
         .replace(
-          this.newRegExp(
-            '([' +
-              this.charsPersian +
-              this.charsDiacritic +
-              ']) ((ام|ات|اش|ای|اید|ایم|اند|مان|تان|شان)[' +
-              this.patternAfter +
-              '])',
+          new RegExp(
+            `([${this.charsPersian}${this.charsDiacritic}]) ((ام|ات|اش|ای|اید|ایم|اند|مان|تان|شان)[${this.patternAfter}])`,
+            'g',
           ),
           replacement,
         )
 
         // *tar *tari *tarin
         .replace(
-          this.newRegExp(
-            '([' +
-              this.charsPersian +
-              this.charsDiacritic +
-              ']) (تر((ی)|(ین))?[' +
-              this.patternAfter +
-              '])',
+          new RegExp(
+            `([${this.charsPersian}${this.charsDiacritic}]) (تر((ی)|(ین))?[${this.patternAfter}])`,
+            'g',
           ),
           replacement,
         )
 
         // *hayee *hayam *hayat *hayash *hayetan *hayeman *hayeshan
         .replace(
-          this.newRegExp(
-            '([' +
-              this.charsPersian +
-              this.charsDiacritic +
-              ']) ((هایی|هایم|هایت|هایش|هایمان|هایتان|هایشان)[' +
-              this.patternAfter +
-              '])',
+          new RegExp(
+            `([${this.charsPersian}${this.charsDiacritic}]) ((هایی|هایم|هایت|هایش|هایمان|هایتان|هایشان)[${this.patternAfter}])`,
+            'g',
           ),
           replacement,
         )
@@ -1283,20 +1191,17 @@ export class Virastar {
     return (
       text
         // cleans zwnj before diacritic characters
-        .replace(this.newRegExp('\u200c([' + this.charsDiacritic + '])'), '$1')
+        .replace(new RegExp(`\u200c([${this.charsDiacritic}])`, 'g'), '$1')
 
         // cleans more than one diacritic characters
         // props @languagetool-org
         .replace(
-          this.newRegExp(`(.*)([${this.charsDiacritic}]){2,}(.*)`),
+          new RegExp(`(.*)([${this.charsDiacritic}]){2,}(.*)`, 'g'),
           '$1$2$3',
         )
 
         // cleans spaces before diacritic characters
-        .replace(
-          this.newRegExp('(\\S)[ ]+([' + this.charsDiacritic + '])'),
-          '$1$2',
-        )
+        .replace(new RegExp(`(\\S) +([${this.charsDiacritic}])`, 'g'), '$1$2')
     )
   }
 
@@ -1366,7 +1271,7 @@ export class Virastar {
 
     for (let iStart = 0; iStart < start.length; iStart++) {
       const sElement = start[iStart]
-      const sReg = this.newRegExp('^\\' + sElement, 'i')
+      const sReg = new RegExp(`^\\${sElement}`, 'i')
       if (sReg.test(text)) {
         text = text.replace(sReg, '').trim()
         after.push(sElement)
@@ -1375,7 +1280,7 @@ export class Virastar {
 
     for (let iEnd = 0; iEnd < end.length; iEnd++) {
       const eElement = end[iEnd]
-      const eReg = this.newRegExp('\\' + eElement + '$', 'i')
+      const eReg = new RegExp(`\\${eElement}$`, 'i')
       if (eReg.test(text)) {
         text = text.replace(eReg, '').trim()
         before.push(eElement)
