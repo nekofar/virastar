@@ -46,7 +46,7 @@ interface VirastarOptions {
 }
 
 export class Virastar {
-  private readonly opts: VirastarOptions = {}
+  private readonly options: VirastarOptions = {}
 
   private readonly charsPersian =
     '\u0621' +
@@ -103,7 +103,7 @@ export class Virastar {
     '\u0651'
 
   // @source: https://github.com/jhermsmeier/uri.regex
-  private readonly patternURI =
+  private readonly patternURI: string =
     `([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|` +
     `%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|` +
     `::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|` +
@@ -127,7 +127,7 @@ export class Virastar {
 
   private readonly patternAfter = `\\s.,;\u060C\u061B!\u061F?"'()[\\]{}\u201C\u201D\u00AB\u00BB`
 
-  private readonly defaultOptions = {
+  private readonly defaultOptions: VirastarOptions = {
     cleanup_begin_and_end: true,
     cleanup_extra_marks: true,
     cleanup_kashidas: true,
@@ -174,7 +174,7 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  private readonly persianDigits =
+  private readonly persianDigits: string =
     '\u06F1' +
     '\u06F2' +
     '\u06F3' +
@@ -208,7 +208,7 @@ export class Virastar {
   }
 
   // props @ebraminio/persiantools
-  private readonly persianGlyphs = {
+  private readonly persianGlyphs: { [key: string]: string } = {
     // these two are for visually available ZWNJ #visualZwnj
     '\u0626': '\uFE89\uFE8A\uFE8B\uFE8C',
     '\u0627': '\uFE8E\u0627',
@@ -261,7 +261,7 @@ export class Virastar {
    * @param {VirastarOptions} [options] - The options to configure the Virastar instance.
    */
   constructor(options: VirastarOptions = {}) {
-    this.opts = this.parseOptions(options)
+    this.options = this.parseOptions(options)
   }
 
   /**
@@ -278,7 +278,7 @@ export class Virastar {
       return text
     }
 
-    const opts = options ? this.parseOptions(options) : this.opts
+    const opts = options ? this.parseOptions(options) : this.options
 
     // Single space paddings around the string
     text = ` ${text} `
