@@ -48,7 +48,7 @@ interface VirastarOptions {
 export class Virastar {
   private readonly options: VirastarOptions = {}
 
-  private readonly charsPersian =
+  private readonly persianChars =
     '\u0621' +
     '\u0627' +
     '\u0622' +
@@ -92,7 +92,7 @@ export class Virastar {
     '\u0643'
 
   // @REF: https://en.wikipedia.org/wiki/Persian_alphabet#Diacritics
-  private readonly charsDiacritic =
+  private readonly diacriticChars =
     '\u0652' +
     '\u064C' +
     '\u064D' +
@@ -1025,7 +1025,7 @@ export class Virastar {
         // *ha *haye
         .replace(
           new RegExp(
-            `([${this.charsPersian}${this.charsDiacritic}]) (ها(ی)?[${this.patternAfter}])`,
+            `([${this.persianChars}${this.diacriticChars}]) (ها(ی)?[${this.patternAfter}])`,
             'g',
           ),
           replacement,
@@ -1034,7 +1034,7 @@ export class Virastar {
         // *am *at *ash *ei *eid *eem *and *man *tan *shan
         .replace(
           new RegExp(
-            `([${this.charsPersian}${this.charsDiacritic}]) ((ام|ات|اش|ای|اید|ایم|اند|مان|تان|شان)[${this.patternAfter}])`,
+            `([${this.persianChars}${this.diacriticChars}]) ((ام|ات|اش|ای|اید|ایم|اند|مان|تان|شان)[${this.patternAfter}])`,
             'g',
           ),
           replacement,
@@ -1043,7 +1043,7 @@ export class Virastar {
         // *tar *tari *tarin
         .replace(
           new RegExp(
-            `([${this.charsPersian}${this.charsDiacritic}]) (تر((ی)|(ین))?[${this.patternAfter}])`,
+            `([${this.persianChars}${this.diacriticChars}]) (تر((ی)|(ین))?[${this.patternAfter}])`,
             'g',
           ),
           replacement,
@@ -1052,7 +1052,7 @@ export class Virastar {
         // *hayee *hayam *hayat *hayash *hayetan *hayeman *hayeshan
         .replace(
           new RegExp(
-            `([${this.charsPersian}${this.charsDiacritic}]) ((هایی|هایم|هایت|هایش|هایمان|هایتان|هایشان)[${this.patternAfter}])`,
+            `([${this.persianChars}${this.diacriticChars}]) ((هایی|هایم|هایت|هایش|هایمان|هایتان|هایشان)[${this.patternAfter}])`,
             'g',
           ),
           replacement,
@@ -1292,17 +1292,17 @@ export class Virastar {
     return (
       text
         // cleans zwnj before diacritic characters
-        .replace(new RegExp(`\u200c([${this.charsDiacritic}])`, 'g'), '$1')
+        .replace(new RegExp(`\u200c([${this.diacriticChars}])`, 'g'), '$1')
 
         // cleans more than one diacritic characters
         // props @languagetool-org
         .replace(
-          new RegExp(`(.*)([${this.charsDiacritic}]){2,}(.*)`, 'g'),
+          new RegExp(`(.*)([${this.diacriticChars}]){2,}(.*)`, 'g'),
           '$1$2$3',
         )
 
         // cleans spaces before diacritic characters
-        .replace(new RegExp(`(\\S) +([${this.charsDiacritic}])`, 'g'), '$1$2')
+        .replace(new RegExp(`(\\S) +([${this.diacriticChars}])`, 'g'), '$1$2')
     )
   }
 
@@ -1313,7 +1313,7 @@ export class Virastar {
    * @returns The input text with all diacritic characters removed.
    */
   private removeDiacritics(text: string): string {
-    return text.replace(new RegExp(`[${this.charsDiacritic}]+`, 'g'), '')
+    return text.replace(new RegExp(`[${this.diacriticChars}]+`, 'g'), '')
   }
 
   /**
