@@ -93,7 +93,8 @@ export class Virastar {
   ].join()
 
   // @REF: https://en.wikipedia.org/wiki/Persian_alphabet#Diacritics
-  private readonly charsDiacritic = '\u0652\u064C\u064D\u064B\u064F\u0650\u064E\u0651'
+  private readonly charsDiacritic =
+    '\u0652\u064C\u064D\u064B\u064F\u0650\u064E\u0651'
 
   // @source: https://github.com/jhermsmeier/uri.regex
   private readonly patternURI = `([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?`
@@ -1143,24 +1144,25 @@ export class Virastar {
     )
   }
 
+  /**
+   * Replaces extra spaces around braces in the given text.
+   *
+   * @param text - The input text.
+   * @returns The input text with extra spaces around braces removed.
+   */
   private fixBracesSpacing(text: string) {
+    const patterns: RegExp[] = [
+      /[ \t\u200c]*(\()\s*([^)]+?)\s*?(\))[ \t\u200c]*/g, // matches "(...)"
+      /[ \t\u200c]*(\[)\s*([^\]]+?)\s*?(])[ \t\u200c]*/g, // matches "[...]"
+      /[ \t\u200c]*(\{)\s*([^}]+?)\s*?(})[ \t\u200c]*/g, // matches "{...}"
+      /[ \t\u200c]*(“)\s*([^”]+?)\s*?(”)[ \t\u200c]*/g, // matches "“...”"
+      /[ \t\u200c]*(«)\s*([^»]+?)\s*?(»)[ \t\u200c]*/g, // matches "«...»"
+    ]
+
     const replacement = ' $1$2$3 '
-    return (
-      text
-        // removes inside spaces and more than one outside
-        // for `()`, `[]`, `{}`, `“”` and `«»`
-        .replace(
-          /[ \t\u200c]*(\()\s*([^)]+?)\s*?(\))[ \t\u200c]*/g,
-          replacement,
-        )
-        .replace(
-          /[ \t\u200c]*(\[)\s*([^\]]+?)\s*?(])[ \t\u200c]*/g,
-          replacement,
-        )
-        .replace(/[ \t\u200c]*(\{)\s*([^}]+?)\s*?(})[ \t\u200c]*/g, replacement)
-        .replace(/[ \t\u200c]*(“)\s*([^”]+?)\s*?(”)[ \t\u200c]*/g, replacement)
-        .replace(/[ \t\u200c]*(«)\s*([^»]+?)\s*?(»)[ \t\u200c]*/g, replacement)
-    )
+    return patterns.reduce((result, pattern) => {
+      return result.replace(pattern, replacement)
+    }, text)
   }
 
   /**
