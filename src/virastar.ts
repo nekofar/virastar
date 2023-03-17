@@ -93,15 +93,14 @@ export class Virastar {
   ].join()
 
   // @REF: https://en.wikipedia.org/wiki/Persian_alphabet#Diacritics
-  private charsDiacritic = '\u0652\u064C\u064D\u064B\u064F\u0650\u064E\u0651'
+  private readonly charsDiacritic = '\u0652\u064C\u064D\u064B\u064F\u0650\u064E\u0651'
 
   // @source: https://github.com/jhermsmeier/uri.regex
-  private patternURI =
-    "([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?"
-  private patternAfter =
-    '\\s.,;\u060C\u061B!\u061F?"\'()[\\]{}\u201C\u201D\u00AB\u00BB'
+  private readonly patternURI = `([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?`
 
-  private defaults = {
+  private readonly patternAfter = `\\s.,;\u060C\u061B!\u061F?"'()[\\]{}\u201C\u201D\u00AB\u00BB`
+
+  private readonly defaultOptions = {
     cleanup_begin_and_end: true,
     cleanup_extra_marks: true,
     cleanup_kashidas: true,
@@ -148,10 +147,10 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  private persianDigits =
+  private readonly persianDigits =
     '\u06F1\u06F2\u06F3\u06F4\u06F5\u06F6\u06F7\u06F8\u06F9\u06F0'
 
-  private entities: { [key: string]: string } = {
+  private readonly htmlEntities: { [key: string]: string } = {
     'sbquo;': '\u201a',
     'lsquo;': '\u2018',
     'lsquor;': '\u201a',
@@ -173,52 +172,52 @@ export class Virastar {
   }
 
   // props @ebraminio/persiantools
-  private persianGlyphs = {
+  private readonly persianGlyphs = {
     // these two are for visually available ZWNJ #visualZwnj
-    '\u200C\u0647': '\uFEEB',
+    '\u0626': '\uFE89\uFE8A\uFE8B\uFE8C',
+    '\u0627': '\uFE8E\u0627',
+    '\u0628': '\uFE8F\uFE90\uFE91\uFE92',
+    '\u062A': '\uFE95\uFE96\uFE97\uFE98',
+    '\u062B': '\uFE99\uFE9A\uFE9B\uFE9C',
+    '\u062C': '\uFE9D\uFE9E\uFE9F\uFEA0',
+    '\u062D': '\uFEA1\uFEA2\uFEA3\uFEA4',
+    '\u062E': '\uFEA5\uFEA6\uFEA7\uFEA8',
+    '\u062F': '\uFEA9\uFEAA',
+    '\u0630': '\uFEAB\uFEAC',
+    '\u0631': '\uFEAD\uFEAE',
+    '\u0632': '\uFEAF\uFEB0',
+    '\u0633': '\uFEB1\uFEB2\uFEB3\uFEB4',
+    '\u0634': '\uFEB5\uFEB6\uFEB7\uFEB8',
+    '\u0635': '\uFEB9\uFEBA\uFEBB\uFEBC',
+    '\u0636': '\uFEBD\uFEBE\uFEBF\uFEC0',
+    '\u0637': '\uFEC1\uFEC2\uFEC3\uFEC4',
+    '\u0638': '\uFEC5\uFEC6\uFEC7\uFEC8',
+    '\u0639': '\uFEC9\uFECA\uFECB\uFECC',
+    '\u063A': '\uFECD\uFECE\uFECF\uFED0',
+    '\u0641': '\uFED1\uFED2\uFED3\uFED4',
+    '\u0642': '\uFED5\uFED6\uFED7\uFED8',
+    '\u0644': '\uFEDD\uFEDE\uFEDF\uFEE0',
+    '\u0644\u0627': '\uFEFC',
+    '\u0645': '\uFEE1\uFEE2\uFEE3\uFEE4',
+    '\u0646': '\uFEE5\uFEE6\uFEE7\uFEE8',
+    '\u0647': '\uFEE9\uFEEA\uFEEB\uFEEC',
+    '\u0647\u0654': '\uFBA4\uFBA5',
+    '\u0648': '\uFEED\uFEEE',
+    '\u067E': '\uFB56\uFB57\uFB58\uFB59',
+    '\u0686': '\uFB7A\uFB7B\uFB7C\uFB7D',
+    '\u0698': '\uFB8A\uFB8B',
+    '\u06A9': '\uFB8E\uFB8F\uFB90\uFB91\uFED9\uFEDA\uFEDB\uFEDC',
+    '\u06AF': '\uFB92\uFB93\uFB94\uFB95',
+    '\u06CC': '\uFBFC\uFBFD\uFBFE\uFBFF\uFEEF\uFEF0\uFEF1\uFEF2\uFEF3\uFEF4',
     '\u06CC\u200C': '\uFEF0\uFEF2',
-    ﺃ: '\uFE84\uFE83',
-    ﺁ: '\uFE81\uFE82',
-    ﺇ: '\uFE87\uFE88',
-    ا: '\uFE8E\u0627',
-    ب: '\uFE8F\uFE90\uFE91\uFE92',
-    پ: '\uFB56\uFB57\uFB58\uFB59',
-    ت: '\uFE95\uFE96\uFE97\uFE98',
-    ث: '\uFE99\uFE9A\uFE9B\uFE9C',
-    ج: '\uFE9D\uFE9E\uFE9F\uFEA0',
-    چ: '\uFB7A\uFB7B\uFB7C\uFB7D',
-    ح: '\uFEA1\uFEA2\uFEA3\uFEA4',
-    خ: '\uFEA5\uFEA6\uFEA7\uFEA8',
-    د: '\uFEA9\uFEAA',
-    ذ: '\uFEAB\uFEAC',
-    ر: '\uFEAD\uFEAE',
-    ز: '\uFEAF\uFEB0',
-    ژ: '\uFB8A\uFB8B',
-    س: '\uFEB1\uFEB2\uFEB3\uFEB4',
-    ش: '\uFEB5\uFEB6\uFEB7\uFEB8',
-    ص: '\uFEB9\uFEBA\uFEBB\uFEBC',
-    ض: '\uFEBD\uFEBE\uFEBF\uFEC0',
-    ط: '\uFEC1\uFEC2\uFEC3\uFEC4',
-    ظ: '\uFEC5\uFEC6\uFEC7\uFEC8',
-    ع: '\uFEC9\uFECA\uFECB\uFECC',
-    غ: '\uFECD\uFECE\uFECF\uFED0',
-    ف: '\uFED1\uFED2\uFED3\uFED4',
-    ق: '\uFED5\uFED6\uFED7\uFED8',
-    ک: '\uFB8E\uFB8F\uFB90\uFB91\uFED9\uFEDA\uFEDB\uFEDC',
-    گ: '\uFB92\uFB93\uFB94\uFB95',
-    ل: '\uFEDD\uFEDE\uFEDF\uFEE0',
-    م: '\uFEE1\uFEE2\uFEE3\uFEE4',
-    ن: '\uFEE5\uFEE6\uFEE7\uFEE8',
-    ه: '\uFEE9\uFEEA\uFEEB\uFEEC',
-    هٔ: '\uFBA4\uFBA5',
-    و: '\uFEED\uFEEE',
-    ﺅ: '\uFE85\uFE86',
-    ی: '\uFBFC\uFBFD\uFBFE\uFBFF\uFEEF\uFEF0\uFEF1\uFEF2\uFEF3\uFEF4',
-    ئ: '\uFE89\uFE8A\uFE8B\uFE8C',
-    لا: '\uFEFC',
-    ﻹ: '\uFEFA',
-    ﻷ: '\uFEF8',
-    ﻵ: '\uFEF6',
+    '\u200C\u0647': '\uFEEB',
+    '\uFE81': '\uFE81\uFE82',
+    '\uFE83': '\uFE84\uFE83',
+    '\uFE85': '\uFE85\uFE86',
+    '\uFE87': '\uFE87\uFE88',
+    '\uFEF5': '\uFEF6',
+    '\uFEF7': '\uFEF8',
+    '\uFEF9': '\uFEFA',
   }
 
   /**
@@ -647,14 +646,15 @@ export class Virastar {
         const hasSemi = /;$/.test(match)
         const withoutSemi = hasSemi ? match.replace(/;$/, '') : match
         const target =
-          this.entities[withoutSemi] || (hasSemi && this.entities[match])
+          this.htmlEntities[withoutSemi] ||
+          (hasSemi && this.htmlEntities[match])
 
         if (typeof target === 'number') {
           return String.fromCharCode(target)
         } else if (typeof target === 'string') {
           return target
         } else {
-          return '&' + match
+          return `&${match}`
         }
       }
     })
@@ -1288,7 +1288,7 @@ export class Virastar {
     }
 
     for (let iBefore = 0; iBefore < before.length; iBefore++) {
-      text = before[iBefore] + ' ' + text
+      text = `${before[iBefore]} ${text}`
     }
 
     for (let iAfter = 0; iAfter < after.length; iAfter++) {
