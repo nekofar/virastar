@@ -41,32 +41,20 @@ import {
   ZwnjLateProcessor,
   ZwnjProcessor,
 } from './processors'
+import {
+  CommentPreserver,
+  CurlyBracesPreserver,
+  FrontMatterPreserver,
+  HtmlEntityPreserver,
+  HtmlPreserver,
+  IPreserver,
+  NonBreakingSpacePreserver,
+  SquareBracketsPreserver,
+  UriPreserver,
+} from './preservers'
 
 export class Virastar {
   private readonly options: VirastarOptions = {}
-
-  // @source: https://github.com/jhermsmeier/uri.regex
-  private readonly patternURI: string =
-    `([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|` +
-    `%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|` +
-    `::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|` +
-    `(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|` +
-    `(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|` +
-    `(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|` +
-    `(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|` +
-    `(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|` +
-    `(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|` +
-    `(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|` +
-    `[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)\\]|` +
-    `(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|` +
-    `2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|` +
-    `%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|` +
-    `%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|` +
-    `%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|` +
-    `%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|` +
-    `%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|` +
-    `%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|` +
-    `%[0-9A-Fa-f]{2})*))?(?:\\#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?`
 
   private readonly defaultOptions: VirastarOptions = {
     cleanup_begin_and_end: true,
@@ -115,6 +103,17 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
+  private preservers: Record<string, IPreserver> = {
+    preserve_braces: new CurlyBracesPreserver(),
+    preserve_brackets: new SquareBracketsPreserver(),
+    preserve_comments: new CommentPreserver(),
+    preserve_entities: new HtmlEntityPreserver(),
+    preserve_frontmatter: new FrontMatterPreserver(),
+    preserve_HTML: new HtmlPreserver(),
+    preserve_nbsps: new NonBreakingSpacePreserver(),
+    preserve_URIs: new UriPreserver(),
+  }
+
   private processors: Record<string, IProcessor> = {
     cleanup_begin_and_end: new BeginAndEndProcessor(),
     cleanup_extra_marks: new ExtraMarksProcessor(),
@@ -150,14 +149,6 @@ export class Virastar {
     normalize_dates: new DateNormalizerProcessor(),
     normalize_ellipsis: new EllipsisProcessor(),
     normalize_eol: new EndOfLineProcessor(),
-    // preserve_braces: false,
-    // preserve_brackets: false,
-    // preserve_comments: new ,
-    // preserve_entities: new ,
-    // preserve_frontmatter: new ,
-    // preserve_HTML: new ,
-    // preserve_nbsps: new ,
-    // preserve_URIs: new ,
     remove_diacritics: new RemoveDiacriticsProcessor(),
     // skip_markdown_ordered_lists_numbers_conversion: false,
   }
@@ -187,21 +178,43 @@ export class Virastar {
     // Parse the options object or use default options.
     const opts = options ? this.parseOptions(options) : this.options
 
-    // Pre-process the text.
-    const {
-      braces,
-      brackets,
-      comments,
-      frontMatter,
-      html,
-      markDownLinks,
-      nbsps,
-      text: preparedText,
-      uris,
-    } = this.prepare(opts, text)
+    // Single space paddings around the string
+    text = ` ${text} `
 
-    // Update the text to the prepared text.
-    text = preparedText
+    // Preserves front-matter data in the text
+    if (opts.preserve_frontmatter) {
+      text = this.preservers.preserve_frontmatter.prepare(text)
+    }
+
+    // Preserves all HTML tags in the text
+    if (opts.preserve_HTML) {
+      text = this.preservers.preserve_HTML.prepare(text)
+    }
+
+    // Preserves all HTML comments in the text
+    if (opts.preserve_comments) {
+      text = this.preservers.preserve_comments.prepare(text)
+    }
+
+    // Preserves strings inside square brackets (`[]`)
+    if (opts.preserve_brackets) {
+      text = this.preservers.preserve_brackets.prepare(text)
+    }
+
+    // Preserves strings inside curly braces (`{}`)
+    if (opts.preserve_braces) {
+      text = this.preservers.preserve_braces.prepare(text)
+    }
+
+    // Preserves all URI strings in the text
+    if (opts.preserve_URIs) {
+      text = this.preservers.preserve_URIs.prepare(text)
+    }
+
+    // Preserves all no-break space entities in the text
+    if (opts.preserve_nbsps) {
+      text = this.preservers.preserve_nbsps.prepare(text)
+    }
 
     // Decode HTML entities if specified
     if (opts.decode_htmlentities) {
@@ -210,12 +223,8 @@ export class Virastar {
 
     // preserves all html entities in the text
     // @props: @substack/node-ent
-    const entities: string[] = []
     if (opts.preserve_entities) {
-      text = text.replace(/&(#?[^;\W]+;?)/g, function (matched) {
-        entities.push(matched)
-        return ' __ENTITIES__PRESERVER__ '
-      })
+      text = this.preservers.preserve_entities.prepare(text)
     }
 
     if (opts.normalize_eol) {
@@ -246,7 +255,19 @@ export class Virastar {
       text = this.processors.fix_english_quotes.process(text)
     }
 
-    text = this.fixHamzeh(opts, text)
+    if (opts.fix_hamzeh) {
+      if (opts.fix_hamzeh_arabic) {
+        text = new HamzehArabicProcessor().process(text)
+      }
+
+      text = new HamzehProcessor().process(text)
+    } else if (opts.fix_suffix_spacing) {
+      if (opts.fix_hamzeh_arabic) {
+        text = new HamzehArabicAltProcessor().process(text)
+      }
+
+      text = new SuffixSpacingHamzehProcessor().process(text)
+    }
 
     if (opts.cleanup_rlm) {
       text = this.processors.cleanup_rlm.process(text)
@@ -334,18 +355,45 @@ export class Virastar {
       text = this.processors.cleanup_line_breaks.process(text)
     }
 
-    text = this.restore(opts, {
-      text,
-      entities,
-      nbsps,
-      markDownLinks,
-      uris,
-      braces,
-      brackets,
-      comments,
-      html,
-      frontMatter,
-    })
+    // bringing back entities
+    if (opts.preserve_entities) {
+      text = this.preservers.preserve_entities.restore(text)
+    }
+
+    // bringing back nbsps
+    if (opts.preserve_nbsps) {
+      text = this.preservers.preserve_nbsps.restore(text)
+    }
+
+    // bringing back URIs
+    if (opts.preserve_URIs) {
+      text = this.preservers.preserve_URIs.restore(text)
+    }
+
+    // bringing back braces
+    if (opts.preserve_braces) {
+      text = this.preservers.preserve_braces.restore(text)
+    }
+
+    // bringing back brackets
+    if (opts.preserve_brackets) {
+      text = this.preservers.preserve_brackets.restore(text)
+    }
+
+    // bringing back HTML comments
+    if (opts.preserve_comments) {
+      text = this.preservers.preserve_comments.restore(text)
+    }
+
+    // bringing back HTML tags
+    if (opts.preserve_HTML) {
+      text = this.preservers.preserve_HTML.restore(text)
+    }
+
+    // bringing back frontmatter
+    if (opts.preserve_frontmatter) {
+      text = this.preservers.preserve_frontmatter.restore(text)
+    }
 
     if (opts.cleanup_begin_and_end) {
       text = this.processors.cleanup_begin_and_end.process(text)
@@ -356,213 +404,6 @@ export class Virastar {
 
     return text
   }
-
-  private fixHamzeh(opts: Record<string, any>, text: string) {
-    if (opts.fix_hamzeh) {
-      if (opts.fix_hamzeh_arabic) {
-        text = new HamzehArabicProcessor().process(text)
-      }
-
-      text = new HamzehProcessor().process(text)
-    } else if (opts.fix_suffix_spacing) {
-      if (opts.fix_hamzeh_arabic) {
-        text = new HamzehArabicAltProcessor().process(text)
-      }
-
-      text = new SuffixSpacingHamzehProcessor().process(text)
-    }
-    return text
-  }
-
-  private prepare(opts: Record<string, any>, text: string) {
-    // Single space paddings around the string
-    text = ` ${text} `
-
-    // Preserves front-matter data in the text
-    const frontMatter: string[] = []
-    if (opts.preserve_frontmatter) {
-      text = text.replace(/^ ---[\S\s]*?---\n/g, (matched) => {
-        frontMatter.push(matched)
-        return ' __FRONTMATTER__PRESERVER__ '
-      })
-    }
-
-    // Preserves all HTML tags in the text
-    const html: string[] = []
-    if (opts.preserve_HTML) {
-      text = text.replace(/<\/?[a-z][^>]*?>/gi, (matched) => {
-        html.push(matched)
-        return ' __HTML__PRESERVER__ '
-      })
-    }
-
-    // Preserves all HTML comments in the text
-    const comments: string[] = []
-    if (opts.preserve_comments) {
-      text = text.replace(/<!--[\s\S]*?-->/g, (matched) => {
-        comments.push(matched)
-        return ' __COMMENT__PRESERVER__ '
-      })
-    }
-
-    // Preserves strings inside square brackets (`[]`)
-    const brackets: string[] = []
-    if (opts.preserve_brackets) {
-      text = text.replace(/(\[.*?])/g, (matched) => {
-        brackets.push(matched)
-        return ' __BRACKETS__PRESERVER__ '
-      })
-    }
-
-    // Preserves strings inside curly braces (`{}`)
-    const braces: string[] = []
-    if (opts.preserve_braces) {
-      text = text.replace(/(\{.*?})/g, function (matched) {
-        braces.push(matched)
-        return ' __BRACES__PRESERVER__ '
-      })
-    }
-
-    // Preserves all URI strings in the text
-    const mdlinks: string[] = []
-    const uris: string[] = []
-    if (opts.preserve_URIs) {
-      // Stores Markdown links separately
-      text = text.replace(/]\((.*?)\)/g, (matched, link) => {
-        if (link) {
-          mdlinks.push(link.trim())
-          return '](__MD_LINK__PRESERVER__)' // No padding!
-        }
-        return matched
-      })
-
-      text = text.replace(new RegExp(this.patternURI), (matched) => {
-        uris.push(matched)
-        return ' __URI__PRESERVER__ '
-      })
-    }
-
-    // Preserves all no-break space entities in the text
-    const nbsps: string[] = []
-    if (opts.preserve_nbsps) {
-      text = text.replace(/&nbsp;|&#160;/gi, (matched) => {
-        nbsps.push(matched)
-        return ' __NBSPS__PRESERVER__ '
-      })
-    }
-    return {
-      frontMatter: frontMatter,
-      text,
-      html,
-      comments,
-      brackets,
-      braces,
-      markDownLinks: mdlinks,
-      uris,
-      nbsps,
-    }
-  }
-
-  private restore(
-    opts: Record<string, any>,
-    preserved: {
-      text: string
-      entities: string[]
-      nbsps: string[]
-      markDownLinks: string[]
-      uris: string[]
-      braces: string[]
-      brackets: string[]
-      comments: string[]
-      html: string[]
-      frontMatter: string[]
-    },
-  ) {
-    let {
-      frontMatter,
-      text,
-      html,
-      comments,
-      brackets,
-      braces,
-      markDownLinks,
-      uris,
-      nbsps,
-      entities,
-    } = preserved
-
-    // bringing back entities
-    if (opts.preserve_entities) {
-      text = text.replace(
-        / ?__ENTITIES__PRESERVER__ ?/g,
-        () => entities.shift() as string,
-      )
-    }
-
-    // bringing back nbsps
-    if (opts.preserve_nbsps) {
-      text = text.replace(
-        / ?__NBSPS__PRESERVER__ ?/g,
-        () => nbsps.shift() as string,
-      )
-    }
-
-    // bringing back URIs
-    if (opts.preserve_URIs) {
-      // no padding!
-      text = text.replace(
-        /__MD_LINK__PRESERVER__/g,
-        () => markDownLinks.shift() as string,
-      )
-
-      text = text.replace(
-        / ?__URI__PRESERVER__ ?/g,
-        () => uris.shift() as string,
-      )
-    }
-
-    // bringing back braces
-    if (opts.preserve_braces) {
-      text = text.replace(
-        / ?__BRACES__PRESERVER__ ?/g,
-        () => braces.shift() as string,
-      )
-    }
-
-    // bringing back brackets
-    if (opts.preserve_brackets) {
-      text = text.replace(
-        / ?__BRACKETS__PRESERVER__ ?/g,
-        () => brackets.shift() as string,
-      )
-    }
-
-    // bringing back HTML comments
-    if (opts.preserve_comments) {
-      text = text.replace(
-        / ?__COMMENT__PRESERVER__ ?/g,
-        () => comments.shift() as string,
-      )
-    }
-
-    // bringing back HTML tags
-    if (opts.preserve_HTML) {
-      text = text.replace(
-        / ?__HTML__PRESERVER__ ?/g,
-        () => html.shift() as string,
-      )
-    }
-
-    // bringing back frontmatter
-    if (opts.preserve_frontmatter) {
-      text = text.replace(
-        / ?__FRONTMATTER__PRESERVER__ ?/g,
-        () => frontMatter.shift() as string,
-      )
-    }
-    return text
-  }
-
   private wordTokenizer(text: string, opts: Record<string, any>) {
     return text.replace(
       /(^|\s+)([[({"'“«]?)(\S+)([\])}"'”»]?)(?=($|\s+))/g,
