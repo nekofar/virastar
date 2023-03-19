@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class KashidasProcessor extends BaseProcessor {
   /**
@@ -11,11 +11,11 @@ export class KashidasProcessor extends BaseProcessor {
     return (
       text
         // converts kashida between numbers to ndash
-        .replace(/([0-9۰-۹]+)ـ+([0-9۰-۹]+)/g, "$1–$2")
+        .replace(/([0-9۰-۹]+)ـ+([0-9۰-۹]+)/g, '$1–$2')
 
         // removes all kashidas between non-whitespace characters
         // MAYBE: more punctuations
-        .replace(/([^\s.])\u0640+(?![\s.])/g, "$1")
-    );
+        .replace(/([^\s.])\u0640+(?![\s.])/g, '$1')
+    )
   }
 }

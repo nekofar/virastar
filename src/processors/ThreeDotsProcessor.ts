@@ -10,9 +10,9 @@ export class ThreeDotsProcessor extends BaseProcessor {
    */
   public process(text: string): string {
     // Removes spaces between dots
-    text = text.replace(/\.( +)(?=[.])/g, ".");
+    text = text.replace(/\.( +)(?=[.])/g, '.')
 
     // Replaces three dots with ellipsis character
-    return text.replace(/[ \t]*\.{3,}/g, "…");
+    return text.replace(/[ \t]*\.{3,}/g, '…')
   }
 }

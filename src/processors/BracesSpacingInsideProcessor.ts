@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 /**
  * A processor that replaces spaces inside various types of braces with no spaces.
@@ -10,7 +10,7 @@ export class BracesSpacingInsideProcessor extends BaseProcessor {
    * @returns {string} The fixed string with no spaces inside the braces.
    */
   public process(text: string): string {
-    const replacement = "$1$2$3";
+    const replacement = '$1$2$3'
 
     return (
       text
@@ -22,7 +22,7 @@ export class BracesSpacingInsideProcessor extends BaseProcessor {
         .replace(/(«)\s*([^»]+?)\s*?(»)/g, replacement)
 
         // Remove Markdown link spaces inside normal ().
-        .replace(/(\(\[.*?]\(.*?\))\s+(\))/g, "$1$2")
-    );
+        .replace(/(\(\[.*?]\(.*?\))\s+(\))/g, '$1$2')
+    )
   }
 }

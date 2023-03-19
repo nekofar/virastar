@@ -1,4 +1,4 @@
-import { BaseProcessor } from './BaseProcessor';
+import { BaseProcessor } from './BaseProcessor'
 
 export class RightToLeftMarkProcessor extends BaseProcessor {
   /**
@@ -7,6 +7,6 @@ export class RightToLeftMarkProcessor extends BaseProcessor {
    * @returns Returns the processed string.
    */
   public process(text: string): string {
-    return text.replace(/([^a-zA-Z\-_])(\u200F)/g, "$1\u200c");
+    return text.replace(/([^a-zA-Z\-_])(\u200F)/g, '$1\u200c')
   }
 }

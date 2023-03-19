@@ -1,15 +1,14 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class MiscNonPersianCharsProcessor extends BaseProcessor {
-
   // props @ebraminio/persiantools
   /**
    * Replaces misc. non-Persian characters with their Persian equivalent.
    * @param text The text to fix.
    * @returns The fixed text.
    */
-  process(text: string): string {
-    return this.charReplace(text, "كڪيىۍېہە", "ککییییههه");
+  public process(text: string): string {
+    return this.charReplace(text, 'كڪيىۍېہە', 'ککییییههه')
   }
 
   /**

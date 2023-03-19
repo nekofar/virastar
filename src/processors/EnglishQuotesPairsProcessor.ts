@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class EnglishQuotesPairsProcessor extends BaseProcessor {
   /**
@@ -7,7 +7,7 @@ export class EnglishQuotesPairsProcessor extends BaseProcessor {
    * @param text The text to fix.
    * @returns The fixed text.
    */
-  public process(text: string, options?: object): string {
-    return text.replace(/“(.+?)”/g, "«$1»");
+  public process(text: string): string {
+    return text.replace(/“(.+?)”/g, '«$1»')
   }
 }

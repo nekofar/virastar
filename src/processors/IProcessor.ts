@@ -1,3 +1,3 @@
 export interface IProcessor {
-  process(text: string, options?: object): string
+  process(text: string): string
 }

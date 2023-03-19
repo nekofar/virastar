@@ -13,10 +13,10 @@ export class DashProcessor implements BaseProcessor {
     return (
       text
         // Replaces triple dash with mdash.
-        .replace(/-{3}/g, "\u2014")
+        .replace(/-{3}/g, '\u2014')
 
         // Replaces double dash with ndash.
-        .replace(/-{2}/g, "\u2013")
-    );
+        .replace(/-{2}/g, '\u2013')
+    )
   }
 }

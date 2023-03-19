@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class PrefixSpacingProcessor extends BaseProcessor {
   /**
@@ -8,7 +8,7 @@ export class PrefixSpacingProcessor extends BaseProcessor {
    * @returns The processed text with zwnj between the word and the prefix.
    */
   public process(text: string): string {
-    return this.fixPrefixSpacing(text);
+    return this.fixPrefixSpacing(text)
   }
 
   /**
@@ -18,9 +18,9 @@ export class PrefixSpacingProcessor extends BaseProcessor {
    * @returns The processed text with zwnj between the word and the prefix.
    */
   private fixPrefixSpacing(text: string): string {
-    const replacement = "$1\u200c$3";
+    const replacement = '$1\u200c$3'
     return text
       .replace(/((\s|^)ن?می) ([^ ])/g, replacement)
-      .replace(/((\s|^)بی) ([^ ])/g, replacement);
+      .replace(/((\s|^)بی) ([^ ])/g, replacement)
   }
 }

@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class SuffixSpacingMiscProcessor extends BaseProcessor {
   /**
@@ -10,7 +10,7 @@ export class SuffixSpacingMiscProcessor extends BaseProcessor {
   public process(text: string): string {
     return text.replace(
       /(\S)ه[\u200c\u200e][ئی]ی([\s\u200c\u200e])/g,
-      "$1ه\u200cای$2"
-    );
+      '$1ه\u200cای$2',
+    )
   }
 }

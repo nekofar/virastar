@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class PunctuationProcessor extends BaseProcessor {
   /**
@@ -7,7 +7,7 @@ export class PunctuationProcessor extends BaseProcessor {
    * @returns {string} The processed text.
    */
   public process(text: string): string {
-    return this.fixPunctuations(text);
+    return this.fixPunctuations(text)
   }
 
   /**
@@ -16,15 +16,15 @@ export class PunctuationProcessor extends BaseProcessor {
    * @returns {string} The processed text.
    */
   private fixPunctuations(text: string): string {
-    return this.charReplace(text, ",;", "،؛");
+    return this.charReplace(text, ',;', '،؛')
   }
 
   private charReplace(text: string, from: string, to: string): string {
-    let result = "";
+    let result = ''
     for (let i = 0; i < text.length; i++) {
-      const index = from.indexOf(text[i]);
-      result += index === -1 ? text[i] : to[index];
+      const index = from.indexOf(text[i])
+      result += index === -1 ? text[i] : to[index]
     }
-    return result;
+    return result
   }
 }

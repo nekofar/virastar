@@ -1,7 +1,7 @@
 import { VirastarOptions } from './VirastarOptions'
 import {
   ArabicNumbersProcessor,
-  BeginAndEndProcessor,
+  LeadingAndTrailingSpaceProcessor,
   BracesSpacingInsideProcessor,
   BracesSpacingProcessor,
   DashProcessor,
@@ -126,7 +126,7 @@ export class Virastar {
     }
 
     this.processors = {
-      removeLeadingAndTrailingSpaces: new BeginAndEndProcessor(),
+      removeLeadingAndTrailingSpaces: new LeadingAndTrailingSpaceProcessor(),
       cleanupExtraMarks: new ExtraMarksProcessor(),
       cleanupKashidas: new KashidasProcessor(),
       cleanupLineBreaks: new LineBreakProcessor(),

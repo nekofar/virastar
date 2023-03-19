@@ -1,4 +1,4 @@
-import { FrontMatterPreserver } from '../../src/preservers/FrontMatterPreserver'
+import { FrontMatterPreserver } from './FrontMatterPreserver'
 
 describe('FrontMatterPreserver', () => {
   it('should correctly preserve front matter and restore it', () => {

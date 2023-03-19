@@ -6,7 +6,7 @@ export class HamzehArabicProcessor extends BaseProcessor {
    * @param text The input string to replace Arabic hamzeh in.
    * @returns The input string with Arabic hamzeh replaced with هٔ.
    */
-  process(text: string): string {
-    return text.replace(/(\S)ة([\s\u200c\u200e])/g, "$1هٔ$2");
+  public process(text: string): string {
+    return text.replace(/(\S)ة([\s\u200c\u200e])/g, '$1هٔ$2')
   }
 }

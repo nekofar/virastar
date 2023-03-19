@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class ExtraMarksProcessor extends BaseProcessor {
   /**
@@ -9,9 +9,9 @@ export class ExtraMarksProcessor extends BaseProcessor {
    */
   public process(text: string): string {
     // remove extra marks
-    text = this.cleanupExtraMarks(text);
+    text = this.cleanupExtraMarks(text)
 
-    return text;
+    return text
   }
 
   /**
@@ -22,18 +22,18 @@ export class ExtraMarksProcessor extends BaseProcessor {
    */
   private cleanupExtraMarks(text: string) {
     // remove space between different/same marks
-    text = text.replace(/([؟?!])([ ]+)(?=[؟?!])/g, "$1");
+    text = text.replace(/([؟?!])([ ]+)(?=[؟?!])/g, '$1')
 
     // replace more than one exclamation mark with just one
-    text = text.replace(/(!){2,}/g, "$1");
+    text = text.replace(/(!){2,}/g, '$1')
 
     // replace more than one english or persian question mark with just one
-    text = text.replace(/([\u061F?]){2,}/g, "$1");
+    text = text.replace(/([\u061F?]){2,}/g, '$1')
 
     // re-order consecutive marks
-    text = text.replace(/(!)([ \t]*)([\u061F?])/g, "$3$1");
+    text = text.replace(/(!)([ \t]*)([\u061F?])/g, '$3$1')
 
     // `?!` --> `!?`
-    return text;
+    return text
   }
 }

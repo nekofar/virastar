@@ -12,6 +12,6 @@ export class EndOfLineProcessor extends BaseProcessor {
    */
   public process(text: string): string {
     // Replace all Windows-style and Mac-style end of line characters with Unix-style end of line character (\n)
-    return text.replace(/\r?\n|\r/g, "\n");
+    return text.replace(/\r?\n|\r/g, '\n')
   }
 }

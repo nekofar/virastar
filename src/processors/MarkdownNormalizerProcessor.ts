@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 /**
  * A processor that normalizes various spacing issues in Markdown, including removing spaces between
@@ -16,24 +16,24 @@ export class MarkdownNormalizerProcessor extends BaseProcessor {
       text
         // removes space between ! and opening brace on markdown images
         // EXAMPLE: `! [alt] (src)` --> `![alt](src)`
-        .replace(/! (\[.*?])[ ]?(\(.*?\))[ ]?/g, "!$1$2")
+        .replace(/! (\[.*?])[ ]?(\(.*?\))[ ]?/g, '!$1$2')
 
         // removes spaces between [] and ()
         // EXAMPLE: `[text] (link)` --> `[text](link)`
-        .replace(/(\[.*?])[ \t]+(\(.*?\))/g, "$1$2")
+        .replace(/(\[.*?])[ \t]+(\(.*?\))/g, '$1$2')
 
         // removes spaces inside double () [] {}
         // EXAMPLE: `[[ text ]]` --> `[[text]]`
-        .replace(/\(\([ \t]*(.*?)[ \t]*\)\)/g, "(($1))")
-        .replace(/\[\[[ \t]*(.*?)[ \t]*]]/g, "[[$1]]")
-        .replace(/\{\{[ \t]*(.*?)[ \t]*}}/g, "{{$1}}")
-        .replace(/\{\{\{[ \t]*(.*?)[ \t]*}}}/g, "{{{$1}}}") // mustache escape
+        .replace(/\(\([ \t]*(.*?)[ \t]*\)\)/g, '(($1))')
+        .replace(/\[\[[ \t]*(.*?)[ \t]*]]/g, '[[$1]]')
+        .replace(/\{\{[ \t]*(.*?)[ \t]*}}/g, '{{$1}}')
+        .replace(/\{\{\{[ \t]*(.*?)[ \t]*}}}/g, '{{{$1}}}') // mustache escape
 
         // removes spaces between double () [] {}
         // EXAMPLE: `[[text] ]` --> `[[text]]`
-        .replace(/(\(\(.*\))[ \t]+(\))/g, "$1$2")
-        .replace(/(\[\[.*])[ \t]+(])/g, "$1$2")
-        .replace(/(\{\{.*})[ \t]+(})/g, "$1$2")
-    );
+        .replace(/(\(\(.*\))[ \t]+(\))/g, '$1$2')
+        .replace(/(\[\[.*])[ \t]+(])/g, '$1$2')
+        .replace(/(\{\{.*})[ \t]+(})/g, '$1$2')
+    )
   }
 }

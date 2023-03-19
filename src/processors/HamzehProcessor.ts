@@ -1,4 +1,4 @@
-import { BaseProcessor } from './BaseProcessor';
+import { BaseProcessor } from './BaseProcessor'
 
 export class HamzehProcessor extends BaseProcessor {
   /**
@@ -8,7 +8,7 @@ export class HamzehProcessor extends BaseProcessor {
    * @returns The fixed text.
    */
   public process(text: string): string {
-    const replacement = "$1هٔ$3";
+    const replacement = '$1هٔ$3'
 
     return (
       text
@@ -23,6 +23,6 @@ export class HamzehProcessor extends BaseProcessor {
 
         // replaces هٓ or single-character ۀ with the standard هٔ
         .replace(/(ۀ|هٓ)/g, 'هٔ')
-    );
+    )
   }
 }

@@ -10,11 +10,11 @@ export class EllipsisProcessor implements BaseProcessor {
     return (
       text
         // Replaces more than one ellipsis with one.
-        .replace(/(…){2,}/g, "…")
+        .replace(/(…){2,}/g, '…')
         // Adds a space after ellipsis if needed.
-        .replace(/…([ \t\u200c]*)/g, "… ")
+        .replace(/…([ \t\u200c]*)/g, '… ')
         // Removes spaces before ellipsis.
-        .replace(/[ \t]+…/g, "…")
-    );
+        .replace(/[ \t]+…/g, '…')
+    )
   }
 }

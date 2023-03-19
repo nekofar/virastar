@@ -1,4 +1,4 @@
-import { BaseProcessor } from "./BaseProcessor";
+import { BaseProcessor } from './BaseProcessor'
 
 export class QuestionMarkProcessor extends BaseProcessor {
   /**
@@ -6,8 +6,8 @@ export class QuestionMarkProcessor extends BaseProcessor {
    * @param text - The text to fix
    * @returns The text with fixed question marks
    */
-  public process(text: string, options?: object): string {
-    return this.fixQuestionMark(text);
+  public process(text: string): string {
+    return this.fixQuestionMark(text)
   }
 
   /**
@@ -16,6 +16,6 @@ export class QuestionMarkProcessor extends BaseProcessor {
    * @returns The text with fixed question marks
    */
   private fixQuestionMark(text: string): string {
-    return text.replace(/(\?)/g, "\u061F"); // \u061F = ؟
+    return text.replace(/(\?)/g, '\u061F') // \u061F = ؟
   }
 }

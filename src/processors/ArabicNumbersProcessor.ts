@@ -1,17 +1,20 @@
 import { BaseProcessor } from './BaseProcessor'
 
+/**
+ * A processor that replaces Arabic numbers with their Persian equivalent.
+ */
 export class ArabicNumbersProcessor extends BaseProcessor {
   private readonly digits: string =
     '\u06F1' +
-    "\u06F2" +
-    "\u06F3" +
-    "\u06F4" +
-    "\u06F5" +
-    "\u06F6" +
-    "\u06F7" +
-    "\u06F8" +
-    "\u06F9" +
-    "\u06F0"
+    '\u06F2' +
+    '\u06F3' +
+    '\u06F4' +
+    '\u06F5' +
+    '\u06F6' +
+    '\u06F7' +
+    '\u06F8' +
+    '\u06F9' +
+    '\u06F0'
 
   /**
    * Replaces Arabic numbers with their Persian equivalent.
@@ -19,8 +22,8 @@ export class ArabicNumbersProcessor extends BaseProcessor {
    * @param text - The input text.
    * @returns The text with Arabic numbers replaced with their Persian equivalent.
    */
-  process(text: string): string {
-    return this.charReplace(text, "١٢٣٤٥٦٧٨٩٠", this.digits);
+  public process(text: string): string {
+    return this.charReplace(text, '١٢٣٤٥٦٧٨٩٠', this.digits)
   }
 
   /**
