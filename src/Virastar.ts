@@ -331,60 +331,7 @@ export class Virastar {
     }
 
     // word tokenizer
-    text = text.replace(
-      /(^|\s+)([[({"'“«]?)(\S+)([\])}"'”»]?)(?=($|\s+))/g,
-      (matched, before, leadings, word, trailings, after) => {
-        // should not replace to persian chars in english phrases
-        if (word.match(/[a-zA-Z\-_]{2,}/g)) {
-          return matched
-        }
-
-        // should not touch sprintf directives
-        // @source: https://stackoverflow.com/a/8915445/
-        if (
-          word.match(
-            /%(?:\d+\$)?[+-]?(?:[ 0]|'.)?-?\d*(?:\.\d+)?[bcdeEufFgGosxX]/g,
-          )
-        ) {
-          return matched
-        }
-
-        // should not touch numbers in html entities
-        if (word.match(/&#\d+;/g)) {
-          return matched
-        }
-
-        // skips converting english numbers of ordered lists in markdown
-        if (
-          opts.skip_markdown_ordered_lists_numbers_conversion &&
-          (matched + trailings + after).match(/(?:\r?\n|\r\n?|(?:^|\n))\d+\.\s/)
-        ) {
-          return matched
-        }
-
-        if (opts.fix_english_numbers) {
-          matched = this.processors.fix_english_numbers.process(matched);
-        }
-
-        if (opts.fix_numeral_symbols) {
-          matched = this.processors.fix_numeral_symbols.process(matched);
-        }
-
-        if (opts.fix_punctuations) {
-          matched = this.processors.fix_punctuations.process(matched);
-        }
-
-        if (opts.fix_misc_non_persian_chars) {
-          matched = this.processors.fix_misc_non_persian_chars.process(matched);
-        }
-
-        if (opts.fix_question_mark) {
-          matched = this.processors.fix_question_mark.process(matched);
-        }
-
-        return matched
-      },
-    )
+    text = this.wordTokenizer(text, opts);
 
     if (opts.normalize_dates) {
       text = this.processors.normalize_dates.process(text);
@@ -534,7 +481,64 @@ export class Virastar {
       text = text.replace(/^ /g, "").replace(/ $/g, "");
     }
 
-    return text
+    return text;
+  }
+
+  private wordTokenizer(text: string, opts: Record<string, any>) {
+    return text.replace(
+      /(^|\s+)([[({"'“«]?)(\S+)([\])}"'”»]?)(?=($|\s+))/g,
+      (matched, before, leadings, word, trailings, after) => {
+        // should not replace to persian chars in english phrases
+        if (word.match(/[a-zA-Z\-_]{2,}/g)) {
+          return matched;
+        }
+
+        // should not touch sprintf directives
+        // @source: https://stackoverflow.com/a/8915445/
+        if (
+          word.match(
+            /%(?:\d+\$)?[+-]?(?:[ 0]|'.)?-?\d*(?:\.\d+)?[bcdeEufFgGosxX]/g
+          )
+        ) {
+          return matched;
+        }
+
+        // should not touch numbers in html entities
+        if (word.match(/&#\d+;/g)) {
+          return matched;
+        }
+
+        // skips converting english numbers of ordered lists in markdown
+        if (
+          opts.skip_markdown_ordered_lists_numbers_conversion &&
+          (matched + trailings + after).match(/(?:\r?\n|\r\n?|(?:^|\n))\d+\.\s/)
+        ) {
+          return matched;
+        }
+
+        if (opts.fix_english_numbers) {
+          matched = this.processors.fix_english_numbers.process(matched);
+        }
+
+        if (opts.fix_numeral_symbols) {
+          matched = this.processors.fix_numeral_symbols.process(matched);
+        }
+
+        if (opts.fix_punctuations) {
+          matched = this.processors.fix_punctuations.process(matched);
+        }
+
+        if (opts.fix_misc_non_persian_chars) {
+          matched = this.processors.fix_misc_non_persian_chars.process(matched);
+        }
+
+        if (opts.fix_question_mark) {
+          matched = this.processors.fix_question_mark.process(matched);
+        }
+
+        return matched;
+      }
+    );
   }
 
   /**
@@ -544,7 +548,7 @@ export class Virastar {
    */
   private parseOptions(options: Record<string, any> = {}): Record<string, any> {
     // Initialize an object with default options.
-    const parsed: Record<string, any> = { ...this.defaultOptions }
+    const parsed: Record<string, any> = { ...this.defaultOptions };
 
     // Override default options with given options.
     for (const key in options) {
