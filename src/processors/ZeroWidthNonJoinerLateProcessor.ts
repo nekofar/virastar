@@ -1,6 +1,6 @@
 import { BaseProcessor } from './BaseProcessor'
 
-export class ZwnjLateProcessor extends BaseProcessor {
+export class ZeroWidthNonJoinerLateProcessor extends BaseProcessor {
   // props @ebraminio/persiantools
   // late checks for zwnjs
   process(text: string): string {

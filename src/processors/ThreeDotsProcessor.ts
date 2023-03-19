@@ -8,9 +8,9 @@ export class ThreeDotsProcessor extends BaseProcessor {
    * @param text The input text to fix punctuation spacing.
    * @returns The text with fixed punctuation spacing for three dots.
    */
-  process(text: string): string {
+  public process(text: string): string {
     // Removes spaces between dots
-    text = text.replace(/\.([ ]+)(?=[.])/g, ".");
+    text = text.replace(/\.( +)(?=[.])/g, ".");
 
     // Replaces three dots with ellipsis character
     return text.replace(/[ \t]*\.{3,}/g, "…");

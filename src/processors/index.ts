@@ -1,6 +1,6 @@
 export { DashProcessor } from "./DashProcessor";
-export { ZwnjProcessor } from "./ZwnjProcessor";
-export { ZwnjLateProcessor } from "./ZwnjLateProcessor";
+export { ZeroWidthNonJoinerProcessor } from "./ZeroWidthNonJoinerProcessor";
+export { ZeroWidthNonJoinerLateProcessor } from "./ZeroWidthNonJoinerLateProcessor";
 export { DecodeHtmlEntitiesProcessor } from "./DecodeHtmlEntitiesProcessor";
 export { EndOfLineProcessor } from "./EndOfLineProcessor";
 export { ThreeDotsProcessor } from "./ThreeDotsProcessor";

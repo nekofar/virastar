@@ -1,6 +1,6 @@
 import { BaseProcessor } from './BaseProcessor'
 
-export class ZwnjProcessor extends BaseProcessor {
+export class ZeroWidthNonJoinerProcessor extends BaseProcessor {
   // props @ebraminio/persiantools
   /**
    * Replaces soft hyphens with ZWNJ and cleans up unnecessary ZWNJ.

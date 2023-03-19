@@ -3,96 +3,96 @@ import { sprintf } from 'sprintf-js'
 
 // demo default options
 const options = {
-  // cleanup_begin_and_end: true,
-  // cleanup_extra_marks: true,
-  // cleanup_kashidas: true,
+  // removeLeadingAndTrailingSpaces: true,
+  // cleanupExtraMarks: true,
+  // cleanupKashidas: true,
   // cleanup_line_breaks: true,
-  // cleanup_rlm: true,
-  // cleanup_spacing: true,
-  // cleanup_zwnj: true,
-  // decode_htmlentities: true,
-  // fix_arabic_numbers: true,
-  // fix_dashes: true,
-  // fix_diacritics: true,
-  // fix_english_numbers: true,
-  // fix_english_quotes_pairs: true,
-  // fix_english_quotes: true,
-  // fix_hamzeh: true,
-  // fix_hamzeh_arabic: true,
-  // fix_misc_non_persian_chars: true,
-  // fix_misc_spacing: true,
-  // fix_numeral_symbols: true,
-  // fix_prefix_spacing: true,
-  // fix_persian_glyphs: false,
-  // fix_punctuations: true,
-  // fix_question_mark: true,
-  // fix_spacing_for_braces_and_quotes: true,
-  // fix_spacing_for_punctuations: true,
-  // fix_suffix_misc: true,
+  // cleanupRightToLeftMarks: true,
+  // cleanupSpacing: true,
+  // cleanupZeroWidthNonJoiners: true,
+  // decodeHtmlEntities: true,
+  // replaceArabicNumbers: true,
+  // replaceDashes: true,
+  // replaceDiacritics: true,
+  // replaceEnglishNumbers: true,
+  // replaceEnglishQuotesPairs: true,
+  // replaceEnglishQuotes: true,
+  // replaceHamzeh: true,
+  // replaceHamzehArabic: true,
+  // replaceMiscNonPersianChars: true,
+  // replaceMiscSpacing: true,
+  // replaceNumeralSymbols: true,
+  // replacePrefixSpacing: true,
+  // replacePersianGlyphs: false,
+  // replacePunctuations: true,
+  // replaceQuestionMarks: true,
+  // replaceSpacingForBracesAndQuotes: true,
+  // removeSpacingForPunctuations: true,
+  // replaceSuffixMisc: true,
   // fix_suffix_spacing: true,
-  // fix_three_dots: true,
-  // kashidas_as_parenthetic: true,
-  // markdown_normalize_braces: true,
-  // markdown_normalize_lists: true,
-  // normalize_dates: true,
-  // normalize_ellipsis: true,
-  // normalize_eol: true,
-  // preserve_braces: true,
-  // preserve_brackets: true,
-  // preserve_comments: true,
-  // preserve_entities: true,
-  // preserve_frontmatter: true,
-  // preserve_HTML: true,
-  // preserve_nbsps: true,
-  // preserve_URIs: true,
-  // remove_diacritics: true,
+  // normalizeThreeDots: true,
+  // normalizeKashidas: true,
+  // normalizeMarkDownBraces: true,
+  // normalizeMarkDownLists: true,
+  // normalizeJalaliDates: true,
+  // normalizeEllipsis: true,
+  // normalizeEndOfLines: true,
+  // preserveCurlyBraces: true,
+  // preserveSquareBrackets: true,
+  // preserveHtmlComments: true,
+  // preserveHtmlEntities: true,
+  // preserveFrontMatter: true,
+  // preserveHtmlTags: true,
+  // preserveNonBreakingSpaces: true,
+  // preserveUris: true,
+  // removeDiacritics: true,
   // skip_markdown_ordered_lists_numbers_conversion: true,
 }
 
 const optionsDisabled = {
-  cleanup_begin_and_end: false,
-  cleanup_extra_marks: false,
-  cleanup_kashidas: false,
+  removeLeadingAndTrailingSpaces: false,
+  cleanupExtraMarks: false,
+  cleanupKashidas: false,
   cleanup_line_breaks: false,
-  cleanup_rlm: false,
-  cleanup_spacing: false,
-  cleanup_zwnj: false,
-  decode_htmlentities: false,
-  fix_arabic_numbers: false,
-  fix_dashes: false,
-  fix_diacritics: false,
-  fix_english_numbers: false,
-  fix_english_quotes_pairs: false,
-  fix_english_quotes: false,
-  fix_hamzeh: false,
-  fix_hamzeh_arabic: false,
-  fix_misc_non_persian_chars: false,
-  fix_misc_spacing: false,
-  fix_numeral_symbols: false,
-  fix_prefix_spacing: false,
-  fix_persian_glyphs: false,
-  fix_punctuations: false,
-  fix_question_mark: false,
-  fix_spacing_for_braces_and_quotes: false,
-  fix_spacing_for_punctuations: false,
-  fix_suffix_misc: false,
+  cleanupRightToLeftMarks: false,
+  cleanupSpacing: false,
+  cleanupZeroWidthNonJoiners: false,
+  decodeHtmlEntities: false,
+  replaceArabicNumbers: false,
+  replaceDashes: false,
+  replaceDiacritics: false,
+  replaceEnglishNumbers: false,
+  replaceEnglishQuotesPairs: false,
+  replaceEnglishQuotes: false,
+  replaceHamzeh: false,
+  replaceHamzehArabic: false,
+  replaceMiscNonPersianChars: false,
+  replaceMiscSpacing: false,
+  replaceNumeralSymbols: false,
+  replacePrefixSpacing: false,
+  replacePersianGlyphs: false,
+  replacePunctuations: false,
+  replaceQuestionMarks: false,
+  replaceSpacingForBracesAndQuotes: false,
+  removeSpacingForPunctuations: false,
+  replaceSuffixMisc: false,
   fix_suffix_spacing: false,
-  fix_three_dots: false,
-  kashidas_as_parenthetic: false,
-  markdown_normalize_braces: false,
-  markdown_normalize_lists: false,
-  normalize_dates: false,
-  normalize_ellipsis: false,
-  normalize_eol: false,
-  preserve_braces: false,
-  preserve_brackets: false,
-  preserve_comments: false,
-  preserve_entities: false,
-  preserve_frontmatter: false,
-  preserve_HTML: false,
-  preserve_nbsps: false,
-  preserve_URIs: false,
-  remove_diacritics: false,
+  normalizeThreeDots: false,
+  normalizeKashidas: false,
+  normalizeMarkDownBraces: false,
+  normalizeMarkDownLists: false,
+  normalizeJalaliDates: false,
+  normalizeEllipsis: false,
+  normalizeEndOfLines: false,
+  preserveCurlyBraces: false,
+  preserveSquareBrackets: false,
+  preserveHtmlComments: false,
+  preserveHtmlEntities: false,
+  preserveFrontMatter: false,
+  preserveHtmlTags: false,
+  preserveNonBreakingSpaces: false,
+  preserveUris: false,
+  removeDiacritics: false,
   skip_markdown_ordered_lists_numbers_conversion: false,
 }
 
@@ -495,16 +495,16 @@ describe('Virastar', () => {
     })
 
     it('should fix heh plus hamza into ye', () => {
-      expect(virastar.cleanup('خانه‌ٔ پدری', { fix_hamzeh: false })).toBe(
+      expect(virastar.cleanup('خانه‌ٔ پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       )
-      expect(virastar.cleanup('خانه ء پدری', { fix_hamzeh: false })).toBe(
+      expect(virastar.cleanup('خانه ء پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       )
-      expect(virastar.cleanup('خانه ي پدری', { fix_hamzeh: false })).toBe(
+      expect(virastar.cleanup('خانه ي پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       )
-      expect(virastar.cleanup('خانه‌ی پدری', { fix_hamzeh: false })).toBe(
+      expect(virastar.cleanup('خانه‌ی پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       ) // no change
     })
@@ -618,13 +618,13 @@ describe('Virastar', () => {
     it('extra: fixHamzehArabic(): converts arabic hamza', () => {
       expect(
         virastar.cleanup('آن دسته از علایم که مشخص‌کنندة انتهای جمله', {
-          fix_hamzeh_arabic: true,
+          replaceHamzehArabic: true,
         }),
       ).toBe('آن دسته از علایم که مشخص‌کنندهٔ انتهای جمله')
       expect(
         virastar.cleanup('آن دسته از علایم که مشخص‌کنندة انتهای جمله', {
-          fix_hamzeh_arabic: true,
-          fix_hamzeh: false,
+          replaceHamzehArabic: true,
+          replaceHamzeh: false,
         }),
       ).toBe('آن دسته از علایم که مشخص‌کننده‌ی انتهای جمله')
     })
@@ -645,7 +645,7 @@ describe('Virastar', () => {
       expect(
         virastar.cleanup(
           'اذا عَمَّتِ الْبُلْدانَ الْفِتَنُ فَعَلَیکمْ بِقُمْ وَحَوالیها وَنَواحیها فَانَ الْبَلاءَ مَدْفُوعٌ عَنْها',
-          { remove_diacritics: true },
+          { removeDiacritics: true },
         ),
       ).toBe(
         'اذا عمت البلدان الفتن فعلیکم بقم وحوالیها ونواحیها فان البلاء مدفوع عنها',
@@ -665,22 +665,22 @@ describe('Virastar', () => {
       expect(result).toBe(expected)
     })
 
-    it('should preserve strings inside curly braces when preserve_braces is true', () => {
+    it('should preserve strings inside curly braces when preserveCurlyBraces is true', () => {
       const input = '{سلام}، این {جمله} یک {تست} است.'
       const expected = '{سلام}، این {جمله} یک {تست} است.'
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_braces: true,
+        preserveCurlyBraces: true,
       })
       expect(result).toBe(expected)
     })
 
-    it('should preserve strings inside brackets when preserve_brackets is true', () => {
+    it('should preserve strings inside brackets when preserveSquareBrackets is true', () => {
       const input = '[سلام]، این [جمله] یک [تست] است.'
       const expected = '[سلام]، این [جمله] یک [تست] است.'
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_brackets: true,
+        preserveSquareBrackets: true,
       })
       expect(result).toBe(expected)
     })
@@ -703,7 +703,7 @@ describe('Virastar', () => {
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_comments: true,
+        preserveHtmlComments: true,
       })
 
       expect(result).toBe(expected)
@@ -715,13 +715,13 @@ describe('Virastar', () => {
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_entities: true,
+        preserveHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
     })
 
-    it('should preserve frontmatter data when preserve_frontmatter is true', () => {
+    it('should preserve frontmatter data when preserveFrontMatter is true', () => {
       const input = `---
 title: My Awesome Title
 ---
@@ -735,13 +735,13 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_frontmatter: true,
+        preserveFrontMatter: true,
       })
 
       expect(result).toBe(expected)
     })
 
-    it('should preserve all HTML tags when preserve_HTML option is enabled', () => {
+    it('should preserve all HTML tags when preserveHtmlTags option is enabled', () => {
       const input =
         '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
       const expected =
@@ -749,13 +749,13 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_HTML: true,
+        preserveHtmlTags: true,
       })
 
       expect(result).toBe(expected)
     })
 
-    it('should preserve all no-break space entities when `preserve_nbsps` is true', () => {
+    it('should preserve all no-break space entities when `preserveNonBreakingSpaces` is true', () => {
       const input =
         'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
       const expected =
@@ -763,8 +763,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_nbsps: true,
-        decode_htmlentities: true,
+        preserveNonBreakingSpaces: true,
+        decodeHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
@@ -776,7 +776,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_URIs: true,
+        preserveUris: true,
       })
 
       expect(result).toBe(expected)
@@ -790,7 +790,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        preserve_URIs: true,
+        preserveUris: true,
       })
 
       expect(result).toBe(expected)
@@ -809,14 +809,14 @@ title: My Awesome Title
     })
   })
 
-  describe('cleanupBeginAndEnd', () => {
+  describe('removeLeadingAndTrailingSpaces', () => {
     it('should remove leading and trailing whitespace and newlines', () => {
       const input = '  \n\t۱۲۳۴۵۶۷۸۹۰  \n\t'
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_begin_and_end: true,
+        removeLeadingAndTrailingSpaces: true,
       })
 
       expect(result).toBe(expected)
@@ -828,7 +828,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_begin_and_end: true,
+        removeLeadingAndTrailingSpaces: true,
       })
 
       expect(result).toBe(expected)
@@ -840,7 +840,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_begin_and_end: true,
+        removeLeadingAndTrailingSpaces: true,
       })
 
       expect(result).toBe(expected)
@@ -852,7 +852,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_begin_and_end: true,
+        removeLeadingAndTrailingSpaces: true,
       })
 
       expect(result).toBe(expected)
@@ -864,7 +864,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_begin_and_end: true,
+        removeLeadingAndTrailingSpaces: true,
       })
 
       expect(result).toBe(expected)
@@ -878,7 +878,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_extra_marks: true,
+        cleanupExtraMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -890,7 +890,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_extra_marks: true,
+        cleanupExtraMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -902,7 +902,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_extra_marks: true,
+        cleanupExtraMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -914,7 +914,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_extra_marks: true,
+        cleanupExtraMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -928,7 +928,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_kashidas: true,
+        cleanupKashidas: true,
       })
 
       expect(result).toBe(expected)
@@ -940,7 +940,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_kashidas: true,
+        cleanupKashidas: true,
       })
 
       expect(result).toBe(expected)
@@ -954,7 +954,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_line_breaks: true,
+        cleanupLineBreaks: true,
       })
 
       expect(result).toBe(expected)
@@ -966,7 +966,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_line_breaks: true,
+        cleanupLineBreaks: true,
       })
 
       expect(result).toBe(expected)
@@ -978,7 +978,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_line_breaks: true,
+        cleanupLineBreaks: true,
       })
 
       expect(result).toBe(expected)
@@ -990,7 +990,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_line_breaks: true,
+        cleanupLineBreaks: true,
       })
 
       expect(result).toBe(expected)
@@ -1004,7 +1004,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_rlm: true,
+        cleanupRightToLeftMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -1016,7 +1016,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_rlm: true,
+        cleanupRightToLeftMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -1028,7 +1028,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_rlm: true,
+        cleanupRightToLeftMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -1040,7 +1040,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_rlm: true,
+        cleanupRightToLeftMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -1054,7 +1054,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_spacing: true,
+        cleanupSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1066,7 +1066,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_spacing: true,
+        cleanupSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1082,7 +1082,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_zwnj: true,
+        cleanupZeroWidthNonJoiners: true,
       })
 
       expect(result).toBe(expected)
@@ -1095,7 +1095,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_zwnj: true,
+        cleanupZeroWidthNonJoiners: true,
       })
 
       expect(result).toBe(expected)
@@ -1109,7 +1109,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_zwnj: true,
+        cleanupZeroWidthNonJoiners: true,
       })
 
       expect(result).toBe(expected)
@@ -1121,7 +1121,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_zwnj: true,
+        cleanupZeroWidthNonJoiners: true,
       })
 
       expect(result).toBe(expected)
@@ -1133,7 +1133,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        cleanup_zwnj: true,
+        cleanupZeroWidthNonJoiners: true,
       })
 
       expect(result).toBe(expected)
@@ -1149,7 +1149,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        decode_htmlentities: true,
+        decodeHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
@@ -1162,7 +1162,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        decode_htmlentities: true,
+        decodeHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
@@ -1174,7 +1174,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        decode_htmlentities: true,
+        decodeHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
@@ -1187,7 +1187,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        decode_htmlentities: true,
+        decodeHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
@@ -1200,7 +1200,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        decode_htmlentities: true,
+        decodeHtmlEntities: true,
       })
 
       expect(result).toBe(expected)
@@ -1214,7 +1214,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_arabic_numbers: true,
+        replaceArabicNumbers: true,
       })
 
       expect(result).toBe(expected)
@@ -1226,7 +1226,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_arabic_numbers: true,
+        replaceArabicNumbers: true,
       })
 
       expect(result).toBe(expected)
@@ -1240,7 +1240,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_dashes: true,
+        replaceDashes: true,
       })
 
       expect(result).toBe(expected)
@@ -1254,7 +1254,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_diacritics: true,
+        replaceDiacritics: true,
       })
 
       expect(result).toBe(expected)
@@ -1266,7 +1266,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_diacritics: true,
+        replaceDiacritics: true,
       })
 
       expect(result).toBe(expected)
@@ -1278,7 +1278,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_diacritics: true,
+        replaceDiacritics: true,
       })
 
       expect(result).toBe(expected)
@@ -1292,7 +1292,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_numbers: true,
+        replaceEnglishNumbers: true,
       })
 
       expect(result).toBe(expected)
@@ -1304,7 +1304,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_numbers: true,
+        replaceEnglishNumbers: true,
       })
 
       expect(result).toBe(expected)
@@ -1316,7 +1316,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_numbers: true,
+        replaceEnglishNumbers: true,
       })
 
       expect(result).toBe(expected)
@@ -1330,7 +1330,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes_pairs: true,
+        replaceEnglishQuotesPairs: true,
       })
 
       expect(result).toBe(expected)
@@ -1342,7 +1342,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes_pairs: true,
+        replaceEnglishQuotesPairs: true,
       })
 
       expect(result).toBe(expected)
@@ -1354,7 +1354,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes_pairs: true,
+        replaceEnglishQuotesPairs: true,
       })
 
       expect(result).toBe(expected)
@@ -1366,7 +1366,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes_pairs: true,
+        replaceEnglishQuotesPairs: true,
       })
 
       expect(result).toBe(expected)
@@ -1378,7 +1378,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes_pairs: true,
+        replaceEnglishQuotesPairs: true,
       })
 
       expect(result).toBe(expected)
@@ -1392,7 +1392,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes: true,
+        replaceEnglishQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1404,7 +1404,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes: true,
+        replaceEnglishQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1416,7 +1416,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_english_quotes: true,
+        replaceEnglishQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1430,8 +1430,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: false,
+        replaceHamzeh: true,
+        replaceHamzehArabic: false,
       })
 
       expect(result).toBe(expected)
@@ -1443,8 +1443,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expected)
@@ -1456,8 +1456,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expected)
@@ -1469,8 +1469,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expected)
@@ -1484,8 +1484,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expectedOutput)
@@ -1497,8 +1497,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expectedOutput)
@@ -1510,8 +1510,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expectedOutput)
@@ -1523,8 +1523,8 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_hamzeh: true,
-        fix_hamzeh_arabic: true,
+        replaceHamzeh: true,
+        replaceHamzehArabic: true,
       })
 
       expect(result).toBe(expectedOutput)
@@ -1538,7 +1538,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_misc_non_persian_chars: true,
+        replaceMiscNonPersianChars: true,
       })
 
       expect(result).toBe(expected)
@@ -1552,7 +1552,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_misc_spacing: true,
+        replaceMiscSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1564,7 +1564,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_misc_spacing: true,
+        replaceMiscSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1576,7 +1576,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_misc_spacing: true,
+        replaceMiscSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1590,7 +1590,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_numeral_symbols: true,
+        replaceNumeralSymbols: true,
       })
 
       expect(result).toBe(expected)
@@ -1602,7 +1602,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_numeral_symbols: true,
+        replaceNumeralSymbols: true,
       })
 
       expect(result).toBe(expected)
@@ -1616,7 +1616,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_prefix_spacing: true,
+        replacePrefixSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1628,7 +1628,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_prefix_spacing: true,
+        replacePrefixSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1640,7 +1640,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_prefix_spacing: true,
+        replacePrefixSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1654,7 +1654,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_persian_glyphs: true,
+        replacePersianGlyphs: true,
       })
 
       expect(result).toBe(expected)
@@ -1666,7 +1666,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_persian_glyphs: true,
+        replacePersianGlyphs: true,
       })
 
       expect(result).toBe(expected)
@@ -1681,7 +1681,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_punctuations: true,
+        replacePunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1695,7 +1695,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_question_mark: true,
+        replaceQuestionMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -1707,7 +1707,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_question_mark: true,
+        replaceQuestionMarks: true,
       })
 
       expect(result).toBe(expected)
@@ -1721,7 +1721,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_braces_and_quotes: true,
+        replaceSpacingForBracesAndQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1733,7 +1733,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_braces_and_quotes: true,
+        replaceSpacingForBracesAndQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1745,7 +1745,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_braces_and_quotes: true,
+        replaceSpacingForBracesAndQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1757,7 +1757,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_braces_and_quotes: true,
+        replaceSpacingForBracesAndQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1769,7 +1769,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_braces_and_quotes: true,
+        replaceSpacingForBracesAndQuotes: true,
       })
 
       expect(result).toBe(expected)
@@ -1783,7 +1783,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_punctuations: true,
+        removeSpacingForPunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1795,7 +1795,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_punctuations: true,
+        removeSpacingForPunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1807,7 +1807,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_punctuations: true,
+        removeSpacingForPunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1819,7 +1819,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_punctuations: true,
+        removeSpacingForPunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1831,7 +1831,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_punctuations: true,
+        removeSpacingForPunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1843,7 +1843,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_spacing_for_punctuations: true,
+        removeSpacingForPunctuations: true,
       })
 
       expect(result).toBe(expected)
@@ -1857,7 +1857,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_suffix_misc: true,
+        replaceSuffixMisc: true,
       })
 
       expect(result).toBe(expected)
@@ -1869,7 +1869,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_suffix_misc: true,
+        replaceSuffixMisc: true,
       })
 
       expect(result).toBe(expected)
@@ -1881,7 +1881,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_suffix_misc: true,
+        replaceSuffixMisc: true,
       })
 
       expect(result).toBe(expected)
@@ -1893,7 +1893,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_suffix_misc: true,
+        replaceSuffixMisc: true,
       })
 
       expect(result).toBe(expected)
@@ -1957,7 +1957,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_three_dots: true,
+        normalizeThreeDots: true,
       })
 
       expect(result).toBe(expected)
@@ -1969,7 +1969,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_three_dots: true,
+        normalizeThreeDots: true,
       })
 
       expect(result).toBe(expected)
@@ -1981,7 +1981,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        fix_three_dots: true,
+        normalizeThreeDots: true,
       })
 
       expect(result).toBe(expected)
@@ -1995,7 +1995,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        kashidas_as_parenthetic: true,
+        normalizeKashidas: true,
       })
 
       expect(result).toBe(expected)
@@ -2009,7 +2009,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_braces: true,
+        normalizeMarkDownBraces: true,
       })
 
       expect(result).toBe(expected)
@@ -2021,7 +2021,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_braces: true,
+        normalizeMarkDownBraces: true,
       })
 
       expect(result).toBe(expected)
@@ -2033,7 +2033,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_braces: true,
+        normalizeMarkDownBraces: true,
       })
 
       expect(result).toBe(expected)
@@ -2045,7 +2045,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_braces: true,
+        normalizeMarkDownBraces: true,
       })
 
       expect(result).toBe(expected)
@@ -2061,7 +2061,7 @@ title: My Awesome Title
 * item 2`
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_lists: true,
+        normalizeMarkDownLists: true,
       })
 
       expect(result).toBe(expected)
@@ -2075,7 +2075,7 @@ title: My Awesome Title
 - item 2`
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_lists: true,
+        normalizeMarkDownLists: true,
       })
 
       expect(result).toBe(expected)
@@ -2089,7 +2089,7 @@ title: My Awesome Title
 # item 2`
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        markdown_normalize_lists: true,
+        normalizeMarkDownLists: true,
       })
 
       expect(result).toBe(expected)
@@ -2103,7 +2103,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_dates: true,
+        normalizeJalaliDates: true,
       })
 
       expect(result).toBe(expected)
@@ -2115,7 +2115,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_dates: true,
+        normalizeJalaliDates: true,
       })
 
       expect(result).toBe(expected)
@@ -2127,7 +2127,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_dates: true,
+        normalizeJalaliDates: true,
       })
 
       expect(result).toBe(expected)
@@ -2139,7 +2139,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_dates: true,
+        normalizeJalaliDates: true,
       })
 
       expect(result).toBe(expected)
@@ -2153,7 +2153,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_ellipsis: true,
+        normalizeEllipsis: true,
       })
 
       expect(result).toBe(expected)
@@ -2165,7 +2165,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_ellipsis: true,
+        normalizeEllipsis: true,
       })
 
       expect(result).toBe(expected)
@@ -2179,7 +2179,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        normalize_eol: true,
+        normalizeEndOfLines: true,
       })
 
       expect(result).toBe(expected)
@@ -2193,7 +2193,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        remove_diacritics: true,
+        removeDiacritics: true,
       })
 
       expect(result).toBe(expected)
@@ -2205,7 +2205,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        remove_diacritics: true,
+        removeDiacritics: true,
       })
 
       expect(result).toBe(expected)
@@ -2217,7 +2217,7 @@ title: My Awesome Title
 
       const result = virastar.cleanup(input, {
         ...optionsDisabled,
-        remove_diacritics: true,
+        removeDiacritics: true,
       })
 
       expect(result).toBe(expected)

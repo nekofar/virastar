@@ -1,6 +1,6 @@
 import { BasePreserver } from './BasePreserver'
 
-export class CommentPreserver extends BasePreserver {
+export class HtmlCommentPreserver extends BasePreserver {
   prepare(text: string): string {
     return text.replace(/<!--[\s\S]*?-->/g, (matched) => {
       this.preserves.push(matched)

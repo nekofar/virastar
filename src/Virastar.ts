@@ -38,11 +38,11 @@ import {
   SuffixSpacingMiscProcessor,
   SuffixSpacingProcessor,
   ThreeDotsProcessor,
-  ZwnjLateProcessor,
-  ZwnjProcessor,
+  ZeroWidthNonJoinerLateProcessor,
+  ZeroWidthNonJoinerProcessor,
 } from './processors'
 import {
-  CommentPreserver,
+  HtmlCommentPreserver,
   CurlyBracesPreserver,
   FrontMatterPreserver,
   HtmlEntityPreserver,
@@ -57,101 +57,55 @@ export class Virastar {
   private readonly options: VirastarOptions = {}
 
   private readonly defaultOptions: VirastarOptions = {
-    cleanup_begin_and_end: true,
-    cleanup_extra_marks: true,
-    cleanup_kashidas: true,
-    cleanup_line_breaks: true,
-    cleanup_rlm: true,
-    cleanup_spacing: true,
-    cleanup_zwnj: true,
-    decode_htmlentities: true,
-    fix_arabic_numbers: true,
-    fix_dashes: true,
-    fix_diacritics: true,
-    fix_english_numbers: true,
-    fix_english_quotes_pairs: true,
-    fix_english_quotes: true,
-    fix_hamzeh: true,
-    fix_hamzeh_arabic: false,
-    fix_misc_non_persian_chars: true,
-    fix_misc_spacing: true,
-    fix_numeral_symbols: true,
-    fix_prefix_spacing: true,
-    fix_persian_glyphs: true,
-    fix_punctuations: true,
-    fix_question_mark: true,
-    fix_spacing_for_braces_and_quotes: true,
-    fix_spacing_for_punctuations: true,
-    fix_suffix_misc: true,
+    cleanupExtraMarks: true,
+    cleanupKashidas: true,
+    cleanupLineBreaks: true,
+    cleanupRightToLeftMarks: true,
+    cleanupSpacing: true,
+    cleanupZeroWidthNonJoiners: true,
+    decodeHtmlEntities: true,
     fix_suffix_spacing: true,
-    fix_three_dots: true,
-    kashidas_as_parenthetic: true,
-    markdown_normalize_braces: true,
-    markdown_normalize_lists: true,
-    normalize_dates: true,
-    normalize_ellipsis: true,
-    normalize_eol: true,
-    preserve_braces: false,
-    preserve_brackets: false,
-    preserve_comments: true,
-    preserve_entities: true,
-    preserve_frontmatter: true,
-    preserve_HTML: true,
-    preserve_nbsps: true,
-    preserve_URIs: true,
-    remove_diacritics: false,
+    normalizeEllipsis: true,
+    normalizeEndOfLines: true,
+    normalizeJalaliDates: true,
+    normalizeKashidas: true,
+    normalizeMarkDownBraces: true,
+    normalizeMarkDownLists: true,
+    normalizeThreeDots: true,
+    preserveCurlyBraces: false,
+    preserveFrontMatter: true,
+    preserveHtmlComments: true,
+    preserveHtmlEntities: true,
+    preserveHtmlTags: true,
+    preserveNonBreakingSpaces: true,
+    preserveSquareBrackets: false,
+    preserveUris: true,
+    removeDiacritics: false,
+    removeLeadingAndTrailingSpaces: true,
+    removeSpacingForPunctuations: true,
+    replaceArabicNumbers: true,
+    replaceDashes: true,
+    replaceDiacritics: true,
+    replaceEnglishNumbers: true,
+    replaceEnglishQuotes: true,
+    replaceEnglishQuotesPairs: true,
+    replaceHamzeh: true,
+    replaceHamzehArabic: false,
+    replaceMiscNonPersianChars: true,
+    replaceMiscSpacing: true,
+    replaceNumeralSymbols: true,
+    replacePersianGlyphs: true,
+    replacePrefixSpacing: true,
+    replacePunctuations: true,
+    replaceQuestionMarks: true,
+    replaceSpacingForBracesAndQuotes: true,
+    replaceSuffixMisc: true,
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  private preservers: Record<string, IPreserver> = {
-    preserve_braces: new CurlyBracesPreserver(),
-    preserve_brackets: new SquareBracketsPreserver(),
-    preserve_comments: new CommentPreserver(),
-    preserve_entities: new HtmlEntityPreserver(),
-    preserve_frontmatter: new FrontMatterPreserver(),
-    preserve_HTML: new HtmlPreserver(),
-    preserve_nbsps: new NonBreakingSpacePreserver(),
-    preserve_URIs: new UriPreserver(),
-  }
+  private preservers: Record<string, IPreserver>
 
-  private processors: Record<string, IProcessor> = {
-    cleanup_begin_and_end: new BeginAndEndProcessor(),
-    cleanup_extra_marks: new ExtraMarksProcessor(),
-    cleanup_kashidas: new KashidasProcessor(),
-    cleanup_line_breaks: new LineBreakProcessor(),
-    cleanup_rlm: new RightToLeftMarkProcessor(),
-    cleanup_spacing: new SpacingProcessor(),
-    cleanup_zwnj: new ZwnjProcessor(),
-    decode_htmlentities: new DecodeHtmlEntitiesProcessor(),
-    fix_arabic_numbers: new ArabicNumbersProcessor(),
-    fix_dashes: new DashProcessor(),
-    fix_diacritics: new DiacriticsProcessor(),
-    fix_english_numbers: new EnglishNumbersProcessor(),
-    fix_english_quotes_pairs: new EnglishQuotesPairsProcessor(),
-    fix_english_quotes: new EnglishQuotesProcessor(),
-    fix_hamzeh: new HamzehProcessor(),
-    fix_hamzeh_arabic: new HamzehArabicProcessor(),
-    fix_misc_non_persian_chars: new MiscNonPersianCharsProcessor(),
-    fix_misc_spacing: new MiscSpacingProcessor(),
-    fix_numeral_symbols: new NumeralSymbolProcessor(),
-    fix_prefix_spacing: new PrefixSpacingProcessor(),
-    fix_persian_glyphs: new GlyphsProcessor(),
-    fix_punctuations: new PunctuationProcessor(),
-    fix_question_mark: new QuestionMarkProcessor(),
-    fix_spacing_for_braces_and_quotes: new BracesSpacingProcessor(),
-    fix_spacing_for_punctuations: new PunctuationSpacingProcessor(),
-    fix_suffix_misc: new SuffixSpacingMiscProcessor(),
-    // fix_suffix_spacing: new SuffixSpacingHamzehProcessor,
-    fix_three_dots: new ThreeDotsProcessor(),
-    kashidas_as_parenthetic: new KashidasAsParentheticProcessor(),
-    markdown_normalize_braces: new MarkdownNormalizerProcessor(),
-    markdown_normalize_lists: new MarkdownListProcessor(),
-    normalize_dates: new DateNormalizerProcessor(),
-    normalize_ellipsis: new EllipsisProcessor(),
-    normalize_eol: new EndOfLineProcessor(),
-    remove_diacritics: new RemoveDiacriticsProcessor(),
-    // skip_markdown_ordered_lists_numbers_conversion: false,
-  }
+  private processors: Record<string, IProcessor>
 
   /**
    * Initializes a new instance of Virastar with the given options.
@@ -159,6 +113,54 @@ export class Virastar {
    */
   constructor(options: VirastarOptions = {}) {
     this.options = this.parseOptions(options)
+
+    this.preservers = {
+      preserveCurlyBraces: new CurlyBracesPreserver(),
+      preserveFrontMatter: new FrontMatterPreserver(),
+      preserveHtmlComments: new HtmlCommentPreserver(),
+      preserveHtmlEntities: new HtmlEntityPreserver(),
+      preserveHtmlTags: new HtmlPreserver(),
+      preserveNonBreakingSpaces: new NonBreakingSpacePreserver(),
+      preserveSquareBrackets: new SquareBracketsPreserver(),
+      preserveUris: new UriPreserver(),
+    }
+
+    this.processors = {
+      removeLeadingAndTrailingSpaces: new BeginAndEndProcessor(),
+      cleanupExtraMarks: new ExtraMarksProcessor(),
+      cleanupKashidas: new KashidasProcessor(),
+      cleanupLineBreaks: new LineBreakProcessor(),
+      cleanupRightToLeftMarks: new RightToLeftMarkProcessor(),
+      cleanupSpacing: new SpacingProcessor(),
+      cleanupZeroWidthNonJoiners: new ZeroWidthNonJoinerProcessor(),
+      decodeHtmlEntities: new DecodeHtmlEntitiesProcessor(),
+      normalizeEllipsis: new EllipsisProcessor(),
+      normalizeEndOfLines: new EndOfLineProcessor(),
+      normalizeJalaliDates: new DateNormalizerProcessor(),
+      normalizeKashidas: new KashidasAsParentheticProcessor(),
+      normalizeMarkDownBraces: new MarkdownNormalizerProcessor(),
+      normalizeMarkDownLists: new MarkdownListProcessor(),
+      normalizeThreeDots: new ThreeDotsProcessor(),
+      removeDiacritics: new RemoveDiacriticsProcessor(),
+      removeSpacingForPunctuations: new PunctuationSpacingProcessor(),
+      replaceArabicNumbers: new ArabicNumbersProcessor(),
+      replaceDashes: new DashProcessor(),
+      replaceDiacritics: new DiacriticsProcessor(),
+      replaceEnglishNumbers: new EnglishNumbersProcessor(),
+      replaceEnglishQuotes: new EnglishQuotesProcessor(),
+      replaceEnglishQuotesPairs: new EnglishQuotesPairsProcessor(),
+      replaceHamzeh: new HamzehProcessor(),
+      replaceHamzehArabic: new HamzehArabicProcessor(),
+      replaceMiscNonPersianChars: new MiscNonPersianCharsProcessor(),
+      replaceMiscSpacing: new MiscSpacingProcessor(),
+      replaceNumeralSymbols: new NumeralSymbolProcessor(),
+      replacePersianGlyphs: new GlyphsProcessor(),
+      replacePrefixSpacing: new PrefixSpacingProcessor(),
+      replacePunctuations: new PunctuationProcessor(),
+      replaceQuestionMarks: new QuestionMarkProcessor(),
+      replaceSpacingForBracesAndQuotes: new BracesSpacingProcessor(),
+      replaceSuffixMisc: new SuffixSpacingMiscProcessor(),
+    }
   }
 
   /**
@@ -182,221 +184,221 @@ export class Virastar {
     text = ` ${text} `
 
     // Preserves front-matter data in the text
-    if (opts.preserve_frontmatter) {
-      text = this.preservers.preserve_frontmatter.prepare(text)
+    if (opts.preserveFrontMatter) {
+      text = this.preservers.preserveFrontMatter.prepare(text)
     }
 
     // Preserves all HTML tags in the text
-    if (opts.preserve_HTML) {
-      text = this.preservers.preserve_HTML.prepare(text)
+    if (opts.preserveHtmlTags) {
+      text = this.preservers.preserveHtmlTags.prepare(text)
     }
 
     // Preserves all HTML comments in the text
-    if (opts.preserve_comments) {
-      text = this.preservers.preserve_comments.prepare(text)
+    if (opts.preserveHtmlComments) {
+      text = this.preservers.preserveHtmlComments.prepare(text)
     }
 
     // Preserves strings inside square brackets (`[]`)
-    if (opts.preserve_brackets) {
-      text = this.preservers.preserve_brackets.prepare(text)
+    if (opts.preserveSquareBrackets) {
+      text = this.preservers.preserveSquareBrackets.prepare(text)
     }
 
     // Preserves strings inside curly braces (`{}`)
-    if (opts.preserve_braces) {
-      text = this.preservers.preserve_braces.prepare(text)
+    if (opts.preserveCurlyBraces) {
+      text = this.preservers.preserveCurlyBraces.prepare(text)
     }
 
     // Preserves all URI strings in the text
-    if (opts.preserve_URIs) {
-      text = this.preservers.preserve_URIs.prepare(text)
+    if (opts.preserveUris) {
+      text = this.preservers.preserveUris.prepare(text)
     }
 
     // Preserves all no-break space entities in the text
-    if (opts.preserve_nbsps) {
-      text = this.preservers.preserve_nbsps.prepare(text)
+    if (opts.preserveNonBreakingSpaces) {
+      text = this.preservers.preserveNonBreakingSpaces.prepare(text)
     }
 
     // Decode HTML entities if specified
-    if (opts.decode_htmlentities) {
+    if (opts.decodeHtmlEntities) {
       text = new DecodeHtmlEntitiesProcessor().process(text)
     }
 
     // preserves all html entities in the text
     // @props: @substack/node-ent
-    if (opts.preserve_entities) {
-      text = this.preservers.preserve_entities.prepare(text)
+    if (opts.preserveHtmlEntities) {
+      text = this.preservers.preserveHtmlEntities.prepare(text)
     }
 
-    if (opts.normalize_eol) {
-      text = this.processors.normalize_eol.process(text)
+    if (opts.normalizeEndOfLines) {
+      text = this.processors.normalizeEndOfLines.process(text)
     }
 
-    if (opts.fix_persian_glyphs) {
-      text = this.processors.fix_persian_glyphs.process(text)
+    if (opts.replacePersianGlyphs) {
+      text = this.processors.replacePersianGlyphs.process(text)
     }
 
-    if (opts.fix_dashes) {
-      text = this.processors.fix_dashes.process(text)
+    if (opts.replaceDashes) {
+      text = this.processors.replaceDashes.process(text)
     }
 
-    if (opts.fix_three_dots) {
-      text = this.processors.fix_three_dots.process(text)
+    if (opts.normalizeThreeDots) {
+      text = this.processors.normalizeThreeDots.process(text)
     }
 
-    if (opts.normalize_ellipsis) {
-      text = this.processors.normalize_ellipsis.process(text)
+    if (opts.normalizeEllipsis) {
+      text = this.processors.normalizeEllipsis.process(text)
     }
 
-    if (opts.fix_english_quotes_pairs) {
-      text = this.processors.fix_english_quotes_pairs.process(text)
+    if (opts.replaceEnglishQuotesPairs) {
+      text = this.processors.replaceEnglishQuotesPairs.process(text)
     }
 
-    if (opts.fix_english_quotes) {
-      text = this.processors.fix_english_quotes.process(text)
+    if (opts.replaceEnglishQuotes) {
+      text = this.processors.replaceEnglishQuotes.process(text)
     }
 
-    if (opts.fix_hamzeh) {
-      if (opts.fix_hamzeh_arabic) {
+    if (opts.replaceHamzeh) {
+      if (opts.replaceHamzehArabic) {
         text = new HamzehArabicProcessor().process(text)
       }
 
       text = new HamzehProcessor().process(text)
     } else if (opts.fix_suffix_spacing) {
-      if (opts.fix_hamzeh_arabic) {
+      if (opts.replaceHamzehArabic) {
         text = new HamzehArabicAltProcessor().process(text)
       }
 
       text = new SuffixSpacingHamzehProcessor().process(text)
     }
 
-    if (opts.cleanup_rlm) {
-      text = this.processors.cleanup_rlm.process(text)
+    if (opts.cleanupRightToLeftMarks) {
+      text = this.processors.cleanupRightToLeftMarks.process(text)
     }
 
-    if (opts.cleanup_zwnj) {
-      text = this.processors.cleanup_zwnj.process(text)
+    if (opts.cleanupZeroWidthNonJoiners) {
+      text = this.processors.cleanupZeroWidthNonJoiners.process(text)
     }
 
-    if (opts.fix_arabic_numbers) {
-      text = this.processors.fix_arabic_numbers.process(text)
+    if (opts.replaceArabicNumbers) {
+      text = this.processors.replaceArabicNumbers.process(text)
     }
 
     // word tokenizer
     text = this.wordTokenizer(text, opts)
 
-    if (opts.normalize_dates) {
-      text = this.processors.normalize_dates.process(text)
+    if (opts.normalizeJalaliDates) {
+      text = this.processors.normalizeJalaliDates.process(text)
     }
 
-    if (opts.fix_prefix_spacing) {
-      text = this.processors.fix_prefix_spacing.process(text)
+    if (opts.replacePrefixSpacing) {
+      text = this.processors.replacePrefixSpacing.process(text)
     }
 
     if (opts.fix_suffix_spacing) {
       text = new SuffixSpacingProcessor().process(text)
     }
 
-    if (opts.fix_suffix_misc) {
+    if (opts.replaceSuffixMisc) {
       text = new SuffixSpacingMiscProcessor().process(text)
     }
 
-    if (opts.fix_spacing_for_braces_and_quotes) {
+    if (opts.replaceSpacingForBracesAndQuotes) {
       text = new BracesSpacingProcessor().process(text)
     }
 
-    if (opts.cleanup_extra_marks) {
-      text = this.processors.cleanup_extra_marks.process(text)
+    if (opts.cleanupExtraMarks) {
+      text = this.processors.cleanupExtraMarks.process(text)
     }
 
-    if (opts.fix_spacing_for_punctuations) {
-      text = this.processors.fix_spacing_for_punctuations.process(text)
+    if (opts.removeSpacingForPunctuations) {
+      text = this.processors.removeSpacingForPunctuations.process(text)
     }
 
-    if (opts.kashidas_as_parenthetic) {
-      text = this.processors.kashidas_as_parenthetic.process(text)
+    if (opts.normalizeKashidas) {
+      text = this.processors.normalizeKashidas.process(text)
     }
 
-    if (opts.cleanup_kashidas) {
-      text = this.processors.cleanup_kashidas.process(text)
+    if (opts.cleanupKashidas) {
+      text = this.processors.cleanupKashidas.process(text)
     }
 
-    if (opts.markdown_normalize_braces) {
-      text = this.processors.markdown_normalize_braces.process(text)
+    if (opts.normalizeMarkDownBraces) {
+      text = this.processors.normalizeMarkDownBraces.process(text)
     }
 
-    if (opts.markdown_normalize_lists) {
-      text = this.processors.markdown_normalize_lists.process(text)
+    if (opts.normalizeMarkDownLists) {
+      text = this.processors.normalizeMarkDownLists.process(text)
     }
 
     // doing it again after `fixPunctuationSpacing()`
-    if (opts.fix_spacing_for_braces_and_quotes) {
+    if (opts.replaceSpacingForBracesAndQuotes) {
       text = new BracesSpacingInsideProcessor().process(text)
     }
 
-    if (opts.fix_misc_spacing) {
-      text = this.processors.fix_misc_spacing.process(text)
+    if (opts.replaceMiscSpacing) {
+      text = this.processors.replaceMiscSpacing.process(text)
     }
 
-    if (opts.remove_diacritics) {
-      text = this.processors.remove_diacritics.process(text)
-    } else if (opts.fix_diacritics) {
-      text = this.processors.fix_diacritics.process(text)
+    if (opts.removeDiacritics) {
+      text = this.processors.removeDiacritics.process(text)
+    } else if (opts.replaceDiacritics) {
+      text = this.processors.replaceDiacritics.process(text)
     }
 
-    if (opts.cleanup_spacing) {
-      text = this.processors.cleanup_spacing.process(text)
+    if (opts.cleanupSpacing) {
+      text = this.processors.cleanupSpacing.process(text)
     }
 
-    if (opts.cleanup_zwnj) {
-      text = new ZwnjLateProcessor().process(text)
+    if (opts.cleanupZeroWidthNonJoiners) {
+      text = new ZeroWidthNonJoinerLateProcessor().process(text)
     }
 
-    if (opts.cleanup_line_breaks) {
-      text = this.processors.cleanup_line_breaks.process(text)
+    if (opts.cleanupLineBreaks) {
+      text = this.processors.cleanupLineBreaks.process(text)
     }
 
     // bringing back entities
-    if (opts.preserve_entities) {
-      text = this.preservers.preserve_entities.restore(text)
+    if (opts.preserveHtmlEntities) {
+      text = this.preservers.preserveHtmlEntities.restore(text)
     }
 
     // bringing back nbsps
-    if (opts.preserve_nbsps) {
-      text = this.preservers.preserve_nbsps.restore(text)
+    if (opts.preserveNonBreakingSpaces) {
+      text = this.preservers.preserveNonBreakingSpaces.restore(text)
     }
 
     // bringing back URIs
-    if (opts.preserve_URIs) {
-      text = this.preservers.preserve_URIs.restore(text)
+    if (opts.preserveUris) {
+      text = this.preservers.preserveUris.restore(text)
     }
 
     // bringing back braces
-    if (opts.preserve_braces) {
-      text = this.preservers.preserve_braces.restore(text)
+    if (opts.preserveCurlyBraces) {
+      text = this.preservers.preserveCurlyBraces.restore(text)
     }
 
     // bringing back brackets
-    if (opts.preserve_brackets) {
-      text = this.preservers.preserve_brackets.restore(text)
+    if (opts.preserveSquareBrackets) {
+      text = this.preservers.preserveSquareBrackets.restore(text)
     }
 
     // bringing back HTML comments
-    if (opts.preserve_comments) {
-      text = this.preservers.preserve_comments.restore(text)
+    if (opts.preserveHtmlComments) {
+      text = this.preservers.preserveHtmlComments.restore(text)
     }
 
     // bringing back HTML tags
-    if (opts.preserve_HTML) {
-      text = this.preservers.preserve_HTML.restore(text)
+    if (opts.preserveHtmlTags) {
+      text = this.preservers.preserveHtmlTags.restore(text)
     }
 
     // bringing back frontmatter
-    if (opts.preserve_frontmatter) {
-      text = this.preservers.preserve_frontmatter.restore(text)
+    if (opts.preserveFrontMatter) {
+      text = this.preservers.preserveFrontMatter.restore(text)
     }
 
-    if (opts.cleanup_begin_and_end) {
-      text = this.processors.cleanup_begin_and_end.process(text)
+    if (opts.removeLeadingAndTrailingSpaces) {
+      text = this.processors.removeLeadingAndTrailingSpaces.process(text)
     } else {
       // removes single space paddings around the string
       text = text.replace(/^ /g, '').replace(/ $/g, '')
@@ -436,24 +438,24 @@ export class Virastar {
           return matched
         }
 
-        if (opts.fix_english_numbers) {
-          matched = this.processors.fix_english_numbers.process(matched)
+        if (opts.replaceEnglishNumbers) {
+          matched = this.processors.replaceEnglishNumbers.process(matched)
         }
 
-        if (opts.fix_numeral_symbols) {
-          matched = this.processors.fix_numeral_symbols.process(matched)
+        if (opts.replaceNumeralSymbols) {
+          matched = this.processors.replaceNumeralSymbols.process(matched)
         }
 
-        if (opts.fix_punctuations) {
-          matched = this.processors.fix_punctuations.process(matched)
+        if (opts.replacePunctuations) {
+          matched = this.processors.replacePunctuations.process(matched)
         }
 
-        if (opts.fix_misc_non_persian_chars) {
-          matched = this.processors.fix_misc_non_persian_chars.process(matched)
+        if (opts.replaceMiscNonPersianChars) {
+          matched = this.processors.replaceMiscNonPersianChars.process(matched)
         }
 
-        if (opts.fix_question_mark) {
-          matched = this.processors.fix_question_mark.process(matched)
+        if (opts.replaceQuestionMarks) {
+          matched = this.processors.replaceQuestionMarks.process(matched)
         }
 
         return matched

@@ -1,7 +1,7 @@
 export { IPreserver } from './IPreserver'
 export { FrontMatterPreserver } from './FrontMatterPreserver'
 export { HtmlPreserver } from './HtmlPreserver'
-export { CommentPreserver } from './CommentPreserver'
+export { HtmlCommentPreserver } from './HtmlCommentPreserver'
 export { HtmlEntityPreserver } from './HtmlEntityPreserver'
 export { SquareBracketsPreserver } from './SquareBracketsPreserver'
 export { CurlyBracesPreserver } from './CurlyBracesPreserver'
