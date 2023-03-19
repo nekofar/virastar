@@ -1,4 +1,4 @@
-import { Virastar } from './Virastar'
+import { Virastar } from '../src/'
 import { sprintf } from 'sprintf-js'
 
 // demo default options
