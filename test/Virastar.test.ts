@@ -96,13 +96,13 @@ const optionsDisabled = {
   skip_markdown_ordered_lists_numbers_conversion: false,
 }
 
+let virastar: Virastar
+
+beforeEach(() => {
+  virastar = new Virastar()
+})
+
 describe('Virastar', () => {
-  let virastar: Virastar
-
-  it('should create new instance', () => {
-    virastar = new Virastar()
-  })
-
   describe('#cleanup()', () => {
     it('should cleanup simple sentences', () => {
       expect(
