@@ -460,16 +460,16 @@ export class Virastar {
     // bringing back entities
     if (opts.preserve_entities) {
       text = text.replace(
-        /[ ]?__ENTITIES__PRESERVER__[ ]?/g,
-        () => entities.shift() as string,
+        / ?__ENTITIES__PRESERVER__ ?/g,
+        () => entities.shift() as string
       )
     }
 
     // bringing back nbsps
     if (opts.preserve_nbsps) {
       text = text.replace(
-        /[ ]?__NBSPS__PRESERVER__[ ]?/g,
-        () => nbsps.shift() as string,
+        / ?__NBSPS__PRESERVER__ ?/g,
+        () => nbsps.shift() as string
       )
     }
 
@@ -482,48 +482,48 @@ export class Virastar {
       )
 
       text = text.replace(
-        /[ ]?__URI__PRESERVER__[ ]?/g,
-        () => uris.shift() as string,
+        / ?__URI__PRESERVER__ ?/g,
+        () => uris.shift() as string
       )
     }
 
     // bringing back braces
     if (opts.preserve_braces) {
       text = text.replace(
-        /[ ]?__BRACES__PRESERVER__[ ]?/g,
-        () => braces.shift() as string,
+        / ?__BRACES__PRESERVER__ ?/g,
+        () => braces.shift() as string
       )
     }
 
     // bringing back brackets
     if (opts.preserve_brackets) {
       text = text.replace(
-        /[ ]?__BRACKETS__PRESERVER__[ ]?/g,
-        () => brackets.shift() as string,
+        / ?__BRACKETS__PRESERVER__ ?/g,
+        () => brackets.shift() as string
       )
     }
 
     // bringing back HTML comments
     if (opts.preserve_comments) {
       text = text.replace(
-        /[ ]?__COMMENT__PRESERVER__[ ]?/g,
-        () => comments.shift() as string,
+        / ?__COMMENT__PRESERVER__ ?/g,
+        () => comments.shift() as string
       )
     }
 
     // bringing back HTML tags
     if (opts.preserve_HTML) {
       text = text.replace(
-        /[ ]?__HTML__PRESERVER__[ ]?/g,
-        () => html.shift() as string,
+        / ?__HTML__PRESERVER__ ?/g,
+        () => html.shift() as string
       )
     }
 
     // bringing back frontmatter
     if (opts.preserve_frontmatter) {
       text = text.replace(
-        /[ ]?__FRONTMATTER__PRESERVER__[ ]?/g,
-        () => frontmatter.shift() as string,
+        / ?__FRONTMATTER__PRESERVER__ ?/g,
+        () => frontmatter.shift() as string
       )
     }
 
@@ -531,7 +531,7 @@ export class Virastar {
       text = this.processors.cleanup_begin_and_end.process(text);
     } else {
       // removes single space paddings around the string
-      text = text.replace(/^[ ]/g, '').replace(/[ ]$/g, '')
+      text = text.replace(/^ /g, "").replace(/ $/g, "");
     }
 
     return text
