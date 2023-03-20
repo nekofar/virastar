@@ -7,13 +7,17 @@
   ],
   "author": "",
   "license": "APLv2",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "directory": "dist"
+  },
   "scripts": {
-    "prebuild": "npm run clean",
+    "prebuild": "npm run test",
     "build": "tsc",
-    "clean": "rimraf -rf ./dist",
-    "postclean": "npm test",
     "pretest": "npm run lint",
     "test": "jest",
     "prelint": "npm run format",
