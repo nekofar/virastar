@@ -15,5 +15,10 @@
     "prepare": "npm run build",
     "prepublishOnly": "pnpm build"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "yargs": "^17.7.1"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.22"
+  }
 }
