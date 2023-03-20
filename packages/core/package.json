@@ -1,0 +1,27 @@
+{
+  "name": "@nekofar/virastar",
+  "description": "Virastar is a TypeScript library for Persian text processing, providing various functions such as normalization, cleaning, and formatting for better readability and compatibility.",
+  "keywords": [
+    "persian",
+    "virastar"
+  ],
+  "author": "",
+  "license": "APLv2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "clean": "rimraf -rf ./dist",
+    "postclean": "npm test",
+    "pretest": "npm run lint",
+    "test": "jest",
+    "prelint": "npm run format",
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.ts\"",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "sprintf-js": "^1.1.2"
+  }
+}
