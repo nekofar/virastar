@@ -1,12 +1,11 @@
 {
   "name": "@nekofar/virastar-cli",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "bin": {
+    "virastar": "dist/index.js"
+  },
   "scripts": {
-    "prebuild": "npm run clean",
+    "prebuild": "npm run test",
     "build": "tsc",
-    "clean": "rimraf -rf ./dist",
-    "postclean": "npm test",
     "pretest": "npm run lint",
     "test": "jest --passWithNoTests",
     "prelint": "npm run format",
