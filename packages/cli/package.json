@@ -10,7 +10,7 @@
     "test": "jest --passWithNoTests",
     "prelint": "npm run format",
     "lint": "eslint",
-    "format": "prettier --write \"**/*.ts\"",
+    "format": "prettier --write \"**/*.ts\" --loglevel error",
     "prepare": "npm run build",
     "prepublishOnly": "pnpm build"
   },
