@@ -16,6 +16,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
+    "@nekofar/virastar": "workspace:*",
     "yargs": "^17.7.1"
   },
   "devDependencies": {
