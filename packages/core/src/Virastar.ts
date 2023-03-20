@@ -409,7 +409,7 @@ export class Virastar {
   private wordTokenizer(text: string, opts: Record<string, any>) {
     return text.replace(
       /(^|\s+)([[({"'“«]?)(\S+)([\])}"'”»]?)(?=($|\s+))/g,
-      (matched, before, leadings, word, trailings, after) => {
+      (matched, _before, _leadings, word, trailings, after) => {
         // should not replace to persian chars in english phrases
         if (word.match(/[a-zA-Z\-_]{2,}/g)) {
           return matched

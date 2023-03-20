@@ -28,28 +28,31 @@ export class DecodeHtmlEntitiesProcessor extends BaseProcessor {
    * @returns The text with HTML entities decoded.
    */
   public process(text: string): string {
-    return text.replace(/&(#?[^;\W]+;?)/g, (matched: string, match: string) => {
-      let n: RegExpExecArray | null
+    return text.replace(
+      /&(#?[^;\W]+;?)/g,
+      (_matched: string, match: string) => {
+        let n: RegExpExecArray | null
 
-      if ((n = /^#(\d+);?$/.exec(match))) {
-        return String.fromCharCode(parseInt(n[1], 10))
-      } else if ((n = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match))) {
-        return String.fromCharCode(parseInt(n[1], 16))
-      } else {
-        const hasSemi = /;$/.test(match)
-        const withoutSemi = hasSemi ? match.replace(/;$/, '') : match
-        const target =
-          this.htmlEntities[withoutSemi] ||
-          (hasSemi && this.htmlEntities[match])
-
-        if (typeof target === 'number') {
-          return String.fromCharCode(target)
-        } else if (typeof target === 'string') {
-          return target
+        if ((n = /^#(\d+);?$/.exec(match))) {
+          return String.fromCharCode(parseInt(n[1], 10))
+        } else if ((n = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match))) {
+          return String.fromCharCode(parseInt(n[1], 16))
         } else {
-          return `&${match}`
+          const hasSemi = /;$/.test(match)
+          const withoutSemi = hasSemi ? match.replace(/;$/, '') : match
+          const target =
+            this.htmlEntities[withoutSemi] ||
+            (hasSemi && this.htmlEntities[match])
+
+          if (typeof target === 'number') {
+            return String.fromCharCode(target)
+          } else if (typeof target === 'string') {
+            return target
+          } else {
+            return `&${match}`
+          }
         }
-      }
-    })
+      },
+    )
   }
 }
