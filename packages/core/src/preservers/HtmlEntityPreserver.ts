@@ -1,12 +1,11 @@
-import { BasePreserver } from "./BasePreserver";
+import { BasePreserver } from './BasePreserver'
 
 export class HtmlEntityPreserver extends BasePreserver {
-
   prepare(text: string): string {
-    return text.replace(/&(#?[^;\W]+;?)/g,  (matched) => {
+    return text.replace(/&(#?[^;\W]+;?)/g, (matched) => {
       this.preserves.push(matched)
       return ' __ENTITIES__PRESERVER__ '
-    });
+    })
   }
 
   restore(text: string): string {
