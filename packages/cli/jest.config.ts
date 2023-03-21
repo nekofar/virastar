@@ -1,8 +1,6 @@
 import type { Config } from 'jest'
 
 const config: Config = {
-  verbose: true,
-
   // Set the root directory
   rootDir: '.',
 
@@ -10,7 +8,7 @@ const config: Config = {
   preset: 'ts-jest',
 
   // Specify the test directory for this package
-  // testMatch: ['<rootDir>/test/**/*.test.ts'],
+  testMatch: ['<rootDir>/**/*.test.ts'],
 
   // Add any additional configuration for this package
 }

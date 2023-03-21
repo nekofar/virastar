@@ -1,19 +1,14 @@
 import type { Config } from 'jest'
 
 const config: Config = {
-  verbose: true,
-
   // Set the root directory
   rootDir: '.',
 
-  // Tell Jest to use TypeScript
-  preset: 'ts-jest',
-
-  // Collect coverage information for each package
-  collectCoverageFrom: ['packages/*/src/**/*.ts'],
-
-  // Specify the packages directory
-  // testMatch: ['<rootDir>/packages/*/test/**/*.test.ts'],
+  // Set the `projects` property to an array of paths to the `jest.config.ts` files in the packages
+  projects: [
+    '<rootDir>/packages/core', // Path the `core` package
+    '<rootDir>/packages/cli', // Path the `cli` package
+  ],
 }
 
 export default config
