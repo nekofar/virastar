@@ -2,18 +2,7 @@
   "extends": "../../tsconfig.json",
   "include": ["src/**/*"],
   "compilerOptions": {
-    "module": "es2022",
-    "target": "es2022",
-    "moduleResolution": "node",
     "outDir": "dist",
-    "rootDir": "src",
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "declaration": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "rootDir": "src"
   }
 }

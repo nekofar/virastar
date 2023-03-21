@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "build": "pnpm --stream -r run build",
-    "test": "pnpm --stream -r run test"
+    "test": "pnpm --stream -r run test",
+    "lint": "pnpm --stream -r run lint"
   },
   "devDependencies": {
     "@tsconfig/node-lts-strictest": "^18.12.1",
