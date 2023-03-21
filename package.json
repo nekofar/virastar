@@ -9,6 +9,7 @@
     "test": "pnpm --stream -r run test"
   },
   "devDependencies": {
+    "@tsconfig/node-lts-strictest": "^18.12.1",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
     "@tsconfig/recommended": "^1.0.2",
     "@types/jest": "^29.4.1",
