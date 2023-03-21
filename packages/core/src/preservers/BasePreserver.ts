@@ -1,4 +1,4 @@
-import { IPreserver } from './IPreserver'
+import type { IPreserver } from './IPreserver'
 
 /**
  * Abstract class that implements the IPreserver interface and provides common functionality for preservers.

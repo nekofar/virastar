@@ -1,4 +1,4 @@
-import { BaseProcessor } from './BaseProcessor'
+import type { BaseProcessor } from './BaseProcessor'
 
 /**
  * A class for processing dashes in a given text.

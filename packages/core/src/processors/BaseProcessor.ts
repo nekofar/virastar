@@ -1,4 +1,4 @@
-import { IProcessor } from './IProcessor'
+import type { IProcessor } from './IProcessor'
 
 /**
  * Base class for processors.

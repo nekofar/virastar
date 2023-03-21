@@ -1,4 +1,4 @@
-import { BaseProcessor } from './BaseProcessor'
+import type { BaseProcessor } from './BaseProcessor'
 
 export class EllipsisProcessor implements BaseProcessor {
   /**

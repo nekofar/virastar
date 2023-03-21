@@ -4,17 +4,30 @@ import { BaseProcessor } from './BaseProcessor'
  * A processor that replaces Arabic numbers with their Persian equivalent.
  */
 export class ArabicNumbersProcessor extends BaseProcessor {
-  private readonly digits: string =
-    '\u06F1' +
-    '\u06F2' +
-    '\u06F3' +
-    '\u06F4' +
-    '\u06F5' +
-    '\u06F6' +
-    '\u06F7' +
-    '\u06F8' +
-    '\u06F9' +
-    '\u06F0'
+  // Define the Persian digits to be used for replacement
+  private readonly persianDigits: string =
+    '\u06F1' + // Persian digit 1
+    '\u06F2' + // Persian digit 2
+    '\u06F3' + // Persian digit 3
+    '\u06F4' + // Persian digit 4
+    '\u06F5' + // Persian digit 5
+    '\u06F6' + // Persian digit 6
+    '\u06F7' + // Persian digit 7
+    '\u06F8' + // Persian digit 8
+    '\u06F9' + // Persian digit 9
+    '\u06F0' // Persian digit 0
+
+  private arabicDigits =
+    '\u0661' +
+    '\u0662' +
+    '\u0663' +
+    '\u0664' +
+    '\u0665' +
+    '\u0666' +
+    '\u0667' +
+    '\u0668' +
+    '\u0669' +
+    '\u0660'
 
   /**
    * Replaces Arabic numbers with their Persian equivalent.
@@ -23,27 +36,13 @@ export class ArabicNumbersProcessor extends BaseProcessor {
    * @returns The text with Arabic numbers replaced with their Persian equivalent.
    */
   public process(text: string): string {
-    return this.charReplace(text, '١٢٣٤٥٦٧٨٩٠', this.digits)
-  }
-
-  /**
-   * Replaces all occurrences of characters from a given batch in the text
-   * with their corresponding characters from another batch.
-   * @param text - The input text.
-   * @param fromBatch - The batch of characters to be replaced.
-   * @param toBatch - The batch of replacement characters.
-   * @returns The text with replaced characters.
-   */
-  private charReplace(
-    text: string,
-    fromBatch: string,
-    toBatch: string,
-  ): string {
-    const fromChars = fromBatch.split('')
-    const toChars = toBatch.split('')
-    for (let i = 0; i < fromChars.length; i++) {
-      text = text.replace(new RegExp(fromChars[i], 'g'), toChars[i])
-    }
     return text
+      .split('')
+      .map((char) =>
+        this.arabicDigits.includes(char)
+          ? this.persianDigits.charAt(this.arabicDigits.indexOf(char))
+          : char,
+      )
+      .join('')
   }
 }

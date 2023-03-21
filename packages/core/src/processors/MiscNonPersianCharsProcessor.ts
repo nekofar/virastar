@@ -1,34 +1,26 @@
 import { BaseProcessor } from './BaseProcessor'
 
+/**
+ * A processor that replaces miscellaneous non-Persian characters with their
+ * Persian equivalents.
+ */
 export class MiscNonPersianCharsProcessor extends BaseProcessor {
-  // props @ebraminio/persiantools
+  private fromBatch = '\u0643\u06A9\u064A\u0649\u06CD\u06D0\u06C1\u06D5'
+  private toBatch = '\u06A9\u06A9\u06CC\u06CC\u06CC\u06CC\u0647\u0647'
   /**
    * Replaces misc. non-Persian characters with their Persian equivalent.
-   * @param text The text to fix.
+   *
+   * @param text - The text to fix.
    * @returns The fixed text.
    */
   public process(text: string): string {
-    return this.charReplace(text, 'كڪيىۍېہە', 'ککییییههه')
-  }
-
-  /**
-   * Replaces all occurrences of characters from a given batch in the text
-   * with their corresponding characters from another batch.
-   * @param text - The input text.
-   * @param fromBatch - The batch of characters to be replaced.
-   * @param toBatch - The batch of replacement characters.
-   * @returns The text with replaced characters.
-   */
-  private charReplace(
-    text: string,
-    fromBatch: string,
-    toBatch: string,
-  ): string {
-    const fromChars = fromBatch.split('')
-    const toChars = toBatch.split('')
-    for (let i = 0; i < fromChars.length; i++) {
-      text = text.replace(new RegExp(fromChars[i], 'g'), toChars[i])
-    }
     return text
+      .split('')
+      .map((char) =>
+        this.fromBatch.includes(char)
+          ? this.toBatch.charAt(this.fromBatch.indexOf(char))
+          : char,
+      )
+      .join('')
   }
 }

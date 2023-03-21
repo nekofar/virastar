@@ -1,4 +1,4 @@
-import { BaseProcessor } from './BaseProcessor'
+import type { BaseProcessor } from './BaseProcessor'
 
 /**
  * A class for normalizing date formats in a given text.
