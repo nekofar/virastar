@@ -1,4 +1,4 @@
-import { VirastarOptions } from './VirastarOptions'
+import type { VirastarOptions } from './VirastarOptions'
 import {
   ArabicNumbersProcessor,
   LeadingAndTrailingSpaceProcessor,
@@ -187,231 +187,231 @@ export class Virastar {
     text = ` ${text} `
 
     // Preserves front-matter data in the text
-    if (opts.preserveFrontMatter) {
-      text = this.preservers.preserveFrontMatter.prepare(text)
+    if (opts['preserveFrontMatter']) {
+      text = this.preservers['preserveFrontMatter']!.prepare(text)
     }
 
     // Preserves all HTML tags in the text
-    if (opts.preserveHtmlTags) {
-      text = this.preservers.preserveHtmlTags.prepare(text)
+    if (opts['preserveHtmlTags']) {
+      text = this.preservers['preserveHtmlTags']!.prepare(text)
     }
 
     // Preserves all HTML comments in the text
-    if (opts.preserveHtmlComments) {
-      text = this.preservers.preserveHtmlComments.prepare(text)
+    if (opts['preserveHtmlComments']) {
+      text = this.preservers['preserveHtmlComments']!.prepare(text)
     }
 
     // Preserves strings inside square brackets (`[]`)
-    if (opts.preserveSquareBrackets) {
-      text = this.preservers.preserveSquareBrackets.prepare(text)
+    if (opts['preserveSquareBrackets']) {
+      text = this.preservers['preserveSquareBrackets']!.prepare(text)
     }
 
     // Preserves strings inside curly braces (`{}`)
-    if (opts.preserveCurlyBraces) {
-      text = this.preservers.preserveCurlyBraces.prepare(text)
+    if (opts['preserveCurlyBraces']) {
+      text = this.preservers['preserveCurlyBraces']!.prepare(text)
     }
 
     // Preserves all URI strings in the text
-    if (opts.preserveUris) {
-      text = this.preservers.preserveUris.prepare(text)
+    if (opts['preserveUris']) {
+      text = this.preservers['preserveUris']!.prepare(text)
     }
 
     // Preserves all Markdown code blocks in the text
-    if (opts.preserveMarkDownCodeBlocks) {
-      text = this.preservers.preserveMarkDownCodeBlocks.prepare(text)
+    if (opts['preserveMarkDownCodeBlocks']) {
+      text = this.preservers['preserveMarkDownCodeBlocks']!.prepare(text)
     }
 
     // Preserves all no-break space entities in the text
-    if (opts.preserveNonBreakingSpaces) {
-      text = this.preservers.preserveNonBreakingSpaces.prepare(text)
+    if (opts['preserveNonBreakingSpaces']) {
+      text = this.preservers['preserveNonBreakingSpaces']!.prepare(text)
     }
 
     // Decode HTML entities if specified
-    if (opts.decodeHtmlEntities) {
+    if (opts['decodeHtmlEntities']) {
       text = new DecodeHtmlEntitiesProcessor().process(text)
     }
 
     // preserves all html entities in the text
     // @props: @substack/node-ent
-    if (opts.preserveHtmlEntities) {
-      text = this.preservers.preserveHtmlEntities.prepare(text)
+    if (opts['preserveHtmlEntities']) {
+      text = this.preservers['preserveHtmlEntities']!.prepare(text)
     }
 
-    if (opts.normalizeEndOfLines) {
-      text = this.processors.normalizeEndOfLines.process(text)
+    if (opts['normalizeEndOfLines']) {
+      text = this.processors['normalizeEndOfLines']!.process(text)
     }
 
-    if (opts.replacePersianGlyphs) {
-      text = this.processors.replacePersianGlyphs.process(text)
+    if (opts['replacePersianGlyphs']) {
+      text = this.processors['replacePersianGlyphs']!.process(text)
     }
 
-    if (opts.replaceDashes) {
-      text = this.processors.replaceDashes.process(text)
+    if (opts['replaceDashes']) {
+      text = this.processors['replaceDashes']!.process(text)
     }
 
-    if (opts.normalizeThreeDots) {
-      text = this.processors.normalizeThreeDots.process(text)
+    if (opts['normalizeThreeDots']) {
+      text = this.processors['normalizeThreeDots']!.process(text)
     }
 
-    if (opts.normalizeEllipsis) {
-      text = this.processors.normalizeEllipsis.process(text)
+    if (opts['normalizeEllipsis']) {
+      text = this.processors['normalizeEllipsis']!.process(text)
     }
 
-    if (opts.replaceEnglishQuotesPairs) {
-      text = this.processors.replaceEnglishQuotesPairs.process(text)
+    if (opts['replaceEnglishQuotesPairs']) {
+      text = this.processors['replaceEnglishQuotesPairs']!.process(text)
     }
 
-    if (opts.replaceEnglishQuotes) {
-      text = this.processors.replaceEnglishQuotes.process(text)
+    if (opts['replaceEnglishQuotes']) {
+      text = this.processors['replaceEnglishQuotes']!.process(text)
     }
 
-    if (opts.replaceHamzeh) {
-      if (opts.replaceHamzehArabic) {
+    if (opts['replaceHamzeh']) {
+      if (opts['replaceHamzehArabic']) {
         text = new HamzehArabicProcessor().process(text)
       }
 
       text = new HamzehProcessor().process(text)
-    } else if (opts.fix_suffix_spacing) {
-      if (opts.replaceHamzehArabic) {
+    } else if (opts['fix_suffix_spacing']) {
+      if (opts['replaceHamzehArabic']) {
         text = new HamzehArabicAltProcessor().process(text)
       }
 
       text = new SuffixSpacingHamzehProcessor().process(text)
     }
 
-    if (opts.cleanupRightToLeftMarks) {
-      text = this.processors.cleanupRightToLeftMarks.process(text)
+    if (opts['cleanupRightToLeftMarks']) {
+      text = this.processors['cleanupRightToLeftMarks']!.process(text)
     }
 
-    if (opts.cleanupZeroWidthNonJoiners) {
-      text = this.processors.cleanupZeroWidthNonJoiners.process(text)
+    if (opts['cleanupZeroWidthNonJoiners']) {
+      text = this.processors['cleanupZeroWidthNonJoiners']!.process(text)
     }
 
-    if (opts.replaceArabicNumbers) {
-      text = this.processors.replaceArabicNumbers.process(text)
+    if (opts['replaceArabicNumbers']) {
+      text = this.processors['replaceArabicNumbers']!.process(text)
     }
 
     // word tokenizer
     text = this.wordTokenizer(text, opts)
 
-    if (opts.normalizeJalaliDates) {
-      text = this.processors.normalizeJalaliDates.process(text)
+    if (opts['normalizeJalaliDates']) {
+      text = this.processors['normalizeJalaliDates']!.process(text)
     }
 
-    if (opts.replacePrefixSpacing) {
-      text = this.processors.replacePrefixSpacing.process(text)
+    if (opts['replacePrefixSpacing']) {
+      text = this.processors['replacePrefixSpacing']!.process(text)
     }
 
-    if (opts.fix_suffix_spacing) {
+    if (opts['fix_suffix_spacing']) {
       text = new SuffixSpacingProcessor().process(text)
     }
 
-    if (opts.replaceSuffixMisc) {
+    if (opts['replaceSuffixMisc']) {
       text = new SuffixSpacingMiscProcessor().process(text)
     }
 
-    if (opts.replaceSpacingForBracesAndQuotes) {
+    if (opts['replaceSpacingForBracesAndQuotes']) {
       text = new BracesSpacingProcessor().process(text)
     }
 
-    if (opts.cleanupExtraMarks) {
-      text = this.processors.cleanupExtraMarks.process(text)
+    if (opts['cleanupExtraMarks']) {
+      text = this.processors['cleanupExtraMarks']!.process(text)
     }
 
-    if (opts.removeSpacingForPunctuations) {
-      text = this.processors.removeSpacingForPunctuations.process(text)
+    if (opts['removeSpacingForPunctuations']) {
+      text = this.processors['removeSpacingForPunctuations']!.process(text)
     }
 
-    if (opts.normalizeKashidas) {
-      text = this.processors.normalizeKashidas.process(text)
+    if (opts['normalizeKashidas']) {
+      text = this.processors['normalizeKashidas']!.process(text)
     }
 
-    if (opts.cleanupKashidas) {
-      text = this.processors.cleanupKashidas.process(text)
+    if (opts['cleanupKashidas']) {
+      text = this.processors['cleanupKashidas']!.process(text)
     }
 
-    if (opts.normalizeMarkDownBraces) {
-      text = this.processors.normalizeMarkDownBraces.process(text)
+    if (opts['normalizeMarkDownBraces']) {
+      text = this.processors['normalizeMarkDownBraces']!.process(text)
     }
 
-    if (opts.normalizeMarkDownLists) {
-      text = this.processors.normalizeMarkDownLists.process(text)
+    if (opts['normalizeMarkDownLists']) {
+      text = this.processors['normalizeMarkDownLists']!.process(text)
     }
 
     // doing it again after `fixPunctuationSpacing()`
-    if (opts.replaceSpacingForBracesAndQuotes) {
+    if (opts['replaceSpacingForBracesAndQuotes']) {
       text = new BracesSpacingInsideProcessor().process(text)
     }
 
-    if (opts.replaceMiscSpacing) {
-      text = this.processors.replaceMiscSpacing.process(text)
+    if (opts['replaceMiscSpacing']) {
+      text = this.processors['replaceMiscSpacing']!.process(text)
     }
 
-    if (opts.removeDiacritics) {
-      text = this.processors.removeDiacritics.process(text)
-    } else if (opts.replaceDiacritics) {
-      text = this.processors.replaceDiacritics.process(text)
+    if (opts['removeDiacritics']) {
+      text = this.processors['removeDiacritics']!.process(text)
+    } else if (opts['replaceDiacritics']) {
+      text = this.processors['replaceDiacritics']!.process(text)
     }
 
-    if (opts.cleanupSpacing) {
-      text = this.processors.cleanupSpacing.process(text)
+    if (opts['cleanupSpacing']) {
+      text = this.processors['cleanupSpacing']!.process(text)
     }
 
-    if (opts.cleanupZeroWidthNonJoiners) {
+    if (opts['cleanupZeroWidthNonJoiners']) {
       text = new ZeroWidthNonJoinerLateProcessor().process(text)
     }
 
-    if (opts.cleanupLineBreaks) {
-      text = this.processors.cleanupLineBreaks.process(text)
+    if (opts['cleanupLineBreaks']) {
+      text = this.processors['cleanupLineBreaks']!.process(text)
     }
 
     // bringing back entities
-    if (opts.preserveHtmlEntities) {
-      text = this.preservers.preserveHtmlEntities.restore(text)
+    if (opts['preserveHtmlEntities']) {
+      text = this.preservers['preserveHtmlEntities']!.restore(text)
     }
 
     // bringing back nbsps
-    if (opts.preserveNonBreakingSpaces) {
-      text = this.preservers.preserveNonBreakingSpaces.restore(text)
+    if (opts['preserveNonBreakingSpaces']) {
+      text = this.preservers['preserveNonBreakingSpaces']!.restore(text)
     }
 
     // bringing back Markdown code blocks
-    if (opts.preserveMarkDownCodeBlocks) {
-      text = this.preservers.preserveMarkDownCodeBlocks.restore(text)
+    if (opts['preserveMarkDownCodeBlocks']) {
+      text = this.preservers['preserveMarkDownCodeBlocks']!.restore(text)
     }
 
     // bringing back URIs
-    if (opts.preserveUris) {
-      text = this.preservers.preserveUris.restore(text)
+    if (opts['preserveUris']) {
+      text = this.preservers['preserveUris']!.restore(text)
     }
 
     // bringing back braces
-    if (opts.preserveCurlyBraces) {
-      text = this.preservers.preserveCurlyBraces.restore(text)
+    if (opts['preserveCurlyBraces']) {
+      text = this.preservers['preserveCurlyBraces']!.restore(text)
     }
 
     // bringing back brackets
-    if (opts.preserveSquareBrackets) {
-      text = this.preservers.preserveSquareBrackets.restore(text)
+    if (opts['preserveSquareBrackets']) {
+      text = this.preservers['preserveSquareBrackets']!.restore(text)
     }
 
     // bringing back HTML comments
-    if (opts.preserveHtmlComments) {
-      text = this.preservers.preserveHtmlComments.restore(text)
+    if (opts['preserveHtmlComments']) {
+      text = this.preservers['preserveHtmlComments']!.restore(text)
     }
 
     // bringing back HTML tags
-    if (opts.preserveHtmlTags) {
-      text = this.preservers.preserveHtmlTags.restore(text)
+    if (opts['preserveHtmlTags']) {
+      text = this.preservers['preserveHtmlTags']!.restore(text)
     }
 
     // bringing back frontmatter
-    if (opts.preserveFrontMatter) {
-      text = this.preservers.preserveFrontMatter.restore(text)
+    if (opts['preserveFrontMatter']) {
+      text = this.preservers['preserveFrontMatter']!.restore(text)
     }
 
-    if (opts.removeLeadingAndTrailingSpaces) {
-      text = this.processors.removeLeadingAndTrailingSpaces.process(text)
+    if (opts['removeLeadingAndTrailingSpaces']) {
+      text = this.processors['removeLeadingAndTrailingSpaces']!.process(text)
     } else {
       // removes single space paddings around the string
       text = text.replace(/^ /g, '').replace(/ $/g, '')
@@ -445,30 +445,31 @@ export class Virastar {
 
         // skips converting english numbers of ordered lists in markdown
         if (
-          opts.skip_markdown_ordered_lists_numbers_conversion &&
+          opts['skip_markdown_ordered_lists_numbers_conversion'] &&
           (matched + trailings + after).match(/(?:\r?\n|\r\n?|(?:^|\n))\d+\.\s/)
         ) {
           return matched
         }
 
-        if (opts.replaceEnglishNumbers) {
-          matched = this.processors.replaceEnglishNumbers.process(matched)
+        if (opts['replaceEnglishNumbers']) {
+          matched = this.processors['replaceEnglishNumbers']!.process(matched)
         }
 
-        if (opts.replaceNumeralSymbols) {
-          matched = this.processors.replaceNumeralSymbols.process(matched)
+        if (opts['replaceNumeralSymbols']) {
+          matched = this.processors['replaceNumeralSymbols']!.process(matched)
         }
 
-        if (opts.replacePunctuations) {
-          matched = this.processors.replacePunctuations.process(matched)
+        if (opts['replacePunctuations']) {
+          matched = this.processors['replacePunctuations']!.process(matched)
         }
 
-        if (opts.replaceMiscNonPersianChars) {
-          matched = this.processors.replaceMiscNonPersianChars.process(matched)
+        if (opts['replaceMiscNonPersianChars']) {
+          matched =
+            this.processors['replaceMiscNonPersianChars']!.process(matched)
         }
 
-        if (opts.replaceQuestionMarks) {
-          matched = this.processors.replaceQuestionMarks.process(matched)
+        if (opts['replaceQuestionMarks']) {
+          matched = this.processors['replaceQuestionMarks']!.process(matched)
         }
 
         return matched

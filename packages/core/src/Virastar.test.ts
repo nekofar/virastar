@@ -285,9 +285,15 @@ describe('Virastar', () => {
         for (const str in templates) {
           expect(
             virastar.cleanup(
-              sprintf(templates[str][0], matched[pair][0], matched[pair][1]),
+              sprintf(
+                templates[str]![0]!,
+                matched[pair]![0],
+                matched[pair]![1],
+              ),
             ),
-          ).toBe(sprintf(templates[str][1], matched[pair][0], matched[pair][1]))
+          ).toBe(
+            sprintf(templates[str]![1]!, matched[pair]![0], matched[pair]![1]),
+          )
         }
       }
 
@@ -309,9 +315,9 @@ describe('Virastar', () => {
       for (let pair2 in mismatched) {
         for (let str2 in templates2) {
           const template = sprintf(
-            templates2[str2],
-            mismatched[pair2][0],
-            mismatched[pair2][1],
+            templates2[str2]!,
+            mismatched[pair2]![0],
+            mismatched[pair2]![1],
           )
           expect(virastar.cleanup(template)).toBe(template)
         }
@@ -424,7 +430,7 @@ describe('Virastar', () => {
       ]
 
       for (let equal in equals) {
-        expect(virastar.cleanup(equals[equal])).toBe(equals[equal])
+        expect(virastar.cleanup(equals[equal]!)).toBe(equals[equal])
       }
     })
   })
