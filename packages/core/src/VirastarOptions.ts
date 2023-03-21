@@ -1,5 +1,4 @@
 export interface VirastarOptions {
-  removeLeadingAndTrailingSpaces?: boolean
   cleanupExtraMarks?: boolean
   cleanupKashidas?: boolean
   cleanupLineBreaks?: boolean
@@ -7,40 +6,42 @@ export interface VirastarOptions {
   cleanupSpacing?: boolean
   cleanupZeroWidthNonJoiners?: boolean
   decodeHtmlEntities?: boolean
+  fix_suffix_spacing?: boolean
+  normalizeEllipsis?: boolean
+  normalizeEndOfLines?: boolean
+  normalizeJalaliDates?: boolean
+  normalizeKashidas?: boolean
+  normalizeMarkDownBraces?: boolean
+  normalizeMarkDownLists?: boolean
+  normalizeThreeDots?: boolean
+  preserveCurlyBraces?: boolean
+  preserveFrontMatter?: boolean
+  preserveHtmlComments?: boolean
+  preserveHtmlEntities?: boolean
+  preserveHtmlTags?: boolean
+  preserveNonBreakingSpaces?: boolean
+  preserveSquareBrackets?: boolean
+  preserveUris?: boolean
+  preserveMarkDownCodeBlocks?: boolean
+  removeDiacritics?: boolean
+  removeLeadingAndTrailingSpaces?: boolean
+  removeSpacingForPunctuations?: boolean
   replaceArabicNumbers?: boolean
   replaceDashes?: boolean
   replaceDiacritics?: boolean
   replaceEnglishNumbers?: boolean
-  replaceEnglishQuotesPairs?: boolean
   replaceEnglishQuotes?: boolean
+  replaceEnglishQuotesPairs?: boolean
   replaceHamzeh?: boolean
   replaceHamzehArabic?: boolean
   replaceMiscNonPersianChars?: boolean
   replaceMiscSpacing?: boolean
   replaceNumeralSymbols?: boolean
-  replacePrefixSpacing?: boolean
   replacePersianGlyphs?: boolean
+  replacePrefixSpacing?: boolean
   replacePunctuations?: boolean
   replaceQuestionMarks?: boolean
   replaceSpacingForBracesAndQuotes?: boolean
-  removeSpacingForPunctuations?: boolean
   replaceSuffixMisc?: boolean
-  fix_suffix_spacing?: boolean
-  normalizeThreeDots?: boolean
-  normalizeKashidas?: boolean
-  normalizeMarkDownBraces?: boolean
-  normalizeMarkDownLists?: boolean
-  normalizeJalaliDates?: boolean
-  normalizeEllipsis?: boolean
-  normalizeEndOfLines?: boolean
-  preserveCurlyBraces?: boolean
-  preserveSquareBrackets?: boolean
-  preserveHtmlComments?: boolean
-  preserveHtmlEntities?: boolean
-  preserveFrontMatter?: boolean
-  preserveHtmlTags?: boolean
-  preserveNonBreakingSpaces?: boolean
-  preserveUris?: boolean
-  removeDiacritics?: boolean
   skip_markdown_ordered_lists_numbers_conversion?: boolean
 }

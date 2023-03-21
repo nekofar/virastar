@@ -51,6 +51,7 @@ import {
   NonBreakingSpacePreserver,
   SquareBracketsPreserver,
   UriPreserver,
+  MarkDownCodeBlockPreserver,
 } from './preservers'
 
 export class Virastar {
@@ -80,6 +81,7 @@ export class Virastar {
     preserveNonBreakingSpaces: true,
     preserveSquareBrackets: false,
     preserveUris: true,
+    preserveMarkDownCodeBlocks: true,
     removeDiacritics: false,
     removeLeadingAndTrailingSpaces: true,
     removeSpacingForPunctuations: true,
@@ -123,6 +125,7 @@ export class Virastar {
       preserveNonBreakingSpaces: new NonBreakingSpacePreserver(),
       preserveSquareBrackets: new SquareBracketsPreserver(),
       preserveUris: new UriPreserver(),
+      preserveMarkDownCodeBlocks: new MarkDownCodeBlockPreserver(),
     }
 
     this.processors = {
@@ -211,6 +214,11 @@ export class Virastar {
     // Preserves all URI strings in the text
     if (opts.preserveUris) {
       text = this.preservers.preserveUris.prepare(text)
+    }
+
+    // Preserves all Markdown code blocks in the text
+    if (opts.preserveMarkDownCodeBlocks) {
+      text = this.preservers.preserveMarkDownCodeBlocks.prepare(text)
     }
 
     // Preserves all no-break space entities in the text
@@ -365,6 +373,11 @@ export class Virastar {
     // bringing back nbsps
     if (opts.preserveNonBreakingSpaces) {
       text = this.preservers.preserveNonBreakingSpaces.restore(text)
+    }
+
+    // bringing back Markdown code blocks
+    if (opts.preserveMarkDownCodeBlocks) {
+      text = this.preservers.preserveMarkDownCodeBlocks.restore(text)
     }
 
     // bringing back URIs
