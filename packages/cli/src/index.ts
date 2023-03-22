@@ -26,7 +26,7 @@ const parser = yargs
       process.exit(1)
     }
 
-    const processedData = new Virastar().cleanup(data)
+    const processedData = new Virastar().process(data)
 
     fs.writeFile(argv.file!, processedData, 'utf8', (err) => {
       if (err) {

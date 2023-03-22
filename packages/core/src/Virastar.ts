@@ -1,4 +1,4 @@
-import type { VirastarOptions } from './VirastarOptions'
+import type { VirastarOptions } from "./VirastarOptions";
 import {
   ArabicNumbersProcessor,
   LeadingAndTrailingSpaceProcessor,
@@ -167,14 +167,14 @@ export class Virastar {
   }
 
   /**
-   * Cleans up a given text by applying various text cleaning techniques based on options.
+   * Process a given text by applying various techniques based on options.
    *
    * @param text The text to be cleaned up.
    * @param options Optional options object to override default options.
    * @returns The cleaned up text.
    * @throws TypeError if the input text is not a string.
    */
-  public cleanup(text: string, options?: VirastarOptions) {
+  public process(text: string, options?: VirastarOptions) {
     // Don't bother if it's empty or whitespace
     if (!text.trim()) {
       return text
