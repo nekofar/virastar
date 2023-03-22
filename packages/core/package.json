@@ -1,0 +1,55 @@
+{
+  "name": "@nekofar/virastar",
+  "version": "0.2.0",
+  "description": "Virastar is a TypeScript library for Persian text processing, providing various functions such as normalization, cleaning, and formatting for better readability and compatibility.",
+  "keywords": [
+    "persian",
+    "virastar"
+  ],
+  "homepage": "https://github.com/nekofar/virastar#readme",
+  "bugs": {
+    "url": "https://github.com/nekofar/virastar/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Milad Nekofar",
+    "email": "milad@nekofar.com",
+    "url": "https://nekofar.com"
+  },
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nekofar/virastar.git"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build-cjs": "tsc --outDir dist/cjs",
+    "build-esm": "tsc --outDir dist/esm --module es2020",
+    "build": "conc \"npm:build-*\"",
+    "clean": "rimraf -rf ./dist",
+    "postclean": "npm test",
+    "pretest": "npm run lint",
+    "test": "jest --passWithNoTests",
+    "prelint": "npm run format",
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.ts\" --loglevel error",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "devDependencies": {
+    "sprintf-js": "^1.1.2"
+  }
+}

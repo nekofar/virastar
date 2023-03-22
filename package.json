@@ -1,35 +1,36 @@
 {
-  "name": "@nekofar/virastar",
-  "version": "0.1.1",
-  "description": "Virastar is a TypeScript library for Persian text processing, providing various functions such as normalization, cleaning, and formatting for better readability and compatibility.",
+  "name": "virastar",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "prebuild": "npm run clean",
-    "build": "tsc",
-    "clean": "rimraf -rf ./dist",
-    "postclean": "npm test",
-    "pretest": "npm run lint",
-    "test": "jest",
-    "prelint": "npm run format",
-    "lint": "eslint .",
-    "format": "prettier --write \"**/*.ts\"",
-    "prepare": "npm run build"
+    "build": "pnpm --stream -r run build",
+    "test": "pnpm --stream -r run test",
+    "lint": "pnpm --stream -r run lint",
+    "prestart": "npm run build",
+    "start": "pnpm run --filter @nekofar/virastar-cli start",
+    "version": "changeset version",
+    "publish": "changeset publish"
   },
-  "keywords": [],
-  "author": "",
-  "license": "APLv2",
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "@tsconfig/node-lts-strictest": "^18.12.1",
+    "@tsconfig/node-lts-strictest-esm": "^18.12.1",
+    "@tsconfig/recommended": "^1.0.2",
     "@types/jest": "^29.4.1",
     "@types/node": "^18.15.3",
     "@types/sprintf-js": "^1.1.2",
-    "assert": "^2.0.0",
+    "concurrently": "^7.6.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29.5.0",
+    "pnpm": "^7.30.0",
     "prettier": "^2.8.4",
     "rimraf": "^4.4.0",
-    "sprintf-js": "^1.1.2",
     "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.5"
   }
 }

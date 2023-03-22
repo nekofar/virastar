@@ -23,6 +23,7 @@ dist/
 *.js
 *.d.ts
 *.map
+*.tsbuildinfo
 
 # Ignore package-lock.json and yarn.lock and pnpm-lock.yaml
 package-lock.json

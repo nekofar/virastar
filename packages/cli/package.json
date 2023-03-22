@@ -1,0 +1,68 @@
+{
+  "name": "@nekofar/virastar-cli",
+  "version": "0.2.0",
+  "description": "A CLI tool for Virastar",
+  "keywords": [
+    "virastar",
+    "cli",
+    "tool"
+  ],
+  "homepage": "https://github.com/nekofar/virastar#readme",
+  "bugs": {
+    "url": "https://github.com/nekofar/virastar/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Milad Nekofar",
+    "email": "milad@nekofar.com",
+    "url": "https://nekofar.com"
+  },
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nekofar/virastar.git"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "bin": {
+    "virastar": "dist/cjs/index.js"
+  },
+  "types": "dist/cjs/index.d.ts",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build-cjs": "tsc --outDir dist/cjs",
+    "build-esm": "tsc --outDir dist/esm --module es2020",
+    "build": "conc \"npm:build-*\"",
+    "clean": "rimraf -rf ./dist",
+    "postclean": "npm test",
+    "pretest": "npm run lint",
+    "test": "jest --passWithNoTests",
+    "prelint": "npm run format",
+    "lint": "eslint",
+    "format": "prettier --write \"**/*.ts\" --loglevel error",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "prestart": "npm run build",
+    "start": "node dist/cjs/index.js -h"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "dependencies": {
+    "@nekofar/virastar": "workspace:*",
+    "yargs": "^17.7.1"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.22"
+  }
+}
