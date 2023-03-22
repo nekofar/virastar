@@ -9,7 +9,9 @@
     "test": "pnpm --stream -r run test",
     "lint": "pnpm --stream -r run lint",
     "prestart": "npm run build",
-    "start": "pnpm run --filter @nekofar/virastar-cli start"
+    "start": "pnpm run --filter @nekofar/virastar-cli start",
+    "version": "changeset version",
+    "publish": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
