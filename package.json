@@ -16,6 +16,7 @@
     "@types/jest": "^29.4.1",
     "@types/node": "^18.15.3",
     "@types/sprintf-js": "^1.1.2",
+    "concurrently": "^7.6.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
