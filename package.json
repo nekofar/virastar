@@ -12,6 +12,7 @@
     "start": "pnpm run --filter @nekofar/virastar-cli start"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
     "@tsconfig/node-lts-strictest": "^18.12.1",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
     "@tsconfig/recommended": "^1.0.2",
