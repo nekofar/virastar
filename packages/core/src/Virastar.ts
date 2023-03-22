@@ -1,58 +1,18 @@
 import type { VirastarOptions } from './VirastarOptions'
 import {
-  ArabicNumbersProcessor,
-  LeadingAndTrailingSpaceProcessor,
   BracesSpacingInsideProcessor,
   BracesSpacingProcessor,
-  DashProcessor,
-  DateNormalizerProcessor,
   DecodeHtmlEntitiesProcessor,
-  DiacriticsProcessor,
-  EllipsisProcessor,
-  EndOfLineProcessor,
-  EnglishNumbersProcessor,
-  EnglishQuotesPairsProcessor,
-  EnglishQuotesProcessor,
-  ExtraMarksProcessor,
-  GlyphsProcessor,
   HamzehArabicAltProcessor,
   HamzehArabicProcessor,
   HamzehProcessor,
-  IProcessor,
-  KashidasAsParentheticProcessor,
-  KashidasProcessor,
-  LineBreakProcessor,
-  MarkdownListProcessor,
-  MarkdownNormalizerProcessor,
-  MiscNonPersianCharsProcessor,
-  MiscSpacingProcessor,
-  NumeralSymbolProcessor,
-  PrefixSpacingProcessor,
-  PunctuationProcessor,
-  PunctuationSpacingProcessor,
-  QuestionMarkProcessor,
-  RemoveDiacriticsProcessor,
-  RightToLeftMarkProcessor,
-  SpacingProcessor,
   SuffixSpacingHamzehProcessor,
   SuffixSpacingMiscProcessor,
   SuffixSpacingProcessor,
-  ThreeDotsProcessor,
   ZeroWidthNonJoinerLateProcessor,
-  ZeroWidthNonJoinerProcessor,
 } from './processors'
-import {
-  HtmlCommentPreserver,
-  CurlyBracesPreserver,
-  FrontMatterPreserver,
-  HtmlEntityPreserver,
-  HtmlPreserver,
-  IPreserver,
-  NonBreakingSpacePreserver,
-  SquareBracketsPreserver,
-  UriPreserver,
-  MarkDownCodeBlockPreserver,
-} from './preservers'
+import { ProcessorFactory } from './processors/ProcessorFactory'
+import { PreserverFactory } from './preservers/PreserverFactory'
 
 export class Virastar {
   private readonly options: VirastarOptions = {}
@@ -105,9 +65,9 @@ export class Virastar {
     skip_markdown_ordered_lists_numbers_conversion: false,
   }
 
-  private preservers: Record<string, IPreserver>
+  private preserverFactory: PreserverFactory
 
-  private processors: Record<string, IProcessor>
+  private processorFactory: ProcessorFactory
 
   /**
    * Initializes a new instance of Virastar with the given options.
@@ -116,65 +76,19 @@ export class Virastar {
   constructor(options: VirastarOptions = {}) {
     this.options = this.parseOptions(options)
 
-    this.preservers = {
-      preserveCurlyBraces: new CurlyBracesPreserver(),
-      preserveFrontMatter: new FrontMatterPreserver(),
-      preserveHtmlComments: new HtmlCommentPreserver(),
-      preserveHtmlEntities: new HtmlEntityPreserver(),
-      preserveHtmlTags: new HtmlPreserver(),
-      preserveNonBreakingSpaces: new NonBreakingSpacePreserver(),
-      preserveSquareBrackets: new SquareBracketsPreserver(),
-      preserveUris: new UriPreserver(),
-      preserveMarkDownCodeBlocks: new MarkDownCodeBlockPreserver(),
-    }
-
-    this.processors = {
-      removeLeadingAndTrailingSpaces: new LeadingAndTrailingSpaceProcessor(),
-      cleanupExtraMarks: new ExtraMarksProcessor(),
-      cleanupKashidas: new KashidasProcessor(),
-      cleanupLineBreaks: new LineBreakProcessor(),
-      cleanupRightToLeftMarks: new RightToLeftMarkProcessor(),
-      cleanupSpacing: new SpacingProcessor(),
-      cleanupZeroWidthNonJoiners: new ZeroWidthNonJoinerProcessor(),
-      decodeHtmlEntities: new DecodeHtmlEntitiesProcessor(),
-      normalizeEllipsis: new EllipsisProcessor(),
-      normalizeEndOfLines: new EndOfLineProcessor(),
-      normalizeJalaliDates: new DateNormalizerProcessor(),
-      normalizeKashidas: new KashidasAsParentheticProcessor(),
-      normalizeMarkDownBraces: new MarkdownNormalizerProcessor(),
-      normalizeMarkDownLists: new MarkdownListProcessor(),
-      normalizeThreeDots: new ThreeDotsProcessor(),
-      removeDiacritics: new RemoveDiacriticsProcessor(),
-      removeSpacingForPunctuations: new PunctuationSpacingProcessor(),
-      replaceArabicNumbers: new ArabicNumbersProcessor(),
-      replaceDashes: new DashProcessor(),
-      replaceDiacritics: new DiacriticsProcessor(),
-      replaceEnglishNumbers: new EnglishNumbersProcessor(),
-      replaceEnglishQuotes: new EnglishQuotesProcessor(),
-      replaceEnglishQuotesPairs: new EnglishQuotesPairsProcessor(),
-      replaceHamzeh: new HamzehProcessor(),
-      replaceHamzehArabic: new HamzehArabicProcessor(),
-      replaceMiscNonPersianChars: new MiscNonPersianCharsProcessor(),
-      replaceMiscSpacing: new MiscSpacingProcessor(),
-      replaceNumeralSymbols: new NumeralSymbolProcessor(),
-      replacePersianGlyphs: new GlyphsProcessor(),
-      replacePrefixSpacing: new PrefixSpacingProcessor(),
-      replacePunctuations: new PunctuationProcessor(),
-      replaceQuestionMarks: new QuestionMarkProcessor(),
-      replaceSpacingForBracesAndQuotes: new BracesSpacingProcessor(),
-      replaceSuffixMisc: new SuffixSpacingMiscProcessor(),
-    }
+    this.preserverFactory = new PreserverFactory()
+    this.processorFactory = new ProcessorFactory()
   }
 
   /**
-   * Cleans up a given text by applying various text cleaning techniques based on options.
+   * Process a given text by applying various techniques based on options.
    *
    * @param text The text to be cleaned up.
    * @param options Optional options object to override default options.
    * @returns The cleaned up text.
    * @throws TypeError if the input text is not a string.
    */
-  public cleanup(text: string, options?: VirastarOptions) {
+  public process(text: string, options?: VirastarOptions) {
     // Don't bother if it's empty or whitespace
     if (!text.trim()) {
       return text
@@ -188,42 +102,56 @@ export class Virastar {
 
     // Preserves front-matter data in the text
     if (opts['preserveFrontMatter']) {
-      text = this.preservers['preserveFrontMatter']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveFrontMatter')
+        .prepare(text)
     }
 
     // Preserves all HTML tags in the text
     if (opts['preserveHtmlTags']) {
-      text = this.preservers['preserveHtmlTags']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveHtmlTags')
+        .prepare(text)
     }
 
     // Preserves all HTML comments in the text
     if (opts['preserveHtmlComments']) {
-      text = this.preservers['preserveHtmlComments']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveHtmlComments')
+        .prepare(text)
     }
 
     // Preserves strings inside square brackets (`[]`)
     if (opts['preserveSquareBrackets']) {
-      text = this.preservers['preserveSquareBrackets']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveSquareBrackets')
+        .prepare(text)
     }
 
     // Preserves strings inside curly braces (`{}`)
     if (opts['preserveCurlyBraces']) {
-      text = this.preservers['preserveCurlyBraces']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveCurlyBraces')
+        .prepare(text)
     }
 
     // Preserves all URI strings in the text
     if (opts['preserveUris']) {
-      text = this.preservers['preserveUris']!.prepare(text)
+      text = this.preserverFactory.createPreserver('preserveUris').prepare(text)
     }
 
     // Preserves all Markdown code blocks in the text
     if (opts['preserveMarkDownCodeBlocks']) {
-      text = this.preservers['preserveMarkDownCodeBlocks']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveMarkDownCodeBlocks')
+        .prepare(text)
     }
 
     // Preserves all no-break space entities in the text
     if (opts['preserveNonBreakingSpaces']) {
-      text = this.preservers['preserveNonBreakingSpaces']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveNonBreakingSpaces')
+        .prepare(text)
     }
 
     // Decode HTML entities if specified
@@ -234,35 +162,51 @@ export class Virastar {
     // preserves all html entities in the text
     // @props: @substack/node-ent
     if (opts['preserveHtmlEntities']) {
-      text = this.preservers['preserveHtmlEntities']!.prepare(text)
+      text = this.preserverFactory
+        .createPreserver('preserveHtmlEntities')
+        .prepare(text)
     }
 
     if (opts['normalizeEndOfLines']) {
-      text = this.processors['normalizeEndOfLines']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeEndOfLines')
+        .process(text)
     }
 
     if (opts['replacePersianGlyphs']) {
-      text = this.processors['replacePersianGlyphs']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replacePersianGlyphs')
+        .process(text)
     }
 
     if (opts['replaceDashes']) {
-      text = this.processors['replaceDashes']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replaceDashes')
+        .process(text)
     }
 
     if (opts['normalizeThreeDots']) {
-      text = this.processors['normalizeThreeDots']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeThreeDots')
+        .process(text)
     }
 
     if (opts['normalizeEllipsis']) {
-      text = this.processors['normalizeEllipsis']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeEllipsis')
+        .process(text)
     }
 
     if (opts['replaceEnglishQuotesPairs']) {
-      text = this.processors['replaceEnglishQuotesPairs']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replaceEnglishQuotesPairs')
+        .process(text)
     }
 
     if (opts['replaceEnglishQuotes']) {
-      text = this.processors['replaceEnglishQuotes']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replaceEnglishQuotes')
+        .process(text)
     }
 
     if (opts['replaceHamzeh']) {
@@ -280,26 +224,36 @@ export class Virastar {
     }
 
     if (opts['cleanupRightToLeftMarks']) {
-      text = this.processors['cleanupRightToLeftMarks']!.process(text)
+      text = this.processorFactory
+        .createProcessor('cleanupRightToLeftMarks')
+        .process(text)
     }
 
     if (opts['cleanupZeroWidthNonJoiners']) {
-      text = this.processors['cleanupZeroWidthNonJoiners']!.process(text)
+      text = this.processorFactory
+        .createProcessor('cleanupZeroWidthNonJoiners')
+        .process(text)
     }
 
     if (opts['replaceArabicNumbers']) {
-      text = this.processors['replaceArabicNumbers']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replaceArabicNumbers')
+        .process(text)
     }
 
     // word tokenizer
     text = this.wordTokenizer(text, opts)
 
     if (opts['normalizeJalaliDates']) {
-      text = this.processors['normalizeJalaliDates']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeJalaliDates')
+        .process(text)
     }
 
     if (opts['replacePrefixSpacing']) {
-      text = this.processors['replacePrefixSpacing']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replacePrefixSpacing')
+        .process(text)
     }
 
     if (opts['fix_suffix_spacing']) {
@@ -315,27 +269,39 @@ export class Virastar {
     }
 
     if (opts['cleanupExtraMarks']) {
-      text = this.processors['cleanupExtraMarks']!.process(text)
+      text = this.processorFactory
+        .createProcessor('cleanupExtraMarks')
+        .process(text)
     }
 
     if (opts['removeSpacingForPunctuations']) {
-      text = this.processors['removeSpacingForPunctuations']!.process(text)
+      text = this.processorFactory
+        .createProcessor('removeSpacingForPunctuations')
+        .process(text)
     }
 
     if (opts['normalizeKashidas']) {
-      text = this.processors['normalizeKashidas']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeKashidas')
+        .process(text)
     }
 
     if (opts['cleanupKashidas']) {
-      text = this.processors['cleanupKashidas']!.process(text)
+      text = this.processorFactory
+        .createProcessor('cleanupKashidas')
+        .process(text)
     }
 
     if (opts['normalizeMarkDownBraces']) {
-      text = this.processors['normalizeMarkDownBraces']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeMarkDownBraces')
+        .process(text)
     }
 
     if (opts['normalizeMarkDownLists']) {
-      text = this.processors['normalizeMarkDownLists']!.process(text)
+      text = this.processorFactory
+        .createProcessor('normalizeMarkDownLists')
+        .process(text)
     }
 
     // doing it again after `fixPunctuationSpacing()`
@@ -344,17 +310,25 @@ export class Virastar {
     }
 
     if (opts['replaceMiscSpacing']) {
-      text = this.processors['replaceMiscSpacing']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replaceMiscSpacing')
+        .process(text)
     }
 
     if (opts['removeDiacritics']) {
-      text = this.processors['removeDiacritics']!.process(text)
+      text = this.processorFactory
+        .createProcessor('removeDiacritics')
+        .process(text)
     } else if (opts['replaceDiacritics']) {
-      text = this.processors['replaceDiacritics']!.process(text)
+      text = this.processorFactory
+        .createProcessor('replaceDiacritics')
+        .process(text)
     }
 
     if (opts['cleanupSpacing']) {
-      text = this.processors['cleanupSpacing']!.process(text)
+      text = this.processorFactory
+        .createProcessor('cleanupSpacing')
+        .process(text)
     }
 
     if (opts['cleanupZeroWidthNonJoiners']) {
@@ -362,56 +336,76 @@ export class Virastar {
     }
 
     if (opts['cleanupLineBreaks']) {
-      text = this.processors['cleanupLineBreaks']!.process(text)
+      text = this.processorFactory
+        .createProcessor('cleanupLineBreaks')
+        .process(text)
     }
 
     // bringing back entities
     if (opts['preserveHtmlEntities']) {
-      text = this.preservers['preserveHtmlEntities']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveHtmlEntities')
+        .restore(text)
     }
 
     // bringing back nbsps
     if (opts['preserveNonBreakingSpaces']) {
-      text = this.preservers['preserveNonBreakingSpaces']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveNonBreakingSpaces')
+        .restore(text)
     }
 
     // bringing back Markdown code blocks
     if (opts['preserveMarkDownCodeBlocks']) {
-      text = this.preservers['preserveMarkDownCodeBlocks']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveMarkDownCodeBlocks')
+        .restore(text)
     }
 
     // bringing back URIs
     if (opts['preserveUris']) {
-      text = this.preservers['preserveUris']!.restore(text)
+      text = this.preserverFactory.createPreserver('preserveUris').restore(text)
     }
 
     // bringing back braces
     if (opts['preserveCurlyBraces']) {
-      text = this.preservers['preserveCurlyBraces']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveCurlyBraces')
+        .restore(text)
     }
 
     // bringing back brackets
     if (opts['preserveSquareBrackets']) {
-      text = this.preservers['preserveSquareBrackets']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveSquareBrackets')
+        .restore(text)
     }
 
     // bringing back HTML comments
     if (opts['preserveHtmlComments']) {
-      text = this.preservers['preserveHtmlComments']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveHtmlComments')
+        .restore(text)
     }
 
     // bringing back HTML tags
     if (opts['preserveHtmlTags']) {
-      text = this.preservers['preserveHtmlTags']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveHtmlTags')
+        .restore(text)
     }
 
     // bringing back frontmatter
     if (opts['preserveFrontMatter']) {
-      text = this.preservers['preserveFrontMatter']!.restore(text)
+      text = this.preserverFactory
+        .createPreserver('preserveFrontMatter')
+        .restore(text)
     }
 
     if (opts['removeLeadingAndTrailingSpaces']) {
-      text = this.processors['removeLeadingAndTrailingSpaces']!.process(text)
+      text = this.processorFactory
+        .createProcessor('removeLeadingAndTrailingSpaces')
+        .process(text)
     } else {
       // removes single space paddings around the string
       text = text.replace(/^ /g, '').replace(/ $/g, '')
@@ -452,24 +446,33 @@ export class Virastar {
         }
 
         if (opts['replaceEnglishNumbers']) {
-          matched = this.processors['replaceEnglishNumbers']!.process(matched)
+          matched = this.processorFactory
+            .createProcessor('replaceEnglishNumbers')
+            .process(matched)
         }
 
         if (opts['replaceNumeralSymbols']) {
-          matched = this.processors['replaceNumeralSymbols']!.process(matched)
+          matched = this.processorFactory
+            .createProcessor('replaceNumeralSymbols')
+            .process(matched)
         }
 
         if (opts['replacePunctuations']) {
-          matched = this.processors['replacePunctuations']!.process(matched)
+          matched = this.processorFactory
+            .createProcessor('replacePunctuations')
+            .process(matched)
         }
 
         if (opts['replaceMiscNonPersianChars']) {
-          matched =
-            this.processors['replaceMiscNonPersianChars']!.process(matched)
+          matched = this.processorFactory
+            .createProcessor('replaceMiscNonPersianChars')
+            .process(matched)
         }
 
         if (opts['replaceQuestionMarks']) {
-          matched = this.processors['replaceQuestionMarks']!.process(matched)
+          matched = this.processorFactory
+            .createProcessor('replaceQuestionMarks')
+            .process(matched)
         }
 
         return matched

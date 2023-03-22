@@ -1,6 +1,5 @@
 {
   "name": "virastar",
-  "private": true,
   "workspaces": [
     "packages/*"
   ],

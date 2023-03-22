@@ -59,7 +59,7 @@ describe('Virastar', () => {
   describe('#cleanup()', () => {
     it('should cleanup simple sentences', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           'ويراستار به شما كمك مي كند تا متون فارسي زيبا تر و درست تري بنويسيد .',
           {},
         ),
@@ -68,7 +68,7 @@ describe('Virastar', () => {
       )
 
       expect(
-        virastar.cleanup(
+        virastar.process(
           'ويراستار به طور پيش فرض اين کار ها را انجام می دهد :',
           {},
         ),
@@ -77,7 +77,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #1', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '1. نویسه های عربي را به فارسی تبديل مي کند.  مثلا كاف و ياي عربي .',
           {},
         ),
@@ -86,7 +86,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #2', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '2. نویسه های انگليسي رايج در تايپ فارسي را به معادل صحيح فارسي آن تبدیل می کند, مثلا تبدیل کامای انگلیسی به ویرگول (,), يا نقطه ویرگول به جای semicolon (;) و یا استفاده از "گيومه های فارسي"',
           {},
         ),
@@ -97,7 +97,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #3', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '3. اعداد عربي و انگليسي و علائم رياضی را به معادل فارسی آن ها تبديل مي کند.    مثلا  :  12%  456',
           {},
         ),
@@ -108,7 +108,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #4', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '4. سه نقطه را به نويسه صحيح آن که تنها يك نويسه است تبديل کرده و فاصله گذاري آن را اصلاح مي کند ...',
           {},
         ),
@@ -119,7 +119,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #5', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '5. در ترکيباتي مانند \'\'خانه ي پدری\'\' که  با "ه" تمام می‌شوند نشانه "ی" كسره ی اضافه را به "هٔ" تبديل می كند.',
           {},
         ),
@@ -130,7 +130,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #6', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '6. دو علامت منهاي پي در پي را به خط کشيده کوتاه (--) و سه علامت منهاي پي در پي را به خط کشیده بلند (---) تبديل مي كند .',
           {},
         ),
@@ -141,7 +141,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #7', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '7. فاصله گذاری را تصحيح مي کند . بين هر کلمه تنها یک فاصله و بین پیشوندها و پسوندهاي مانند "مي","تر"و"ترین"  يک نيم فاصله قرار مي دهد.  بین ویرگول یا نقطه و کلمه قبل آن فاصله را حذف می کند.',
           {},
         ),
@@ -152,7 +152,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #8', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '8. فاصله گذاری را برای متون بین "  گیومه  " , {    آکولاد   }  , [   کروشه  ]  و ( پرانتز    ) تنظيم مي کند .',
           {},
         ),
@@ -163,7 +163,7 @@ describe('Virastar', () => {
 
     it('should cleanup simple sentences #9', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '9. علامت تعحب و سوال اضافی را حذف مي کند؟؟؟!!!!!!!',
           {},
         ),
@@ -172,7 +172,7 @@ describe('Virastar', () => {
 
     it('should replace kashidas to ndash in parenthetic', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           'ـ که در واقع پدرخوانده‌ام بود ولی من او را جای پدرم می‌دانستم ـ',
           {},
         ),
@@ -181,7 +181,7 @@ describe('Virastar', () => {
 
     it('should not put space after dots in numbers', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           'پوسته دوهزارونوزده، حداقل به نسخه وردپرس 4.7 نیاز دارد. شما نسخه %s را اجرا می کنید. لطفاً وردپرس خود را ارتقا دهید و دوباره سعی کنید.',
           {},
         ),
@@ -192,7 +192,7 @@ describe('Virastar', () => {
 
     it('should not replace sprintf directives', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           'این افزونه به php نسخه "%1$s" نياز دارد. شما از نسخه (%2$s) استفاده می کنید. لطفاً پس از ارتقا دوباره تلاش کنید.',
           {},
         ),
@@ -202,10 +202,10 @@ describe('Virastar', () => {
     })
 
     it('should converts back html named character references', () => {
-      expect(virastar.cleanup('&quot;گيومه های فارسي&quot;')).toBe(
+      expect(virastar.process('&quot;گيومه های فارسي&quot;')).toBe(
         '«گیومه‌های فارسی»',
       )
-      expect(virastar.cleanup('&apos;گيومه های فارسي&apos;')).toBe(
+      expect(virastar.process('&apos;گيومه های فارسي&apos;')).toBe(
         '«گیومه‌های فارسی»',
       )
     })
@@ -213,53 +213,53 @@ describe('Virastar', () => {
     // @REF: https://github.com/aziz/virastar/blob/master/spec/virastar_spec.rb
 
     it('should replace Arabic kaf with its Persian equivalent', () => {
-      expect(virastar.cleanup('ك')).toBe('ک')
-      expect(virastar.cleanup('كمك')).toBe('کمک')
+      expect(virastar.process('ك')).toBe('ک')
+      expect(virastar.process('كمك')).toBe('کمک')
     })
 
     it('should replace Arabic Yeh with its Persian equivalent', () => {
-      expect(virastar.cleanup('ي')).toBe('ی')
-      expect(virastar.cleanup('بيني')).toBe('بینی')
+      expect(virastar.process('ي')).toBe('ی')
+      expect(virastar.process('بيني')).toBe('بینی')
     })
 
     it('should replace Arabic numbers with their Persian equivalent', () => {
-      expect(virastar.cleanup('٠١٢٣٤٥٦٧٨٩')).toBe('۰۱۲۳۴۵۶۷۸۹')
+      expect(virastar.process('٠١٢٣٤٥٦٧٨٩')).toBe('۰۱۲۳۴۵۶۷۸۹')
     })
 
     it('should replace English numbers with their Persian equivalent', () => {
-      expect(virastar.cleanup('0123456789')).toBe('۰۱۲۳۴۵۶۷۸۹')
+      expect(virastar.process('0123456789')).toBe('۰۱۲۳۴۵۶۷۸۹')
     })
 
     it('should replace English comma and semicolon with their Persian equivalent', () => {
-      expect(virastar.cleanup(';,')).toBe('؛ ،')
+      expect(virastar.process(';,')).toBe('؛ ،')
     })
 
     it('should correct :;,.?! spacing (one space after and no space before)', () => {
-      expect(virastar.cleanup('گفت : سلام')).toBe('گفت: سلام')
+      expect(virastar.process('گفت : سلام')).toBe('گفت: سلام')
     })
 
     it('should replace English quotes with their Persian equivalent', () => {
-      expect(virastar.cleanup("''تست''")).toBe('«تست»')
-      expect(virastar.cleanup("'تست'")).toBe('«تست»')
-      expect(virastar.cleanup('`تست`')).toBe('«تست»')
-      expect(virastar.cleanup('``تست``')).toBe('«تست»')
-      expect(virastar.cleanup('"گفت: سلام"')).toBe('«گفت: سلام»')
-      expect(virastar.cleanup('"این" یا "آن"')).toBe('«این» یا «آن»') // not greedy
+      expect(virastar.process("''تست''")).toBe('«تست»')
+      expect(virastar.process("'تست'")).toBe('«تست»')
+      expect(virastar.process('`تست`')).toBe('«تست»')
+      expect(virastar.process('``تست``')).toBe('«تست»')
+      expect(virastar.process('"گفت: سلام"')).toBe('«گفت: سلام»')
+      expect(virastar.process('"این" یا "آن"')).toBe('«این» یا «آن»') // not greedy
     })
 
     it('should convert ه ی to هٔ', () => {
-      expect(virastar.cleanup('خانه ی ما')).toBe('خانهٔ ما')
-      expect(virastar.cleanup('خانه ی ما')).toBe('خانهٔ ما')
-      expect(virastar.cleanup('خانه ي ما')).toBe('خانهٔ ما')
+      expect(virastar.process('خانه ی ما')).toBe('خانهٔ ما')
+      expect(virastar.process('خانه ی ما')).toBe('خانهٔ ما')
+      expect(virastar.process('خانه ي ما')).toBe('خانهٔ ما')
     })
 
     it('should replace double dash to ndash and triple dash to mdash', () => {
-      expect(virastar.cleanup('--')).toBe('–')
-      expect(virastar.cleanup('---')).toBe('—')
+      expect(virastar.process('--')).toBe('–')
+      expect(virastar.process('---')).toBe('—')
     })
 
     it('should replace more than one space with just a single one', () => {
-      expect(virastar.cleanup('  سلام   جهان ،  من ویراستار هستم!')).toBe(
+      expect(virastar.process('  سلام   جهان ،  من ویراستار هستم!')).toBe(
         'سلام جهان، من ویراستار هستم!',
       )
     })
@@ -284,7 +284,7 @@ describe('Virastar', () => {
       for (const pair in matched) {
         for (const str in templates) {
           expect(
-            virastar.cleanup(
+            virastar.process(
               sprintf(
                 templates[str]![0]!,
                 matched[pair]![0],
@@ -319,74 +319,74 @@ describe('Virastar', () => {
             mismatched[pair2]![0],
             mismatched[pair2]![1],
           )
-          expect(virastar.cleanup(template)).toBe(template)
+          expect(virastar.process(template)).toBe(template)
         }
       }
     })
 
     it('should replace English percent sign to its Persian equivalent', () => {
-      expect(virastar.cleanup('96%')).toBe('۹۶٪')
+      expect(virastar.process('96%')).toBe('۹۶٪')
     })
 
     it.skip('should remove spaces before and after line breaks', () => {
-      expect(virastar.cleanup('this is \n \n \n     \n a test')).toBe(
+      expect(virastar.process('this is \n \n \n     \n a test')).toBe(
         'this is \n\na test',
       )
-      expect(virastar.cleanup('this is\n\n\n\na test')).toBe(
+      expect(virastar.process('this is\n\n\n\na test')).toBe(
         'this is\n\na test',
       )
-      expect(virastar.cleanup('this is \n\n\n    a test')).toBe(
+      expect(virastar.process('this is \n\n\n    a test')).toBe(
         'this is \n\na test',
       )
     })
 
     it.skip('should remove more that two line breaks', () => {
-      expect(virastar.cleanup('this is \n \n \n     \n a test')).toBe(
+      expect(virastar.process('this is \n \n \n     \n a test')).toBe(
         'this is \n\na test',
       )
-      expect(virastar.cleanup('this is\n\n\n\na test')).toBe(
+      expect(virastar.process('this is\n\n\n\na test')).toBe(
         'this is\n\na test',
       )
-      expect(virastar.cleanup('this is \n\n\n    a test')).toBe(
+      expect(virastar.process('this is \n\n\n    a test')).toBe(
         'this is \n\na test',
       )
     })
 
     it('should not replace line breaks and should remove spaces after line break', () => {
-      expect(virastar.cleanup('this is \n  a test')).toBe('this is \na test')
+      expect(virastar.process('this is \n  a test')).toBe('this is \na test')
     })
 
     it('should put zwnj between word and prefix/suffix (ha haye* tar* tarin mi* nemi*)', () => {
-      expect(virastar.cleanup('ما می توانیم')).toBe('ما می‌توانیم')
-      expect(virastar.cleanup('ما نمی توانیم')).toBe('ما نمی‌توانیم')
-      expect(virastar.cleanup('این بهترین کتاب ها است')).toBe(
+      expect(virastar.process('ما می توانیم')).toBe('ما می‌توانیم')
+      expect(virastar.process('ما نمی توانیم')).toBe('ما نمی‌توانیم')
+      expect(virastar.process('این بهترین کتاب ها است')).toBe(
         'این بهترین کتاب‌ها است',
       )
-      expect(virastar.cleanup('بزرگ تری و قدرتمند ترین زبان های دنیا')).toBe(
+      expect(virastar.process('بزرگ تری و قدرتمند ترین زبان های دنیا')).toBe(
         'بزرگ‌تری و قدرتمندترین زبان‌های دنیا',
       )
     })
 
     it('should not replace English numbers in English phrases', () => {
-      expect(virastar.cleanup('عزیز ATM74 در IBM-96 085 B 95BCS')).toBe(
+      expect(virastar.process('عزیز ATM74 در IBM-96 085 B 95BCS')).toBe(
         'عزیز ATM74 در IBM-96 ۰۸۵ B 95BCS',
       )
     })
 
     it('should not create spacing for something like (,)', () => {
-      expect(virastar.cleanup('this is (,) comma')).toBe('this is (،) comma')
+      expect(virastar.process('this is (,) comma')).toBe('this is (،) comma')
     })
 
     it('should not puts space after time colon separator', () => {
-      expect(virastar.cleanup('12:34')).toBe('۱۲:۳۴')
+      expect(virastar.process('12:34')).toBe('۱۲:۳۴')
     })
 
     it.skip('should not destroy URLs', () => {
-      expect(virastar.cleanup('https://virastar.brothersincode.ir')).toBe(
+      expect(virastar.process('https://virastar.brothersincode.ir')).toBe(
         'https://virastar.brothersincode.ir',
       )
       expect(
-        virastar.cleanup(
+        virastar.process(
           'https://virastar.brothersincode.ir\nhttp://twitter.com',
         ),
       ).toBe('https://virastar.brothersincode.ir\nhttp://twitter.com')
@@ -395,27 +395,27 @@ describe('Virastar', () => {
     it('should not replace line breaks when the line ends with quotes', () => {
       let actual = 'salam "khoobi" \n chetori'
       let output = 'salam «khoobi» \nchetori'
-      expect(virastar.cleanup(actual)).toBe(output)
+      expect(virastar.process(actual)).toBe(output)
     })
 
     it("should not put space after quotes, {}, () or [] if there's ,.; just after that", () => {
       let actual = '«این», {این}, (این), [این] or {این}. بعضی وقت ها (این).'
       let output = '«این»، {این}، (این)، [این] or {این}. بعضی وقت‌ها (این).'
-      expect(virastar.cleanup(actual)).toBe(output)
+      expect(virastar.process(actual)).toBe(output)
     })
 
     it('should be able to convert numbers with dashes', () => {
-      expect(virastar.cleanup('1- salam')).toBe('۱- salam')
+      expect(virastar.process('1- salam')).toBe('۱- salam')
     })
 
     it('aggressive editing', () => {
-      expect(virastar.cleanup('salam!!!')).toBe('salam!')
-      expect(virastar.cleanup('چطور؟؟؟')).toBe('چطور؟')
+      expect(virastar.process('salam!!!')).toBe('salam!')
+      expect(virastar.process('چطور؟؟؟')).toBe('چطور؟')
     })
 
     it('should remove all kashida', () => {
-      expect(virastar.cleanup('سلامـــت')).toBe('سلامت')
-      expect(virastar.cleanup('لــعل سـلـسـبیــل')).toBe('لعل سلسبیل')
+      expect(virastar.process('سلامـــت')).toBe('سلامت')
+      expect(virastar.process('لــعل سـلـسـبیــل')).toBe('لعل سلسبیل')
     })
   })
 
@@ -430,7 +430,7 @@ describe('Virastar', () => {
       ]
 
       for (let equal in equals) {
-        expect(virastar.cleanup(equals[equal]!)).toBe(equals[equal])
+        expect(virastar.process(equals[equal]!)).toBe(equals[equal])
       }
     })
   })
@@ -438,135 +438,135 @@ describe('Virastar', () => {
   describe('#cleanup(): Additional', () => {
     it('should preserve all HTML tags', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           '<strong title="نباید تغییر کند!!!!!">سلام جهان</strong>',
         ),
       ).toBe('<strong title="نباید تغییر کند!!!!!">سلام جهان</strong>')
     })
 
     it('should fix heh plus standalone hamza', () => {
-      expect(virastar.cleanup('از غم به هر بهانهء ممكن عبور كن !')).toBe(
+      expect(virastar.process('از غم به هر بهانهء ممكن عبور كن !')).toBe(
         'از غم به هر بهانهٔ ممکن عبور کن!',
       ) // without space
-      expect(virastar.cleanup('از غم به هر بهانه ء ممكن عبور كن !')).toBe(
+      expect(virastar.process('از غم به هر بهانه ء ممكن عبور كن !')).toBe(
         'از غم به هر بهانهٔ ممکن عبور کن!',
       ) // with space
     })
 
     it('should fix heh plus hamza into ye', () => {
-      expect(virastar.cleanup('خانه‌ٔ پدری', { replaceHamzeh: false })).toBe(
+      expect(virastar.process('خانه‌ٔ پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       )
-      expect(virastar.cleanup('خانه ء پدری', { replaceHamzeh: false })).toBe(
+      expect(virastar.process('خانه ء پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       )
-      expect(virastar.cleanup('خانه ي پدری', { replaceHamzeh: false })).toBe(
+      expect(virastar.process('خانه ي پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       )
-      expect(virastar.cleanup('خانه‌ی پدری', { replaceHamzeh: false })).toBe(
+      expect(virastar.process('خانه‌ی پدری', { replaceHamzeh: false })).toBe(
         'خانه‌ی پدری',
       ) // no change
     })
 
     it('should convert all soft hyphens into zwnj', () => {
       expect(
-        virastar.cleanup('عادت به تنهایی... این دیگر از آن حرف­هاست! '),
+        virastar.process('عادت به تنهایی... این دیگر از آن حرف­هاست! '),
       ).toBe('عادت به تنهایی… این دیگر از آن حرف‌هاست!')
     })
 
     it('should normalize ellipsis', () => {
-      expect(virastar.cleanup('...…...')).toBe('…')
+      expect(virastar.process('...…...')).toBe('…')
     })
 
     it('should normalize question/exclamation marks', () => {
       expect(
-        virastar.cleanup('عادت به تنهایی... این دیگر از آن حرف­هاست!!!?'),
+        virastar.process('عادت به تنهایی... این دیگر از آن حرف­هاست!!!?'),
       ).toBe('عادت به تنهایی… این دیگر از آن حرف‌هاست؟!')
-      expect(virastar.cleanup('متن فارسی؟!')).toBe('متن فارسی؟!')
-      expect(virastar.cleanup('متن فارسی!؟')).toBe('متن فارسی؟!')
-      expect(virastar.cleanup('متن فارسی?!')).toBe('متن فارسی؟!')
-      expect(virastar.cleanup('متن فارسی!?')).toBe('متن فارسی؟!')
-      expect(virastar.cleanup('؟!')).toBe('؟!')
-      expect(virastar.cleanup('!؟')).toBe('؟!')
-      expect(virastar.cleanup('?!')).toBe('؟!')
-      expect(virastar.cleanup('!?')).toBe('؟!')
-      expect(virastar.cleanup('کتاب????!!!!')).toBe('کتاب؟!')
-      expect(virastar.cleanup('کتاب!!!!?????')).toBe('کتاب؟!')
-      expect(virastar.cleanup('کتاب؟؟؟!!!!')).toBe('کتاب؟!')
-      expect(virastar.cleanup('کتاب!!!!!!!!!؟؟؟؟؟؟؟؟')).toBe('کتاب؟!')
-      expect(virastar.cleanup('کتاب!!!!!!')).toBe('کتاب!')
-      expect(virastar.cleanup('کتاب؟؟؟؟')).toBe('کتاب؟')
-      expect(virastar.cleanup('کتاب?????')).toBe('کتاب؟')
+      expect(virastar.process('متن فارسی؟!')).toBe('متن فارسی؟!')
+      expect(virastar.process('متن فارسی!؟')).toBe('متن فارسی؟!')
+      expect(virastar.process('متن فارسی?!')).toBe('متن فارسی؟!')
+      expect(virastar.process('متن فارسی!?')).toBe('متن فارسی؟!')
+      expect(virastar.process('؟!')).toBe('؟!')
+      expect(virastar.process('!؟')).toBe('؟!')
+      expect(virastar.process('?!')).toBe('؟!')
+      expect(virastar.process('!?')).toBe('؟!')
+      expect(virastar.process('کتاب????!!!!')).toBe('کتاب؟!')
+      expect(virastar.process('کتاب!!!!?????')).toBe('کتاب؟!')
+      expect(virastar.process('کتاب؟؟؟!!!!')).toBe('کتاب؟!')
+      expect(virastar.process('کتاب!!!!!!!!!؟؟؟؟؟؟؟؟')).toBe('کتاب؟!')
+      expect(virastar.process('کتاب!!!!!!')).toBe('کتاب!')
+      expect(virastar.process('کتاب؟؟؟؟')).toBe('کتاب؟')
+      expect(virastar.process('کتاب?????')).toBe('کتاب؟')
     })
 
     it('extra: fixSuffixSpacing()', () => {
       expect(
-        virastar.cleanup('"و من هم به خاطر جلب اعتماد او پذیرفته ام"'),
+        virastar.process('"و من هم به خاطر جلب اعتماد او پذیرفته ام"'),
       ).toBe('«و من هم به خاطر جلب اعتماد او پذیرفته‌ام»') // within quotes
       expect(
-        virastar.cleanup('و من هم به خاطر جلب اعتماد او پذیرفته ام.'),
+        virastar.process('و من هم به خاطر جلب اعتماد او پذیرفته ام.'),
       ).toBe('و من هم به خاطر جلب اعتماد او پذیرفته‌ام.') // followed by dot
       expect(
-        virastar.cleanup('و من هم به خاطر جلب اعتماد او پذیرفته ام!'),
+        virastar.process('و من هم به خاطر جلب اعتماد او پذیرفته ام!'),
       ).toBe('و من هم به خاطر جلب اعتماد او پذیرفته‌ام!') // followed by exclamation
       expect(
-        virastar.cleanup('و من هم به خاطر جلب اعتماد او پذیرفته ام؟'),
+        virastar.process('و من هم به خاطر جلب اعتماد او پذیرفته ام؟'),
       ).toBe('و من هم به خاطر جلب اعتماد او پذیرفته‌ام؟') // followed by question
-      expect(virastar.cleanup('و من هم به خاطر جلب اعتماد او پذیرفته ام')).toBe(
+      expect(virastar.process('و من هم به خاطر جلب اعتماد او پذیرفته ام')).toBe(
         'و من هم به خاطر جلب اعتماد او پذیرفته‌ام',
       ) // as last word (with the help of padding)
 
       expect(
-        virastar.cleanup(
+        virastar.process(
           'و به چلو ماهی و باسلوق و مترادف کرده ایم، محض خالی نبودن عریضه دیوان حافظ را هم تنگش زده ایم. سوءتفاهم نشود.',
         ),
       ).toBe(
         'و به چلو ماهی و باسلوق و مترادف کرده‌ایم، محض خالی نبودن عریضه دیوان حافظ را هم تنگش زده‌ایم. سوءتفاهم نشود.',
       )
       expect(
-        virastar.cleanup(
+        virastar.process(
           'عرضم این است که ما در بیداری نیز خود را فریب می دهیم و به شکم چرانی مان صبغه فرهیختگی می زنیم.',
         ),
       ).toBe(
         'عرضم این است که ما در بیداری نیز خود را فریب می‌دهیم و به شکم چرانی‌مان صبغه فرهیختگی می‌زنیم.',
       )
-      expect(virastar.cleanup('به خواب های تان دقت کنید.')).toBe(
+      expect(virastar.process('به خواب های تان دقت کنید.')).toBe(
         'به خواب‌های‌تان دقت کنید.',
       )
     })
 
     it('extra: fixSuffixMisc()', () => {
-      expect(virastar.cleanup('خانه‌يی بر روی آب')).toBe('خانه‌ای بر روی آب')
-      expect(virastar.cleanup('خانه‌ئی بر روی آب')).toBe('خانه‌ای بر روی آب')
-      expect(virastar.cleanup('خانه‌یی بر روی آب')).toBe('خانه‌ای بر روی آب')
+      expect(virastar.process('خانه‌يی بر روی آب')).toBe('خانه‌ای بر روی آب')
+      expect(virastar.process('خانه‌ئی بر روی آب')).toBe('خانه‌ای بر روی آب')
+      expect(virastar.process('خانه‌یی بر روی آب')).toBe('خانه‌ای بر روی آب')
     })
 
     it('extra: fixDiacritics():‌ cleans more than one diacritic characters', () => {
-      expect(virastar.cleanup('لطفاًً')).toBe('لطفاً')
+      expect(virastar.process('لطفاًً')).toBe('لطفاً')
     })
 
     it('extra: fixNumeralSymbols(): replaces english percent signs', () => {
-      expect(virastar.cleanup('۹۶%')).toBe('۹۶٪')
+      expect(virastar.process('۹۶%')).toBe('۹۶٪')
     })
 
     it('extra: fixNumeralSymbols(): replaces dots between numbers into decimal separator', () => {
-      expect(virastar.cleanup('۱۲.۵۶')).toBe('۱۲٫۵۶')
+      expect(virastar.process('۱۲.۵۶')).toBe('۱۲٫۵۶')
     })
 
     it('extra: fixNumeralSymbols(): replaces commas between numbers into thousands separator', () => {
-      expect(virastar.cleanup('۱۲,۵۴۳')).toBe('۱۲٬۵۴۳')
+      expect(virastar.process('۱۲,۵۴۳')).toBe('۱۲٬۵۴۳')
     })
 
     it('extra: cleanupKashidas(): converts kashida between numbers to ndash', () => {
-      expect(virastar.cleanup('۱۱ـ۲۳')).toBe('۱۱–۲۳')
+      expect(virastar.process('۱۱ـ۲۳')).toBe('۱۱–۲۳')
     })
 
     it('extra: kashidasAsParenthetic(): replaces kashidas to ndash in parenthetic', () => {
       expect(
-        virastar.cleanup('ـکه همواره به فتوحات پادشاهان خویش در هند می‌بالیمـ'),
+        virastar.process('ـکه همواره به فتوحات پادشاهان خویش در هند می‌بالیمـ'),
       ).toBe('–که همواره به فتوحات پادشاهان خویش در هند می‌بالیم–')
       expect(
-        virastar.cleanup(
+        virastar.process(
           'ما مردم افغانستان ـکه همواره به فتوحات پادشاهان خویش در هند می‌بالیمـ شاید حالا که دو دهه رنج تهاجم بیگانگان را چشیده‌ایم‌، بتوانیم درد و رنج مردم هند را در دوران لشکرکشی‌های اجدادمان دریابیم‌.',
         ),
       ).toBe(
@@ -576,12 +576,12 @@ describe('Virastar', () => {
 
     it('extra: fixHamzehArabic(): converts arabic hamza', () => {
       expect(
-        virastar.cleanup('آن دسته از علایم که مشخص‌کنندة انتهای جمله', {
+        virastar.process('آن دسته از علایم که مشخص‌کنندة انتهای جمله', {
           replaceHamzehArabic: true,
         }),
       ).toBe('آن دسته از علایم که مشخص‌کنندهٔ انتهای جمله')
       expect(
-        virastar.cleanup('آن دسته از علایم که مشخص‌کنندة انتهای جمله', {
+        virastar.process('آن دسته از علایم که مشخص‌کنندة انتهای جمله', {
           replaceHamzehArabic: true,
           replaceHamzeh: false,
         }),
@@ -589,20 +589,20 @@ describe('Virastar', () => {
     })
 
     it('extra: fixThreeDots(): removes space between dots/replaces three dots with ellipsis character', () => {
-      expect(virastar.cleanup('...')).toBe('…')
-      expect(virastar.cleanup('......')).toBe('…')
-      expect(virastar.cleanup('. . . .   ...   ..... . . . .')).toBe('…')
-      expect(virastar.cleanup('خداحافظ ... به به')).toBe('خداحافظ… به به')
+      expect(virastar.process('...')).toBe('…')
+      expect(virastar.process('......')).toBe('…')
+      expect(virastar.process('. . . .   ...   ..... . . . .')).toBe('…')
+      expect(virastar.process('خداحافظ ... به به')).toBe('خداحافظ… به به')
     })
 
     it('extra: normalizeDates(): reorders date parts with slash as delimiter', () => {
-      expect(virastar.cleanup('23/10/1355')).toBe('۱۳۵۵/۱۰/۲۳')
-      expect(virastar.cleanup('3/1/1355')).toBe('۱۳۵۵/۱/۳')
+      expect(virastar.process('23/10/1355')).toBe('۱۳۵۵/۱۰/۲۳')
+      expect(virastar.process('3/1/1355')).toBe('۱۳۵۵/۱/۳')
     })
 
     it('extra: removeDiacritics(): removes all diacritic characters', () => {
       expect(
-        virastar.cleanup(
+        virastar.process(
           'اذا عَمَّتِ الْبُلْدانَ الْفِتَنُ فَعَلَیکمْ بِقُمْ وَحَوالیها وَنَواحیها فَانَ الْبَلاءَ مَدْفُوعٌ عَنْها',
           { removeDiacritics: true },
         ),
@@ -617,7 +617,7 @@ describe('Virastar', () => {
       const input = '&nbsp;امروز&nbsp;۲۰&nbsp;مرداد&nbsp;۱۴۰۰&nbsp;'
       const expected = '&nbsp;امروز&nbsp;۲۰&nbsp;مرداد&nbsp;۱۴۰۰&nbsp;'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
       })
 
@@ -627,7 +627,7 @@ describe('Virastar', () => {
     it('should preserve strings inside curly braces when preserveCurlyBraces is true', () => {
       const input = '{سلام}، این {جمله} یک {تست} است.'
       const expected = '{سلام}، این {جمله} یک {تست} است.'
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveCurlyBraces: true,
       })
@@ -637,7 +637,7 @@ describe('Virastar', () => {
     it('should preserve strings inside brackets when preserveSquareBrackets is true', () => {
       const input = '[سلام]، این [جمله] یک [تست] است.'
       const expected = '[سلام]، این [جمله] یک [تست] است.'
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveSquareBrackets: true,
       })
@@ -660,7 +660,7 @@ describe('Virastar', () => {
       </div>
     `
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveHtmlComments: true,
       })
@@ -672,7 +672,7 @@ describe('Virastar', () => {
       const input = 'سلام &nbsp; جهان'
       const expected = 'سلام &nbsp; جهان'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveHtmlEntities: true,
       })
@@ -692,7 +692,7 @@ title: My Awesome Title
 
 این یک تست است.`
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveFrontMatter: true,
       })
@@ -706,7 +706,7 @@ title: My Awesome Title
       const expected =
         '<p>متنی <strong>با</strong> <em>تگ‌های</em> <a href="#">HTML</a></p>'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveHtmlTags: true,
       })
@@ -720,7 +720,7 @@ title: My Awesome Title
       const expected =
         'این یک &nbsp; متن است که شامل فضای بین‌کلمه‌ای نیز می‌باشد.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveNonBreakingSpaces: true,
         decodeHtmlEntities: true,
@@ -733,7 +733,7 @@ title: My Awesome Title
       const input = 'جستجوی در اینترنت: https://fa.wikipedia.org'
       const expected = 'جستجوی در اینترنت: https://fa.wikipedia.org'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveUris: true,
       })
@@ -747,7 +747,7 @@ title: My Awesome Title
       const expected =
         'برای خواندن بیشتر، به [ویکی‌پدیا](https://fa.wikipedia.org) مراجعه کنید.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         preserveUris: true,
       })
@@ -759,7 +759,7 @@ title: My Awesome Title
       const input = 'سومین مورد\n1. خریداری\n2. نصب\n3. راه اندازی'
       const expected = 'سومین مورد\n1. خریداری\n2. نصب\n3. راه اندازی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         skip_markdown_ordered_lists_numbers_conversion: true,
       })
@@ -773,7 +773,7 @@ title: My Awesome Title
       const input = '  \n\t۱۲۳۴۵۶۷۸۹۰  \n\t'
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeLeadingAndTrailingSpaces: true,
       })
@@ -785,7 +785,7 @@ title: My Awesome Title
       const input = '  \n\t۱۲۳  ۴۵ ۶۷۸۹۰  \n\t'
       const expected = '۱۲۳  ۴۵ ۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeLeadingAndTrailingSpaces: true,
       })
@@ -797,7 +797,7 @@ title: My Awesome Title
       const input = '\u200f۱۲۳۴۵۶۷۸۹۰\u200f'
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeLeadingAndTrailingSpaces: true,
       })
@@ -809,7 +809,7 @@ title: My Awesome Title
       const input = '‌۱۲۳۴۵۶۷۸۹۰‌'
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeLeadingAndTrailingSpaces: true,
       })
@@ -821,7 +821,7 @@ title: My Awesome Title
       const input = '۱۲۳۴۵۶۷۸۹۰ '
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeLeadingAndTrailingSpaces: true,
       })
@@ -835,7 +835,7 @@ title: My Awesome Title
       const input = 'سلام؟؟؟! چطورید؟؟!'
       const expected = 'سلام؟! چطورید؟!'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupExtraMarks: true,
       })
@@ -847,7 +847,7 @@ title: My Awesome Title
       const input = 'وای! خدایا!!'
       const expected = 'وای! خدایا!'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupExtraMarks: true,
       })
@@ -859,7 +859,7 @@ title: My Awesome Title
       const input = '؟؟؟چرا'
       const expected = '؟چرا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupExtraMarks: true,
       })
@@ -871,7 +871,7 @@ title: My Awesome Title
       const input = 'چطوری!؟'
       const expected = 'چطوری؟!'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupExtraMarks: true,
       })
@@ -885,7 +885,7 @@ title: My Awesome Title
       const input = '۱۲۳۴۵۶۷۸۹۰ــــــ۱۲۳۴۵۶۷۸۹۰'
       const expected = '۱۲۳۴۵۶۷۸۹۰–۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupKashidas: true,
       })
@@ -897,7 +897,7 @@ title: My Awesome Title
       const input = 'تـحـت مـجـازیـت هـوا'
       const expected = 'تحت مجازیت هوا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupKashidas: true,
       })
@@ -911,7 +911,7 @@ title: My Awesome Title
       const input = 'خط ۱\n\n\nخط ۲\n\n\n\n\n\n\n\n\n\n\n\n\nخط ۳'
       const expected = 'خط ۱\n\nخط ۲\n\nخط ۳'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupLineBreaks: true,
       })
@@ -923,7 +923,7 @@ title: My Awesome Title
       const input = 'خط ۱\nخط ۲\n\n\nخط ۳'
       const expected = 'خط ۱\nخط ۲\n\nخط ۳'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupLineBreaks: true,
       })
@@ -935,7 +935,7 @@ title: My Awesome Title
       const input = 'متن با یک خط\n'
       const expected = 'متن با یک خط\n'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupLineBreaks: true,
       })
@@ -947,7 +947,7 @@ title: My Awesome Title
       const input = 'متن بدون خطی\nبا خطی دیگر\n'
       const expected = 'متن بدون خطی\nبا خطی دیگر\n'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupLineBreaks: true,
       })
@@ -961,7 +961,7 @@ title: My Awesome Title
       const input = 'این\u200Fیک متن فارسی است.'
       const expected = 'این\u200cیک متن فارسی است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupRightToLeftMarks: true,
       })
@@ -973,7 +973,7 @@ title: My Awesome Title
       const input = 'This\u200Fis a persian text.'
       const expected = 'This\u200Fis a persian text.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupRightToLeftMarks: true,
       })
@@ -985,7 +985,7 @@ title: My Awesome Title
       const input = 'یک متن فارسی -\u200F مثال'
       const expected = 'یک متن فارسی -\u200F مثال'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupRightToLeftMarks: true,
       })
@@ -997,7 +997,7 @@ title: My Awesome Title
       const input = 'این\u200Fیک\u200Fمتن فارسی است.'
       const expected = 'این\u200cیک\u200cمتن فارسی است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupRightToLeftMarks: true,
       })
@@ -1011,7 +1011,7 @@ title: My Awesome Title
       const input = 'تست    تست. تست  تست\n'
       const expected = 'تست تست. تست تست\n'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupSpacing: true,
       })
@@ -1023,7 +1023,7 @@ title: My Awesome Title
       const input = 'تست\n \t \u200c \nتست'
       const expected = 'تست\n\nتست'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupSpacing: true,
       })
@@ -1039,7 +1039,7 @@ title: My Awesome Title
       const expected =
         'این یک\u200cمتن است که زیاده\u200cاستفاده از زوج نیم\u200cفاصله در آن صورت گرفته است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupZeroWidthNonJoiners: true,
       })
@@ -1052,7 +1052,7 @@ title: My Awesome Title
         'برای آزمایش توانایی \u200c   این علائم [ ] { } ( ) ؛  ،   ؟   " "   در متون پارسی'
       const expected = 'برای آزمایش توانایی این علائم[]{}()؛،؟""در متون پارسی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupZeroWidthNonJoiners: true,
       })
@@ -1066,7 +1066,7 @@ title: My Awesome Title
       const expected =
         'این یک متن است که در چندین خط نوشته شده\nاین خط دوم است\nاین خط سوم است'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupZeroWidthNonJoiners: true,
       })
@@ -1078,7 +1078,7 @@ title: My Awesome Title
       const input = 'the \u200cbook \u200cis \u200cinteresting.'
       const expected = 'the book is interesting.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupZeroWidthNonJoiners: true,
       })
@@ -1090,7 +1090,7 @@ title: My Awesome Title
       const input = '۱۲۳۴۵۶۷۸۹۰ \u200c۱۲۳۴۵۶۷۸۹۰ '
       const expected = '۱۲۳۴۵۶۷۸۹۰ ۱۲۳۴۵۶۷۸۹۰ '
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         cleanupZeroWidthNonJoiners: true,
       })
@@ -1106,7 +1106,7 @@ title: My Awesome Title
       const expected =
         'یک نمایش‌نامه معروف به مرد خانه‌دار و دوبله‌ی فیلم‌های بلند لنگری'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         decodeHtmlEntities: true,
       })
@@ -1119,7 +1119,7 @@ title: My Awesome Title
         'این یک &nbsp;متن است&#x60; با&nbsp;entity ها&nbsp;مختلف. &lt;br&gt;'
       const expected = 'این یک  متن است` با entity ها مختلف. <br>'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         decodeHtmlEntities: true,
       })
@@ -1131,7 +1131,7 @@ title: My Awesome Title
       const input = 'این یک متن با entity های نامعتبر &invalid; است.'
       const expected = 'این یک متن با entity های نامعتبر &invalid; است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         decodeHtmlEntities: true,
       })
@@ -1144,7 +1144,7 @@ title: My Awesome Title
         '&#1587;&#1604;&#1575;&#1605;&#32;&#1583;&#1606;&#1740;&#1575;'
       const expected = 'سلام دنیا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         decodeHtmlEntities: true,
       })
@@ -1157,7 +1157,7 @@ title: My Awesome Title
         '&#x633;&#x644;&#x627;&#x645;&#x20;&#x62f;&#x646;&#x6cc;&#x627;'
       const expected = 'سلام دنیا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         decodeHtmlEntities: true,
       })
@@ -1171,7 +1171,7 @@ title: My Awesome Title
       const input = '۱۲۳٤٥٦۷۸۹٠'
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceArabicNumbers: true,
       })
@@ -1183,7 +1183,7 @@ title: My Awesome Title
       const input = '۱۲۳۴۵۶۷۸۹۰'
       const expected = '۱۲۳۴۵۶۷۸۹۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceArabicNumbers: true,
       })
@@ -1197,7 +1197,7 @@ title: My Awesome Title
       const input = 'این یک متن است که --- و -- های زیادی دارد.'
       const expected = 'این یک متن است که — و – های زیادی دارد.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceDashes: true,
       })
@@ -1211,7 +1211,7 @@ title: My Awesome Title
       const input = 'کتَابِت، اینجا خونه است'
       const expected = 'کتابت، اینجا خونه است'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceDiacritics: true,
       })
@@ -1223,7 +1223,7 @@ title: My Awesome Title
       const input = 'ما هم‌زَمان بودیم'
       const expected = 'ما همزمان بودیم'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceDiacritics: true,
       })
@@ -1235,7 +1235,7 @@ title: My Awesome Title
       const input = 'کتابتِِِ ِ ِ ِ َ    ؟؟؟؟؟'
       const expected = 'کتابتِ َ    ؟؟؟؟؟'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceDiacritics: true,
       })
@@ -1249,7 +1249,7 @@ title: My Awesome Title
       const input = '123۴۵6'
       const expected = '۱۲۳۴۵۶'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishNumbers: true,
       })
@@ -1261,7 +1261,7 @@ title: My Awesome Title
       const input = '۱۲۳۴۵۶'
       const expected = '۱۲۳۴۵۶'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishNumbers: true,
       })
@@ -1273,7 +1273,7 @@ title: My Awesome Title
       const input = ''
       const expected = ''
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishNumbers: true,
       })
@@ -1287,7 +1287,7 @@ title: My Awesome Title
       const input = '“Hello, World!”'
       const expected = '«Hello, World!»'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotesPairs: true,
       })
@@ -1299,7 +1299,7 @@ title: My Awesome Title
       const input = '“Hello, World!” “Welcome to the party.”'
       const expected = '«Hello, World!» «Welcome to the party.»'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotesPairs: true,
       })
@@ -1311,7 +1311,7 @@ title: My Awesome Title
       const input = "Don't forget to say “Hello, World!”"
       const expected = "Don't forget to say «Hello, World!»"
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotesPairs: true,
       })
@@ -1323,7 +1323,7 @@ title: My Awesome Title
       const input = '<p>“Hello, World!”</p>'
       const expected = '<p>“Hello, World!”</p>'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotesPairs: true,
       })
@@ -1335,7 +1335,7 @@ title: My Awesome Title
       const input = '```“Hello, World!”```'
       const expected = '```“Hello, World!”```'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotesPairs: true,
       })
@@ -1349,7 +1349,7 @@ title: My Awesome Title
       const input = '"با چشم‌هایی متعجب به یکدیگر نگاه کردند"'
       const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotes: true,
       })
@@ -1361,7 +1361,7 @@ title: My Awesome Title
       const input = `'با چشم‌هایی متعجب به یکدیگر نگاه کردند'`
       const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotes: true,
       })
@@ -1373,7 +1373,7 @@ title: My Awesome Title
       const input = `\`با چشم‌هایی متعجب به یکدیگر نگاه کردند\``
       const expected = '«با چشم‌هایی متعجب به یکدیگر نگاه کردند»'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceEnglishQuotes: true,
       })
@@ -1387,7 +1387,7 @@ title: My Awesome Title
       const input = 'تست ة تست' // 'test ة test'
       const expected = 'تست هٔ تست' // 'test هٔ test'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: false,
@@ -1400,7 +1400,7 @@ title: My Awesome Title
       const input = 'تستة تست' // 'testة test'
       const expected = 'تستة تست' // 'testة test'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1413,7 +1413,7 @@ title: My Awesome Title
       const input = 'تستة' // 'testة'
       const expected = 'تستة' // 'testة'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1426,7 +1426,7 @@ title: My Awesome Title
       const input = 'ةتست' // 'ةtest'
       const expected = 'ةتست' // 'ةtest'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1441,7 +1441,7 @@ title: My Awesome Title
       const input = 'ماشینة ورزشة'
       const expectedOutput = 'ماشینه‌ی ورزشه‌ی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1454,7 +1454,7 @@ title: My Awesome Title
       const input = 'دندانپزشكة'
       const expectedOutput = 'دندانپزشكه‌ی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1467,7 +1467,7 @@ title: My Awesome Title
       const input = 'بانكة'
       const expectedOutput = 'بانكه‌ی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1480,7 +1480,7 @@ title: My Awesome Title
       const input = 'مدرسة'
       const expectedOutput = 'مدرسه‌ی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceHamzeh: true,
         replaceHamzehArabic: true,
@@ -1495,7 +1495,7 @@ title: My Awesome Title
       const input = 'كڪيىۍېہە'
       const expected = 'ککییییههه'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceMiscNonPersianChars: true,
       })
@@ -1509,7 +1509,7 @@ title: My Awesome Title
       const input = 'مثال (ص) جمله (س) کلمه (ع)'
       const expected = 'مثال(ص) جمله(س) کلمه(ع)'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceMiscSpacing: true,
       })
@@ -1521,7 +1521,7 @@ title: My Awesome Title
       const input = 'اعداد [۱۲۳۴۵۶۷۸۹۰]'
       const expected = 'اعداد[۱۲۳۴۵۶۷۸۹۰]'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceMiscSpacing: true,
       })
@@ -1533,7 +1533,7 @@ title: My Awesome Title
       const input = 'این یک متن است'
       const expected = 'این یک متن است'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceMiscSpacing: true,
       })
@@ -1547,7 +1547,7 @@ title: My Awesome Title
       const input = '۱,۰۰۰٫۵۰%'
       const expected = '۱٬۰۰۰٫۵۰٪'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceNumeralSymbols: true,
       })
@@ -1559,7 +1559,7 @@ title: My Awesome Title
       const input = '۱۲۳,۴۵۶.۷۸% ۹۰۰.۱۲'
       const expected = '۱۲۳٬۴۵۶٫۷۸٪ ۹۰۰٫۱۲'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceNumeralSymbols: true,
       })
@@ -1573,7 +1573,7 @@ title: My Awesome Title
       const input = 'من می روم'
       const expected = 'من می\u200cروم'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replacePrefixSpacing: true,
       })
@@ -1585,7 +1585,7 @@ title: My Awesome Title
       const input = 'من نمی روم'
       const expected = 'من نمی\u200cروم'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replacePrefixSpacing: true,
       })
@@ -1597,7 +1597,7 @@ title: My Awesome Title
       const input = 'من بی خیال شدم'
       const expected = 'من بی‌خیال شدم'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replacePrefixSpacing: true,
       })
@@ -1611,7 +1611,7 @@ title: My Awesome Title
       const input = 'ﭖ ﻉ ﺥ ﮎ ﻛ ﺭ ﻝ'
       const expected = 'پ ع خ ک ک ر ل'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replacePersianGlyphs: true,
       })
@@ -1623,7 +1623,7 @@ title: My Awesome Title
       const input = 'این یک متن عادی است.'
       const expected = 'این یک متن عادی است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replacePersianGlyphs: true,
       })
@@ -1638,7 +1638,7 @@ title: My Awesome Title
       const expected =
         'من آمده\u200cام، با خودم کتاب\u200cهایی آورده\u200cام؛ من می\u200cخوانم.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replacePunctuations: true,
       })
@@ -1652,7 +1652,7 @@ title: My Awesome Title
       const input = 'چرا سوالی نیست? من همیشه پر از سوالاتم?'
       const expected = 'چرا سوالی نیست؟ من همیشه پر از سوالاتم؟'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceQuestionMarks: true,
       })
@@ -1664,7 +1664,7 @@ title: My Awesome Title
       const input = 'این جمله سوالی نیست.'
       const expected = 'این جمله سوالی نیست.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceQuestionMarks: true,
       })
@@ -1678,7 +1678,7 @@ title: My Awesome Title
       const input = 'این یک ( تست ) است.'
       const expected = 'این یک (تست) است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSpacingForBracesAndQuotes: true,
       })
@@ -1690,7 +1690,7 @@ title: My Awesome Title
       const input = 'این یک [ تست ] است.'
       const expected = 'این یک [تست] است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSpacingForBracesAndQuotes: true,
       })
@@ -1702,7 +1702,7 @@ title: My Awesome Title
       const input = 'این یک { تست } است.'
       const expected = 'این یک {تست} است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSpacingForBracesAndQuotes: true,
       })
@@ -1714,7 +1714,7 @@ title: My Awesome Title
       const input = 'این یک “ تست ” است.'
       const expected = 'این یک “تست” است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSpacingForBracesAndQuotes: true,
       })
@@ -1726,7 +1726,7 @@ title: My Awesome Title
       const input = 'این یک « تست » است.'
       const expected = 'این یک «تست» است.'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSpacingForBracesAndQuotes: true,
       })
@@ -1740,7 +1740,7 @@ title: My Awesome Title
       const input = 'اگر دوست داشته باشید ؛ به من یاد می‌دهید ؟'
       const expected = 'اگر دوست داشته باشید؛ به من یاد می‌دهید؟'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeSpacingForPunctuations: true,
       })
@@ -1752,7 +1752,7 @@ title: My Awesome Title
       const input = 'نام: محمد، سن: ۲۵'
       const expected = 'نام: محمد، سن: ۲۵'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeSpacingForPunctuations: true,
       })
@@ -1764,7 +1764,7 @@ title: My Awesome Title
       const input = 'زمان: ۱۰: ۴۵'
       const expected = 'زمان: ۱۰:۴۵'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeSpacingForPunctuations: true,
       })
@@ -1776,7 +1776,7 @@ title: My Awesome Title
       const input = 'قیمت: ۱۰. ۵ دلار'
       const expected = 'قیمت: ۱۰.۵ دلار'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeSpacingForPunctuations: true,
       })
@@ -1788,7 +1788,7 @@ title: My Awesome Title
       const input = 'برای دسترسی به سایت‌های time .ir و google. com'
       const expected = 'برای دسترسی به سایت‌های time.ir و google.com'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeSpacingForPunctuations: true,
       })
@@ -1800,7 +1800,7 @@ title: My Awesome Title
       const input = '؟     !'
       const expected = '؟!'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeSpacingForPunctuations: true,
       })
@@ -1814,7 +1814,7 @@ title: My Awesome Title
       const input = 'خانه‌ئی'
       const expected = 'خانه‌ای'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSuffixMisc: true,
       })
@@ -1826,7 +1826,7 @@ title: My Awesome Title
       const input = 'همچنان'
       const expected = 'همچنان'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSuffixMisc: true,
       })
@@ -1838,7 +1838,7 @@ title: My Awesome Title
       const input = 'خانه‌ایی'
       const expected = 'خانه‌ایی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSuffixMisc: true,
       })
@@ -1850,7 +1850,7 @@ title: My Awesome Title
       const input = 'به زودی'
       const expected = 'به زودی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         replaceSuffixMisc: true,
       })
@@ -1864,7 +1864,7 @@ title: My Awesome Title
       const input = 'مدیریت های دوم'
       const expected = 'مدیریت\u200cهای دوم'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         fix_suffix_spacing: true,
       })
@@ -1876,7 +1876,7 @@ title: My Awesome Title
       const input = 'راه هایی'
       const expected = 'راه\u200cهایی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         fix_suffix_spacing: true,
       })
@@ -1888,7 +1888,7 @@ title: My Awesome Title
       const input = 'تراش هایی'
       const expected = 'تراش\u200cهایی'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         fix_suffix_spacing: true,
       })
@@ -1900,7 +1900,7 @@ title: My Awesome Title
       const input = 'هوا'
       const expected = 'هوا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         fix_suffix_spacing: true,
       })
@@ -1914,7 +1914,7 @@ title: My Awesome Title
       const input = 'سلام ... دنیا'
       const expected = 'سلام… دنیا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeThreeDots: true,
       })
@@ -1926,7 +1926,7 @@ title: My Awesome Title
       const input = 'سلام.  .  . دنیا'
       const expected = 'سلام… دنیا'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeThreeDots: true,
       })
@@ -1938,7 +1938,7 @@ title: My Awesome Title
       const input = 'من .. دوستت دارم'
       const expected = 'من .. دوستت دارم'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeThreeDots: true,
       })
@@ -1952,7 +1952,7 @@ title: My Awesome Title
       const input = 'تستــــــ'
       const expected = 'تست–'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeKashidas: true,
       })
@@ -1966,7 +1966,7 @@ title: My Awesome Title
       const input = '! [alt] (src)'
       const expected = '![alt](src)'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownBraces: true,
       })
@@ -1978,7 +1978,7 @@ title: My Awesome Title
       const input = '[text] (link)'
       const expected = '[text](link)'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownBraces: true,
       })
@@ -1990,7 +1990,7 @@ title: My Awesome Title
       const input = '[[ text ]]'
       const expected = '[[text]]'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownBraces: true,
       })
@@ -2002,7 +2002,7 @@ title: My Awesome Title
       const input = '[[text] ]'
       const expected = '[[text]]'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownBraces: true,
       })
@@ -2018,7 +2018,7 @@ title: My Awesome Title
 * item 2`
       const expected = `* item 1
 * item 2`
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownLists: true,
       })
@@ -2032,7 +2032,7 @@ title: My Awesome Title
 - item 2`
       const expected = `- item 1
 - item 2`
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownLists: true,
       })
@@ -2046,7 +2046,7 @@ title: My Awesome Title
 # item 2`
       const expected = `# item 1
 # item 2`
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeMarkDownLists: true,
       })
@@ -2060,7 +2060,7 @@ title: My Awesome Title
       const input = '۱۴/۰۳/۲۰۲۱'
       const expected = '۲۰۲۱/۰۳/۱۴'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeJalaliDates: true,
       })
@@ -2072,7 +2072,7 @@ title: My Awesome Title
       const input = 'متنی بدون تاریخ'
       const expected = input
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeJalaliDates: true,
       })
@@ -2084,7 +2084,7 @@ title: My Awesome Title
       const input = '۱۴/۰۳/۲۰۲۱ - ۱۴/۰۳/۲۰۲۲'
       const expected = '۲۰۲۱/۰۳/۱۴ - ۲۰۲۲/۰۳/۱۴'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeJalaliDates: true,
       })
@@ -2096,7 +2096,7 @@ title: My Awesome Title
       const input = '۲۰-۰۳-۲۰۲۱'
       const expected = '۲۰۲۱/۰۳/۲۰'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeJalaliDates: true,
       })
@@ -2110,7 +2110,7 @@ title: My Awesome Title
       const input = 'سلام……'
       const expected = 'سلام…'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeEllipsis: true,
       })
@@ -2122,7 +2122,7 @@ title: My Awesome Title
       const input = 'سلام…\t\t'
       const expected = 'سلام… '
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeEllipsis: true,
       })
@@ -2136,7 +2136,7 @@ title: My Awesome Title
       const input = 'متن با سلام\r\nاین یک تست است\nو برای تست\rمی باشد'
       const expected = 'متن با سلام\nاین یک تست است\nو برای تست\nمی باشد'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         normalizeEndOfLines: true,
       })
@@ -2150,7 +2150,7 @@ title: My Awesome Title
       const input = 'دَرخِتِ قَدِيمي زَيرآب'
       const expected = 'درخت قديمي زيرآب'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeDiacritics: true,
       })
@@ -2162,7 +2162,7 @@ title: My Awesome Title
       const input = 'شيوه نگارش فارسی را بهبود بخشيد'
       const expected = 'شيوه نگارش فارسی را بهبود بخشيد'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeDiacritics: true,
       })
@@ -2174,7 +2174,7 @@ title: My Awesome Title
       const input = 'چِند ضَربِه از مَي خورِد؟'
       const expected = 'چند ضربه از مي خورد؟'
 
-      const result = virastar.cleanup(input, {
+      const result = virastar.process(input, {
         ...options,
         removeDiacritics: true,
       })
