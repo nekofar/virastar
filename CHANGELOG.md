@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2023-03-22
+
+### <!-- 01 -->Features
+
+- Rename `cleanup` to `process` on `Virastar`
+
+### <!-- 04 -->Refactor
+
+- Create `PreserverFactory` and `ProcessorFactory`
+- Improve cli tool codes and add some comments
+
+### <!-- 05 -->Documentation
+
+- Add installation and usage instructions to the project's readme
+
+### <!-- 08 -->Miscellaneous Tasks
+
+- Remove `private` option from root package file
+- Change `access` and `changelog` on `changesets` config
+
 ## [0.2.0] - 2023-03-22
 
 ### <!-- 01 -->Features
