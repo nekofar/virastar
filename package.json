@@ -7,7 +7,9 @@
   "scripts": {
     "build": "pnpm --stream -r run build",
     "test": "pnpm --stream -r run test",
-    "lint": "pnpm --stream -r run lint"
+    "lint": "pnpm --stream -r run lint",
+    "prestart": "npm run build",
+    "start": "pnpm run --filter @nekofar/virastar-cli start"
   },
   "devDependencies": {
     "@tsconfig/node-lts-strictest": "^18.12.1",
