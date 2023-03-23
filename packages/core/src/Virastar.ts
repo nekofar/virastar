@@ -1,14 +1,7 @@
 import type { VirastarOptions } from './VirastarOptions'
 import {
-  BracesSpacingInsideProcessor,
-  BracesSpacingProcessor,
-  DecodeHtmlEntitiesProcessor,
   HamzehArabicAltProcessor,
-  HamzehArabicProcessor,
-  HamzehProcessor,
   SuffixSpacingHamzehProcessor,
-  SuffixSpacingMiscProcessor,
-  SuffixSpacingProcessor,
   ZeroWidthNonJoinerLateProcessor,
 } from './processors'
 import { ProcessorFactory } from './processors/ProcessorFactory'
@@ -25,7 +18,7 @@ export class Virastar {
     cleanupSpacing: true,
     cleanupZeroWidthNonJoiners: true,
     decodeHtmlEntities: true,
-    fix_suffix_spacing: true,
+    replaceSuffixSpacing: true,
     normalizeEllipsis: true,
     normalizeEndOfLines: true,
     normalizeJalaliDates: true,
@@ -156,7 +149,9 @@ export class Virastar {
 
     // Decode HTML entities if specified
     if (opts['decodeHtmlEntities']) {
-      text = new DecodeHtmlEntitiesProcessor().process(text)
+      text = this.processorFactory
+        .createProcessor('decodeHtmlEntities')
+        .process(text)
     }
 
     // preserves all html entities in the text
@@ -211,11 +206,15 @@ export class Virastar {
 
     if (opts['replaceHamzeh']) {
       if (opts['replaceHamzehArabic']) {
-        text = new HamzehArabicProcessor().process(text)
+        text = this.processorFactory
+          .createProcessor('replaceHamzehArabic')
+          .process(text)
       }
 
-      text = new HamzehProcessor().process(text)
-    } else if (opts['fix_suffix_spacing']) {
+      text = this.processorFactory
+        .createProcessor('replaceHamzeh')
+        .process(text)
+    } else if (opts['replaceSuffixSpacing']) {
       if (opts['replaceHamzehArabic']) {
         text = new HamzehArabicAltProcessor().process(text)
       }
@@ -256,16 +255,21 @@ export class Virastar {
         .process(text)
     }
 
-    if (opts['fix_suffix_spacing']) {
-      text = new SuffixSpacingProcessor().process(text)
-    }
+    if (opts['replaceSuffixSpacing']) {
+      text = this.processorFactory
+        .createProcessor('replaceSuffixSpacing')
+        .process(text)    }
 
     if (opts['replaceSuffixMisc']) {
-      text = new SuffixSpacingMiscProcessor().process(text)
+      text = this.processorFactory
+        .createProcessor('replaceSuffixMisc')
+        .process(text)
     }
 
     if (opts['replaceSpacingForBracesAndQuotes']) {
-      text = new BracesSpacingProcessor().process(text)
+      text = this.processorFactory
+        .createProcessor('replacesExtraSpacesAroundBraces')
+        .process(text)
     }
 
     if (opts['cleanupExtraMarks']) {
@@ -306,7 +310,9 @@ export class Virastar {
 
     // doing it again after `fixPunctuationSpacing()`
     if (opts['replaceSpacingForBracesAndQuotes']) {
-      text = new BracesSpacingInsideProcessor().process(text)
+      text = this.processorFactory
+        .createProcessor('replacesSpacesInsideBraces')
+        .process(text)
     }
 
     if (opts['replaceMiscSpacing']) {

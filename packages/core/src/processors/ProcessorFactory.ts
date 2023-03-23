@@ -33,6 +33,8 @@ import { QuestionMarkProcessor } from './QuestionMarkProcessor'
 import { BracesSpacingProcessor } from './BracesSpacingProcessor'
 import { SuffixSpacingMiscProcessor } from './SuffixSpacingMiscProcessor'
 import type { IProcessor } from './IProcessor'
+import { BracesSpacingInsideProcessor } from './BracesSpacingInsideProcessor'
+import { SuffixSpacingProcessor } from "./SuffixSpacingProcessor";
 
 export class ProcessorFactory {
   private static processors: Record<string, IProcessor | null> = {
@@ -70,6 +72,9 @@ export class ProcessorFactory {
     replaceQuestionMarks: null,
     replaceSpacingForBracesAndQuotes: null,
     replaceSuffixMisc: null,
+    replacesSpacesInsideBraces: null,
+    replacesExtraSpacesAroundBraces: null,
+    replaceSuffixSpacing: null,
   }
 
   createProcessor(type: string): IProcessor {
@@ -179,6 +184,15 @@ export class ProcessorFactory {
           break
         case 'replaceSuffixMisc':
           processor = new SuffixSpacingMiscProcessor()
+          break
+        case 'replacesSpacesInsideBraces':
+          processor = new BracesSpacingInsideProcessor()
+          break
+        case 'replacesExtraSpacesAroundBraces':
+          processor = new BracesSpacingProcessor()
+          break
+       case 'replaceSuffixSpacing':
+          processor = new SuffixSpacingProcessor()
           break
         default:
           throw new Error('Invalid processor type')
