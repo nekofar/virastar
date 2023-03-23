@@ -1,6 +1,6 @@
 {
   "name": "@nekofar/virastar",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Virastar is a TypeScript library for Persian text processing, providing various functions such as normalization, cleaning, and formatting for better readability and compatibility.",
   "keywords": [
     "persian",
