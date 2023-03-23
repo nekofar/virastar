@@ -1,5 +1,10 @@
 # Virastar
 
+![Experimental](https://img.shields.io/badge/Status-Experimental-orange?style=flat)
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue?style=flat&logo=typescript)
+![PNPM](https://img.shields.io/badge/Package%20Manager-pnpm-red?style=flat&logo=pnpm)
+
+
 Virastar is a TypeScript library for Persian text processing, providing various functions such as normalization, cleaning, and formatting for better readability and compatibility.
 
 > Please note that Virastar is an experimental project and is currently under development. As such, it may not be suitable for use in production environments. Use at your own risk and discretion.
