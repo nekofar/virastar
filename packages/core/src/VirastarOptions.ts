@@ -6,7 +6,7 @@ export interface VirastarOptions {
   cleanupSpacing?: boolean
   cleanupZeroWidthNonJoiners?: boolean
   decodeHtmlEntities?: boolean
-  fix_suffix_spacing?: boolean
+  replaceSuffixSpacing?: boolean
   normalizeEllipsis?: boolean
   normalizeEndOfLines?: boolean
   normalizeJalaliDates?: boolean

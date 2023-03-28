@@ -1866,7 +1866,7 @@ title: My Awesome Title
 
       const result = virastar.process(input, {
         ...options,
-        fix_suffix_spacing: true,
+        replaceSuffixSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1878,7 +1878,7 @@ title: My Awesome Title
 
       const result = virastar.process(input, {
         ...options,
-        fix_suffix_spacing: true,
+        replaceSuffixSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1890,7 +1890,7 @@ title: My Awesome Title
 
       const result = virastar.process(input, {
         ...options,
-        fix_suffix_spacing: true,
+        replaceSuffixSpacing: true,
       })
 
       expect(result).toBe(expected)
@@ -1902,7 +1902,7 @@ title: My Awesome Title
 
       const result = virastar.process(input, {
         ...options,
-        fix_suffix_spacing: true,
+        replaceSuffixSpacing: true,
       })
 
       expect(result).toBe(expected)
