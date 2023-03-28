@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2] - 2023-03-28
+
+### <!-- 04 -->Refactor
+
+- Add some of missed processors to the factory
+
+### <!-- 07 -->Continuous Integrations
+
+- Bump actions/cache from 3.2.6 to 3.3.1 
+- Bump actions/checkout from 3.3.0 to 3.5.0 
+
+### <!-- 08 -->Miscellaneous Tasks
+
+- Bump pnpm from 7.30.5 to 8.0.0 
+
+## [0.3.1] - 2023-03-23
+
+### <!-- 05 -->Documentation
+
+- Add some badges to the readme file
+
 ## [0.3.0] - 2023-03-22
 
 ### <!-- 01 -->Features
