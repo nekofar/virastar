@@ -258,7 +258,8 @@ export class Virastar {
     if (opts['replaceSuffixSpacing']) {
       text = this.processorFactory
         .createProcessor('replaceSuffixSpacing')
-        .process(text)    }
+        .process(text)
+    }
 
     if (opts['replaceSuffixMisc']) {
       text = this.processorFactory

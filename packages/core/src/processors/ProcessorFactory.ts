@@ -34,7 +34,7 @@ import { BracesSpacingProcessor } from './BracesSpacingProcessor'
 import { SuffixSpacingMiscProcessor } from './SuffixSpacingMiscProcessor'
 import type { IProcessor } from './IProcessor'
 import { BracesSpacingInsideProcessor } from './BracesSpacingInsideProcessor'
-import { SuffixSpacingProcessor } from "./SuffixSpacingProcessor";
+import { SuffixSpacingProcessor } from './SuffixSpacingProcessor'
 
 export class ProcessorFactory {
   private static processors: Record<string, IProcessor | null> = {
@@ -191,7 +191,7 @@ export class ProcessorFactory {
         case 'replacesExtraSpacesAroundBraces':
           processor = new BracesSpacingProcessor()
           break
-       case 'replaceSuffixSpacing':
+        case 'replaceSuffixSpacing':
           processor = new SuffixSpacingProcessor()
           break
         default:
