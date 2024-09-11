@@ -20,7 +20,7 @@
     "@types/jest": "^29.4.1",
     "@types/node": "^22.1.0",
     "@types/sprintf-js": "^1.1.2",
-    "concurrently": "^8.0.1",
+    "concurrently": "^9.0.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
