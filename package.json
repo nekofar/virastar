@@ -17,7 +17,7 @@
     "@tsconfig/node-lts-strictest": "^18.12.1",
     "@tsconfig/node-lts-strictest-esm": "^18.12.1",
     "@tsconfig/recommended": "^1.0.2",
-    "@types/jest": "^29.4.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.1.0",
     "@types/sprintf-js": "^1.1.2",
     "concurrently": "^9.0.1",
